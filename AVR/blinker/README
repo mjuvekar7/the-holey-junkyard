@@ -1,0 +1,39 @@
+blinker sub-directory
+author: mandar, shardul
+
+This is the README file located in the blinker sub-directory of the AVR
+directory of the repository. It contains code for a very simple blinker program,
+used primarily for testing. The directory has one sub-directory and seven files
+as explained below:
+
+Directories --
+alternate/ 
+    This directory contains source code and output files
+    for a simple rpogram to have two LEDs blink in an alternate fashion.
+
+Files --
+blink.c 
+    This is the actual source code for the program. It is a simple fragment of 
+    code. Please read comments in the code in order to understand its working.
+
+blink.hex and blink.elf
+    These are the pre-compiled output files for the program ready to be burnt on
+    an AVR.  Note: these files are compiled to work with an Atmega16 working at
+    8MHz. These files can be recompiled and burnt using the Makefile.
+
+blink.lst 
+    This is a file showing the C code and assembly code for the program
+    side-by-side. It is not practically useful, but shows how C code is
+    translated into assembly instructions.
+
+blink.out 
+    This file is needed for the .lst file (see above).
+
+Makefile 
+    See README file in AVR directory for instructions on using the Makefile.
+
+README
+    This file.
+
+Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com> or
+<mjuvekar7@gmail.com> 

@@ -1,0 +1,34 @@
+python directory
+author: shardul
+
+This is the README file located in the python directory of the SVN repository.
+The directory has five files and no sub-directries. Its contents are explained
+below:
+
+fib.py
+    A Python utility for Fibonacci numbers, which can give you the first n
+    Fibonacci numbers, all Fibonacci numbers less than n, and next/previous
+    Fibonacci numbers.
+
+prime.py
+    A Python utility for prime numbers, which can give you the first n
+    prime numbers, all prime numbers less than n, and next/previous
+    prime numbers. It can also factorize quite large numbers (into their prime
+    factors) upto 20 digits long within a minute or so on a 1 GHz processor.
+
+primes
+    A Python pickled file of the first 100000 (one hundred thousand) primes. To
+    use it, unpickle it as usual. This file is used by 'prime_time.py'.
+
+prime_time.py
+    A Python script to check how long it takes to factorize a random large
+    semi-prime. A semi-prime is a number made by multiplying two primes
+    together. Here, two random primes from the pickled 'primes' file are
+    multiplied and the result is then factorized, measuring the timetaken to
+    factorize it.
+
+README
+    This file.
+
+Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com> or
+<mjuvekar7@gmail.com>. 

@@ -1,0 +1,45 @@
+Ideas for things to do:
+
+ - Build an AVR-based LED cube with a *very nice* user interface, which will
+   allow the user to use lines, planes, and other objects, or define custom
+   patterns, and move them, flip them, rotate them, shrink them, etc. Something
+   like a 'layered' architecture --
+
+        User______________________
+          ||__________            |
+          |           |           |
+        Shapes    Transform    Custom
+          |___________|___________|
+          |
+        Bitmap Manipulation
+          |
+        Physical I/O Interface
+          |
+        Hardware
+
+
+ - Same LED cube, rendering 3D models with the help of a Raspberry Pi. Something
+   like: take pictures, send to RPi, procedurally models object, defines as
+   'custom' object in LED cube, displays model in 3D. No human intervention.
+
+
+ - AVR-based 'Flashing Lights' project, where sounds are sampled and digitally
+   manipulated and separated into component frequencies. Colored lights are
+   flashed based on amplitudes of these frequencies. Final output will be lights
+   flashing to the beat of a drum, or to the different keys of a piano.
+
+
+ - VoteCounter is currently a self-contained application: prone to disaster if
+   system or application crashes, where there is a risk of loss of valuable
+   data. Also, it is not synchronized across the network; for example, it
+   doesn't tally votes from different voting booths where voting proceeds
+   simultaneously. If a VoteCounter server could be set up and kept running, it
+   would account for many clients in different groups at the same time, while
+   keeping a backup of data at the server-side.
+
+
+ - Write a small webserver in C or Python.
+
+
+ - Write an OS for AVRs, which can handle multiple processes and file or terminal
+   I/O, and give an easy interface to the timers, ADCs, and I/O pins.

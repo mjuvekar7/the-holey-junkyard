@@ -1,0 +1,11 @@
+Our Aim:
+
+Our aim is to make a control system which will open or close a door at fixed times, or after specified intervals. Such a control system can take any sort of input from sensors -- in this case, from buttons to adjust the interval -- and drive something based on it -- the door. One of the many possible things you can do with such a system is lighting a bulb when someone claps twice, or turning a fan on based on the temperature. The possibilities and applications are endless.
+
+What We Have Achieved:
+
+Our aim has not been fully achieved. There are two parts to the project -- the circuitry and code part, and the mechanical part. The control circuit is finished, but it cannot be used in a practical situation as it has to be put on to a PCB, the circuit has to be sealed and protected, with only the inputs accessible, among many other things. Also, we have managed to drive a light bulb, and we could (in theory) drive a door opener as well, but we have to work on it.
+
+The Future:
+
+The project was inspired by a practical problem: our housing society's gates needed to be opened and closed at fixed times, and there was no readily available, low-priced system that could do this. We decided to try to design such a control system on our own, and we are almost there. We have to still work on the mechanical door-opening part, we have to enclose the circuit, etc., to make a practical implementation of such a system.

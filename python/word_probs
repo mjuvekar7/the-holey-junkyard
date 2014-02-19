@@ -1,0 +1,12 @@
+Given string like:
+ 'If the selling price of an article is $50 and the loss is 40%, find the cost price.'
+Should be able to separate into:
+ sell: 50
+ loss: 40%
+ cost: unknown
+
+General rules:
+forms of sell = sell, selling, sold followed by max. 6 words and then a number
+forms of buy = buy, bought, purchased, purchasing, buying followed by max. 6 words and then a number
+examples -- 'sold (at|for) <price>', 'buys a pen stand (at|for) <price>'
+

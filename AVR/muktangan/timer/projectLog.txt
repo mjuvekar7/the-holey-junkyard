@@ -1,0 +1,15 @@
+Project Log:
+
+01. Design drafting and development
+02. Design finalization
+03. Purchase of components, programmers, ec.
+04. Program development
+05. Code finalization and burning onto chip
+06. Assembly of various components to make complete circuit 
+07. Small fixes in code and circuit
+08. Circuitry finished
+09. Development of relay-driven external circuit
+10. Project essentials finished
+11. Code documented and printed
+12. Explanatory charts and diagrams prepared
+13. Project in exhibition!
