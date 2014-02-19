@@ -1,0 +1,121 @@
+Build an AVR-based LED cube with a *very nice* user interface, which will
+allow the user to use lines, planes, and other objects, or define custom
+patterns, and move them, flip them, rotate them, shrink them, etc. Something
+like a 'layered' architecture --
+
+     User______________________
+       ||__________            |
+       |           |           |
+     Shapes    Transform    Custom
+       |___________|___________|
+       |
+     Bitmap Manipulation
+       |
+     Physical I/O Interface
+       |
+     Hardware
+
+*******************************************************************************
+Hardware Top View:
+
+  *__*__*__*__* ____ 
+  |  |  |  |  |     |
+  *__*__*__*__* __  |_
+  |  |  |  |  |   |___ port        joined to
+  *__*__*__*__* ______ for Y     corresponding
+  |  |  |  |  |    ___ control      pins in
+  *__*__*__*__* __|  _ pins      lower layers
+  |  |  |  |  |     |
+  *__*__*__*__* ____|     ___________________________
+                         |     Material Needed       |
+  |  |_ | _|  |          | 125x  blue LEDs           |
+  |___ ||| ___|          | lots  wire                |
+      |||||              | 125x  frame sticks        |
+    joined to              
+  corresponding     all to
+     pins in         Vcc
+  lower layers        |
+  |  |  |  |  |____ opto 1 __ select layer 1
+  |  |  |  |_______ opto 2 __ select layer 2  if selected,
+  |  |  |__________ opto 3 __ select layer 3  then ground so
+  |  |_____________ opto 4 __ select layer 4  opto enabled
+  |________________ opto 5 __ select layer 5
+                    |||||
+            port for X control pins
+            if selected, then ground
+
+*******************************************************************************
+Physical I/O Interface:
+which port for X? (pins 0 to 4)
+which port for Y? (pins 0 to 4)
+which port and pins for Z?
+
+get next frame from upper layer
+go over frame voxel by voxel, leaving on for 200 us (40 Hz refresh rate)
+space for line optimization? for plane optimization? for cube optimization?
+
+to turn on X, Y, Z
+portX.pinX low
+portY.pinY high
+portZ.pinZ low
+
+to turn on line with two single co-ords and one range co-ord
+same thing with multiple pinSomethings
+
+to turn on plane with one single co-ord and two range co-ords
+two multiple pinSomethings
+
+to turn on cube -- all pinSomethings multiple
+
+*******************************************************************************
+Bitmap Representation:
+16-bit 2d array[16][16] of ints; each int = one line
+is frame ready? mark for sending down
+also mark optimizations
+
+take shift input
+create subset array[5][5] as frame
+
+turn on voxel X, Y, Z
+turn on line  Xs, Y, Z OR X, Ys, Z OR X, Y, Zs
+turn on plane Xs, Ys, Z OR Xs, Y, Zs OR X, Ys, Zs
+turn on cube  Xs, Ys, Zs
+
+*******************************************************************************
+Shapes:
+define point
+define line connecting two points
+define plane connecting three points
+define cuboid, ellipsoid
+define solid and wireframe versions
+
+allow user to define shape with vertices, edges
+allow user to define shape as collection of points
+
+create shape in bitmap below and keep track
+remove shape (keep track of this, too)
+
+*******************************************************************************
+Transformations:
+rotate on * axis
+move on * axis
+revolve around voxel
+grow/shrink
+stretch/compress on * axis
+
+allow user to define custom transformation
+that is, what to do to bitmap or shape(s) on bitmap
+
+apply transformation to bitmap below and update shape record(s)
+
+*******************************************************************************
+User Interface:
+interface to C, Python, Java
+small demo executables
+easily usable
+
+*******************************************************************************
+my humble estimates:
+Muktangan version: ~2500 LOC, ~2 months
+reasonably good version: ~7500 LOC, ~1 year
+

@@ -1,0 +1,13 @@
+Challenges faced:
+
+1. Required component not available --
+The microcontroller we had designed the project on was not available, so we had to buy another one and redesign the project.
+
+2. Code and circuit not developed synchronously --
+We developed the code, and then the circuit. So, we had to debug the code and develop the circuit alongside to make them work together.
+
+3. Power source problem --
+An AC-DC adapter should have worked for the project, but such adapters do not give stable, clean output. We had to use DC power from AA batteries instead.
+
+4. Driving the mechanical part of the project --
+The circuit was ready, but the other part -- the mechanical latch -- was not. We had to drive AC mains using a relay triggered by our circuit.

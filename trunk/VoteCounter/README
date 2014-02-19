@@ -1,0 +1,42 @@
+VoteCounter directory
+author: shardul
+
+This is the README file in the VoteCounter directory of the repository. It has
+four sub-directories and four files, each explained below:
+
+Directories --
+build/
+    This sub-directory contains compiled sources (as '*.class' files). It also
+    contains NetBeans build configuration data. This sub-directory is not meant
+    to be tampered with directly; there is no README file.
+
+dist/
+    This sub-directory contains the built jarchive for the project, along with
+    library dependancies.
+
+nbproject/
+    This sub-directory contains NetBeans project configuration data. This sub-
+    directory is not meant to be tampered with directly; there is no README
+    file.
+
+src/
+    This sub-directory contains the sources for the project (Java source files
+    -- '*.java' -- and other resource files). They are well-commented and self-
+    explanatory, so there is no README file.
+
+Files --
+build.xml
+    This contains NetBeans build configuration.
+
+COPYING
+    This contains the GPL copyleft declaration for VoteCounter. This file is
+    actually a link to src/votecounter/COPYING.
+
+manifest.mf
+    This is the NetBeans project Manifest file.
+
+README
+    This file.
+
+Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com> or
+<mjuvekar7@gmail.com>.

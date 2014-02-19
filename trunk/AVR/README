@@ -1,0 +1,60 @@
+AVR directory
+author: shardul
+
+This is the README file located in the AVR directory of the repository. The
+directory has six sub-directories and one file, which are explained below:
+
+Directories --
+blinker/
+    This sub-directory contains the code for a simple output blinker, useful for
+    testing or debugging purposes. Also, sample assembled code is also given
+    alongside only for this subdirectory.
+
+infrared/
+    This sub-directory contains code for infrared-based wireless communication
+    between two AVR devices, using any of a number of protocols (standard ones
+    such as RC5 or improvised ones such as the modified Samsung TV remote
+    protocol). It can be considered as a project on its own.
+
+lcd/
+    This sub-directory contains code for testing a standard 16-by-2 alphanumeric
+    liquid crystal display (LCD screen). The code basically demonstrates the
+    usage of the 'lcd.h' library header.
+
+lib/
+    This sub-directory contains simple library headers (which I have written
+    mainly to suit my own specific purposes but which I have tried to make as
+    useful as possible to everyone else) for using AVR timers and LCD screens.
+
+muktangan/
+    This is a timer project, which my team had made for the Muktangan Science
+    Exhibition held in Pune in 2012 (we didn't get a prize for it, though,
+    because very few understood any of it and those who did were unbelieving).
+    It counts down for a user-specified interval, and then produces some form of
+    output and stops.
+
+usart/
+    This sub-directory contains code for one of my early attempts at inter-AVR
+    communication, using the inbuilt USART protocol. Though it demonstrates
+    simple usage, it can be used for heavy data transfer up to 200 kbps
+    (kilobits per second) with a good clock source.
+
+Files --
+README
+    This file.
+
+This directory, and all those below it, also contain Makefiles which are to be
+used for building the code and burning it onto the device. The Makefiles are
+self-explanatory, but even so, here is their usage:
+ -- make: compiles code
+ -- make burn: burns built code onto device
+ -- make all: does both of the above
+ -- make show_assembly: shows assembly code and C code side-by-side
+ -- make clean: removes assembly and backup files
+The Makefiles need some configuring before they are used to set the correct
+microcontroller being used and the clock frequency. Give values accordingly to
+the TARGET, MCU and F_CPU variables in the Makefile in reference to your
+microcontroller. Also, fill in your source files in the FILES variable.
+
+Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com> or
+<mjuvekar7@gmail.com>. 
