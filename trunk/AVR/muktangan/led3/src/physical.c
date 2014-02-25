@@ -11,6 +11,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "common.h"
+#include "repr.h"
 
 volatile uint8_t x, y;
 
@@ -28,6 +29,7 @@ uint8_t mux (uint8_t x, uint8_t y)
 ISR(TIMER0_COMP_vect)
 {
     cli();
+    redraw();
     // PORTA -> Z port
     // PORTB -> input for demuxer
     PORTA |= disp_buf[x][y];
