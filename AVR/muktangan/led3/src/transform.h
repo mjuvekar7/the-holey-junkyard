@@ -56,7 +56,7 @@ void shift_disp (int8_t dir, uint8_t mag)
 
 void shift_pt (struct Point *p, int8_t dir, uint8_t mag)
 {
-    pt_off(p);
+    pt_off(&p);
     if (dir < 0)
         if (dir == -1)
             p.x = p.x - mag;
@@ -71,20 +71,20 @@ void shift_pt (struct Point *p, int8_t dir, uint8_t mag)
             p.y = p.y + mag;
         else
             p.z = p.z + mag;
-    pt_on(p);
+    pt_on(&p);
 }
 
 void shift_ln (struct Line *l, int8_t dir, uint8_t mag)
 {
-    ln_off(l);
+    ln_off(&l);
     shift_pt (&(l->s), dir, mag);
     shift_pt (&(l->e), dir, mag);
-    ln_on(l);
+    ln_on(&l);
 }
 
 void shift_r (struct Rect *r, int8_t dir, uint8_t mag)
 {
-    r_off(r);
+    r_off(&r);
     struct Line s0, s1, s2, s3;
    
     s0.s = r->c;
@@ -108,14 +108,14 @@ void shift_r (struct Rect *r, int8_t dir, uint8_t mag)
     shift_l(&s1, dir, mag);
     shift_l(&s2, dir, mag);
     shift_l(&s3, dir, mag);
-    r_on(r);
+    r_on(&r);
 }
 
 void shift_pl (struct Plane *p, int8_t mag)
 {
-    pl_off(p);
+    pl_off(&p);
     p->loc = (p->loc >> 6) | ((p->loc & 0x3F) + mag);
-    pl_on(p);
+    pl_on(&p);
 }
 
 #endif
