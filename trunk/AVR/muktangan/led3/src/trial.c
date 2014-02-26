@@ -6,9 +6,9 @@ int main (void)
 {
     init();
     uint8_t x, y;
-    for (x = 0; x < DISP_X_SIZE; x++)
-        for (y = 0; y < DISP_Y_SIZE; y++)
-            disp_buf[x][y] = 0x1F;
+    for (x = 0; x < FULL_X_SIZE; x++)
+        for (y = 0; y < FULL_Y_SIZE; y++)
+            full_buf[x][y] = 0xFF;
     while (1);
     return 0;
 }

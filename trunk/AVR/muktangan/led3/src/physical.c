@@ -17,7 +17,7 @@ volatile uint8_t x, y;
 
 uint8_t mux (uint8_t x, uint8_t y)
 {
-    uint8_t x_num, y_num, i;
+    uint8_t x_num = 0, y_num = 0, i;
     for (i = 0; i < 5; i++)
     {
 	if (x & (1 << i)) x_num = i;
@@ -29,7 +29,9 @@ uint8_t mux (uint8_t x, uint8_t y)
 ISR(TIMER0_COMP_vect)
 {
     cli();
-    redraw();
+    for (int i = 0; i < DISP_X_SIZE; i++)
+        for (int j = 0; j < DISP_Y_SIZE; j++)
+            disp_buf[i][j] = full_buf[i+x_off][j+y_off];
     // PORTA -> Z port
     // PORTB -> input for demuxer
     PORTA |= disp_buf[x][y];

@@ -4,6 +4,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "repr.h"
+#include "shapes.h"
+#include "transform.h"
 
 // must call before anything else
 void init (void)

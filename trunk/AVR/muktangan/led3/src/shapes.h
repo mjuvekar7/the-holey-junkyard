@@ -7,22 +7,22 @@
 struct Point
 {
     uint8_t x, y, z;
-}
+};
 
 struct Line
 {
     struct Point s, e;
-}
+};
 
 struct Rect
 {
     struct Point c, p0, p1;
-}
+};
 
 struct Plane
 {
     uint8_t loc;
-}
+};
 /**
  * implement more shapes
  *  -- triangle
@@ -54,7 +54,7 @@ void ln_on (struct Line *l)
     }
 }
 
-void ln_on (struct Line *l)
+void ln_off (struct Line *l)
 {
     uint8_t x, y, z;
     float t;
@@ -69,7 +69,7 @@ void ln_on (struct Line *l)
 
 void r_on (struct Rect *r)
 {
-    struct Line s0, s1, s3, s4;
+    struct Line s0, s1, s2, s3;
 
     s0.s = r->c;
     s0.e = r->p0;
@@ -96,7 +96,7 @@ void r_on (struct Rect *r)
 
 void r_off (struct Rect *r)
 {
-    struct Line s0, s1, s3, s4;
+    struct Line s0, s1, s2, s3;
 
     s0.s = r->c;
     s0.e = r->p0;
