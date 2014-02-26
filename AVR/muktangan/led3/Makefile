@@ -21,7 +21,7 @@ FILES=src/physical.c src/common.c src/trial.c
 
 # the compiler and flags --
 CC=avr-gcc
-CFLAGS=-mmcu=$(TARGET) -Wall -Os -g -DF_CPU=$(F_CPU)
+CFLAGS=-mmcu=$(TARGET) -Wall -Os --std=gnu99 -DF_CPU=$(F_CPU)
 
 # converting into object file and flags --
 OBJCOPY=avr-objcopy
