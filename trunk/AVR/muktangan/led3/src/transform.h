@@ -4,9 +4,9 @@
 #include <avr/io.h>
 #include "shapes.h"
 
-void shift (int8_t dir, uint8_t mag)
+void shift_disp (int8_t dir, uint8_t mag)
 {
-    static int i, j;
+    static uint8_t i, j;
     
     if (dir > 0)
         if (dir == 1)
@@ -54,46 +54,37 @@ void shift (int8_t dir, uint8_t mag)
                     full_buf[i][j] = full_buf[i][j] >> mag;
 }
 
-void shift_p (struct Point *p, int8_t dir, uint8_t mag)
+void shift_pt (struct Point *p, int8_t dir, uint8_t mag)
 {
+    pt_off(p);
     if (dir < 0)
-    {
-	if (dir > -3)
-	    if (dir > -2)
-		p.x = p.x - mag;
-	    else
-		p.y = p.y - mag;
-	else
-	    if (dir > -4)
-		p.z = p.z - mag;
-	    else
-#               warning "Arguement value outside required range"
-    }
-    else if (dir > 0)
-    {
-	if (dir < 3)
-	    if (dir < 2)
-		p.x = p.x + mag;
-	    else
-		p.y = p.y + mag;
-	else
-	    if (dir < 4)
-		p.z  = p.z + mag;
-	    else
-#               warning "Arguement value outside required range"
-    }
+        if (dir == -1)
+            p.x = p.x - mag;
+        else if (dir == -2)
+            p.y = p.y - mag;
+        else
+            p.z = p.z - mag;
     else
-#               warning "Arguement value outside required range"
+        if (dir == 1)
+            p.x = p.x + mag;
+        else if (dir == 2)
+            p.y = p.y + mag;
+        else
+            p.z = p.z + mag;
+    pt_on(p);
 }
 
-void shift_l (struct Line *l, int8_t dir, uint8_t mag)
+void shift_ln (struct Line *l, int8_t dir, uint8_t mag)
 {
-    shift_p (&l.s, dir, mag);
-    shift_p (&l.e, dir, mag);
+    ln_off(l);
+    shift_pt (&(l->s), dir, mag);
+    shift_pt (&(l->e), dir, mag);
+    ln_on(l);
 }
 
 void shift_r (struct Rect *r, int8_t dir, uint8_t mag)
 {
+    r_off(r);
     struct Line s0, s1, s2, s3;
    
     s0.s = r->c;
@@ -117,6 +108,14 @@ void shift_r (struct Rect *r, int8_t dir, uint8_t mag)
     shift_l(&s1, dir, mag);
     shift_l(&s2, dir, mag);
     shift_l(&s3, dir, mag);
+    r_on(r);
+}
+
+void shift_pl (struct Plane *p, int8_t mag)
+{
+    pl_off(p);
+    p->loc = (p->loc >> 6) | ((p->loc & 0x3F) + mag);
+    pl_on(p);
 }
 
 #endif
