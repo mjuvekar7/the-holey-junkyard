@@ -31,7 +31,7 @@ int main (void)
      */
     uint8_t input;
 
-    DDRA &= ~0x1F;
+    DDRA &= 0x1F;
     DDRA |= 0xE0;
     DDRB |= 0xFF;
     DDRC |= 0xFF;
