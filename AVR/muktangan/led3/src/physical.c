@@ -10,6 +10,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 #include "common.h"
 #include "repr.h"
 
@@ -25,6 +26,28 @@ uint8_t mux (uint8_t x, uint8_t y)
     }
     return x_num * 5 + y_num;
 }
+
+/*int main (void)
+{
+  while(1)
+  {
+    for (int i = 0; i < DISP_X_SIZE; i++)
+        for (int j = 0; j < DISP_Y_SIZE; j++)
+            disp_buf[i][j] = full_buf[i+x_off][j+y_off];
+    // PORTA -> Z port
+    // PORTB -> input for demuxer
+    PORTA |= disp_buf[x][y];
+    PORTB |= mux(x, y);
+    if (y++ == DISP_Y_SIZE - 1)
+    {
+        y = 0;
+        if (x++ == DISP_X_SIZE - 1)
+            x = 0;
+    }
+    _delay_us(3);
+  }
+}
+*/
 
 ISR(TIMER0_COMP_vect)
 {
@@ -44,4 +67,3 @@ ISR(TIMER0_COMP_vect)
     }
     sei();
 }
-
