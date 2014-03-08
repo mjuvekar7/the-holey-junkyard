@@ -202,9 +202,9 @@ public class VoteCounter extends javax.swing.JFrame {
      */
     public static void readXMLInput(String path) {
         try {
-            votecounter.InputParser.parse((new InputParser()).getClass().getResourceAsStream(path));
+            votecounter.InputParser.parse(VoteCounter.class.getResourceAsStream(path));
         } catch (org.jdom2.JDOMException | java.io.IOException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getLocalizedMessage());
         }
         System.out.println(votecounter.InputParser.getGroups());
         System.out.println(votecounter.InputParser.getGenericPosts());
@@ -671,7 +671,7 @@ public class VoteCounter extends javax.swing.JFrame {
                 new VoteCounter().setVisible(true);
             }
         });
-//        readXMLInput("resources/school.xml");
+//        readXMLInput("/resources/school.xml");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about;

@@ -3,11 +3,11 @@
 #  make all:           to compile and burn to device
 #  make clean:         to remove backup files and assembly files
 #  make assembly:      to show assembly code alongside source code
-PROJECTNAME=lc_main
+PROJECTNAME=lc_demux
 
 # fill in target (eg. atmega8) and MCU (eg. m8), and project name (eg. blinker)
-TARGET=atmega8535
-MCU=m8535
+TARGET=atmega16
+MCU=m16
 
 # fill in CPU frequency (eg. 1000000L)
 F_CPU=1000000L
@@ -17,7 +17,7 @@ F_CPU=1000000L
 # and burining it onto the AVR device
 
 # fill in source files
-FILES=src/physical.c src/common.c src/trial.c
+FILES=src/demux.c
 
 # the compiler and flags --
 CC=avr-gcc
