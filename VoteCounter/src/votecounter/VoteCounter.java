@@ -106,7 +106,7 @@ public class VoteCounter extends javax.swing.JFrame {
      */
     private void chooseHouse() {
         // house set to user's choice
-        house = (String) JOptionPane.showInputDialog(this, "Choose your house:", "Choose House", JOptionPane.PLAIN_MESSAGE, null, houseOptions, "Jaguar");
+        house = (String) JOptionPane.showInputDialog(this, "Voter #" + (voters[0] + 1) + " Choose your house:", "Choose House", JOptionPane.PLAIN_MESSAGE, null, houseOptions, "Jaguar");
         // if user selected an option
         if ((house != null) && (house.length() > 0)) {
             // count total and house-wise voters
@@ -258,6 +258,7 @@ public class VoteCounter extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VoteCounter");
+        setBounds(new java.awt.Rectangle(600, 300, 0, 0));
 
         category.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         category.setText("Category");
