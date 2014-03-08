@@ -31,88 +31,93 @@ int main (void)
      */
     uint8_t input;
 
-    DDRA &= 0x1F;
-    DDRA |= 0xE0;
-    DDRB |= 0xFF;
-    DDRC |= 0xFF;
-    DDRD |= 0x3F;
+    DDRA = 0;
+    DDRA |= _BV(PA5) | _BV(PA6) | _BV(PA7);
+    DDRB = 0xFF;
+    DDRC = 0xFF;
+    DDRD = 0xFF;
+    
+    PORTA |= _BV(PA0) | _BV(PA1) | _BV(PA2) | _BV(PA3) | _BV(PA4);
 
-    PORTA |= 0x1F;
+    MCUCSR|= (1<<JTD);
+    MCUCSR|= (1<<JTD);
 
     while (1)
     {
-	input = PORTA;
-	input &= ~0xE0;
+        _delay_ms(1);
 
-	//TODO -- delay
+        PORTA |= _BV(PA5) | _BV(PA6) | _BV(PA7);
+        PORTB = 0xFF;
+        PORTC = 0xFF;
+        PORTD = 0xFF;
 
-	if (input < 13)
+        input = PINA & ~(_BV(PA5) | _BV(PA6) | _BV(PA7));
+        if (input < 13)
             if (input < 7)
                 if (input < 4)
                     if (input < 2)
                         if (input < 1)
-                            PORTA |= _BV(PA5);
+                            PORTA &= ~_BV(PA5);
                         else
-                            PORTA |= _BV(PA6);
+                            PORTA &= ~_BV(PA6);
                     else if (input < 3)
-                        PORTA |= _BV(PA7);
+                        PORTA &= ~_BV(PA7);
                     else
-                        PORTB |= _BV(PB0);
+                        PORTB &= ~_BV(PB0);
                 else
                     if (input < 5)
-                        PORTB |= _BV(PB1);
+                        PORTB &= ~_BV(PB1);
                     else if (input < 6)
-                        PORTB |= _BV(PB2);
+                        PORTB &= ~_BV(PB2);
                     else
-                        PORTB |= _BV(PB3);
+                        PORTB &= ~_BV(PB3);
             else
                 if (input < 10)
                     if (input < 8)
-                        PORTB |= _BV(PB4);
+                        PORTB &= ~_BV(PB4);
                     else if (input < 9)
-                        PORTB |= _BV(PB5);
+                        PORTB &= ~_BV(PB5);
                     else
-                        PORTB |= _BV(PB6);
+                        PORTB &= ~_BV(PB6);
                 else
                     if (input < 12)
                         if (input < 11)
-                            PORTB |= _BV(PB7);
+                            PORTB &= ~_BV(PB7);
                         else
-                            PORTC |= _BV(PC0);
-                    else if (input < 13)
-                        PORTC |= _BV(PC1);
+                            PORTC &= ~_BV(PC0);
                     else
-                        PORTC |= _BV(PC2);
+                        PORTC &= ~_BV(PC1);
         else
             if (input < 19)
                 if (input < 16)
                     if (input < 14)
-                        PORTC |= _BV(PC3);
+                        PORTC &= ~_BV(PC3);
                     else if (input < 15)
-                        PORTC |= _BV(PC4);
+                        PORTC &= ~_BV(PC4);
                     else
-                        PORTC |= _BV(PC5);
+                        PORTC &= ~_BV(PC5);
                 else
                     if (input < 17)
-                        PORTC |= _BV(PC6);
+                        PORTC &= ~_BV(PC6);
                     else if (input < 18)
-                        PORTC |= _BV(PC7);
+                        PORTC &= ~_BV(PC7);
                     else
-                        PORTD |= _BV(PD0);
+                        PORTD &= ~_BV(PD0);
             else
                 if (input < 22)
                     if (input < 20)
-                        PORTD |= _BV(PD1);
+                        PORTD &= ~_BV(PD1);
                     else if (input < 21)
-                        PORTD |= _BV(PD2);
+                        PORTD &= ~_BV(PD2);
                     else
-                        PORTD |= _BV(PD3);
+                        PORTD &= ~_BV(PD3);
                 else
                     if (input < 23)
-                        PORTD |= _BV(PD4);
+                        PORTD &= ~_BV(PD4);
                     else if (input < 24)
-                        PORTD |= _BV(PD5);
+                        PORTD &= ~_BV(PD5);
                     else
-                        PORTD |= _BV(PD6);
+                        PORTD &= ~_BV(PD6);
     }
 }
+
