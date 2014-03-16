@@ -106,7 +106,7 @@ public class VoteCounter extends javax.swing.JFrame {
      */
     private void chooseHouse() {
         // house set to user's choice
-        house = (String) JOptionPane.showInputDialog(this, "Voter #" + (voters[0] + 1) + " Choose your house:", "Choose House", JOptionPane.PLAIN_MESSAGE, null, houseOptions, "Jaguar");
+        house = (String) JOptionPane.showInputDialog(this, "Voter #" + (voters[0] + 1) + ": Choose your house:", "Choose House", JOptionPane.PLAIN_MESSAGE, null, houseOptions, "Jaguar");
         // if user selected an option
         if ((house != null) && (house.length() > 0)) {
             // count total and house-wise voters
@@ -202,33 +202,34 @@ public class VoteCounter extends javax.swing.JFrame {
      */
     public static void readXMLInput(String path) {
         try {
-            votecounter.InputParser.parse(VoteCounter.class.getResourceAsStream(path));
-        } catch (org.jdom2.JDOMException | java.io.IOException ex) {
-            System.err.println(ex.getLocalizedMessage());
-        }
-        System.out.println(votecounter.InputParser.getGroups());
-        System.out.println(votecounter.InputParser.getGenericPosts());
-        System.out.println(votecounter.InputParser.getNonGenericPosts());
-        System.out.println();
-        String[][] genericNominees = votecounter.InputParser.getGenericNominees();
-        for (int i = 0; i < genericNominees.length; i++) {
-            System.out.println(votecounter.InputParser.getGenericPosts().get(i) + " -- ");
-            for (int j = 0; j < genericNominees[i].length; j++) {
-                System.out.println(genericNominees[i][j]);
-            }
+            votecounter.InputParser parser = new votecounter.InputParser();
+            parser.parse(VoteCounter.class.getResourceAsStream(path));
+            System.out.println(parser.getGroups());
+            System.out.println(parser.getGenericPosts());
+            System.out.println(parser.getNonGenericPosts());
             System.out.println();
-        }
-        String[][][] nonGenericNominees = votecounter.InputParser.getNonGenericNominees();
-        for (int i = 0; i < nonGenericNominees.length; i++) {
-            System.out.println(votecounter.InputParser.getNonGenericPosts().get(i) + " -- ");
-            for (int j = 0; j < nonGenericNominees[i].length; j++) {
-                if (nonGenericNominees[i][j] != null) {
-                    for (int k = 0; k < nonGenericNominees[i][j].length; k++) {
-                        System.out.println(nonGenericNominees[i][j][k]);
+            String[][] genericNominees = parser.getGenericNominees();
+            for (int i = 0; i < genericNominees.length; i++) {
+                System.out.println(parser.getGenericPosts().get(i) + " -- ");
+                for (int j = 0; j < genericNominees[i].length; j++) {
+                    System.out.println(genericNominees[i][j]);
+                }
+                System.out.println();
+            }
+            String[][][] nonGenericNominees = parser.getNonGenericNominees();
+            for (int i = 0; i < nonGenericNominees.length; i++) {
+                System.out.println(parser.getNonGenericPosts().get(i) + " -- ");
+                for (int j = 0; j < nonGenericNominees[i].length; j++) {
+                    if (nonGenericNominees[i][j] != null) {
+                        for (int k = 0; k < nonGenericNominees[i][j].length; k++) {
+                            System.out.println(nonGenericNominees[i][j][k]);
+                        }
                     }
                 }
+                System.out.println();
             }
-            System.out.println();
+        } catch (org.jdom2.JDOMException | java.io.IOException ex) {
+            System.err.println(ex.getLocalizedMessage());
         }
     }
 
@@ -600,10 +601,10 @@ public class VoteCounter extends javax.swing.JFrame {
 
     /**
      * Shows an 'About' dialog box.
-     * 
+     *
      * The dialog shown includes the author and copyright and an email address
      * for bug reporting or suggestions.
-     * 
+     *
      * @param evt the event which generated this handler
      */
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
@@ -620,7 +621,7 @@ public class VoteCounter extends javax.swing.JFrame {
 
     /**
      * Shows the license.
-     * 
+     *
      * @param evt the event which generated this handler
      */
     private void licenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenseActionPerformed
@@ -672,7 +673,6 @@ public class VoteCounter extends javax.swing.JFrame {
                 new VoteCounter().setVisible(true);
             }
         });
-//        readXMLInput("/resources/school.xml");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about;

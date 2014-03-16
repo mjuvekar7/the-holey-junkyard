@@ -43,62 +43,11 @@ import org.jdom2.input.*;
  */
 public class InputParser {
 
-    private static List<String> groups;
-    private static List<String> genericPosts;
-    private static String[][] genericNominees;
-    private static List<String> nonGenericPosts;
-    private static String[][][] nonGenericNominees;
-
-    /**
-     * Get list of nominee groups.
-     *
-     * @return list of nominee groups
-     */
-    public static List<String> getGroups() {
-        return groups;
-    }
-
-    /**
-     * Get array of nominees in generic (non-group) categories.
-     *
-     * The two dimensional array is of the form {@code String[posts][nominees for each
-     * post]}.
-     *
-     * @return array of generic nominees
-     */
-    public static String[][] getGenericNominees() {
-        return genericNominees;
-    }
-
-    /**
-     * Get array of nominees in non-generic (group-wise) categories.
-     *
-     * The three dimensional array is of the form
-     * {@code String[posts][contesting groups][nominees for each group in each post]}.
-     *
-     * @return array of non-generic nominees
-     */
-    public static String[][][] getNonGenericNominees() {
-        return nonGenericNominees;
-    }
-
-    /**
-     * Get list of generic (non-group) posts.
-     *
-     * @return list of generic posts
-     */
-    public static List<String> getGenericPosts() {
-        return genericPosts;
-    }
-
-    /**
-     * Get list of non-generic (group-wise) posts.
-     *
-     * @return list of non-generic posts
-     */
-    public static List<String> getNonGenericPosts() {
-        return nonGenericPosts;
-    }
+    private List<String> groups;
+    private List<String> genericPosts;
+    private String[][] genericNominees;
+    private List<String> nonGenericPosts;
+    private String[][][] nonGenericNominees;
 
     /**
      * Parse the XML input file and get groups, posts, and nominees.
@@ -119,7 +68,7 @@ public class InputParser {
      * @throws JDOMException if XML structure/syntax is incorrect
      * @throws IOException if error accessing file
      */
-    public static void parse(java.io.InputStream is) throws JDOMException, IOException {
+    public void parse(java.io.InputStream is) throws JDOMException, IOException {
         Element root = ((new SAXBuilder()).build(is)).getRootElement();
         int listSize;
 
@@ -169,5 +118,56 @@ public class InputParser {
             }
         }
         nonGenericPosts = Arrays.asList(nonGenericPostArray);
+    }
+
+    /**
+     * Get list of nominee groups.
+     *
+     * @return list of nominee groups
+     */
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    /**
+     * Get array of nominees in generic (non-group) categories.
+     *
+     * The two dimensional array is of the form {@code String[posts][nominees for each
+     * post]}.
+     *
+     * @return array of generic nominees
+     */
+    public String[][] getGenericNominees() {
+        return genericNominees;
+    }
+
+    /**
+     * Get array of nominees in non-generic (group-wise) categories.
+     *
+     * The three dimensional array is of the form
+     * {@code String[posts][contesting groups][nominees for each group in each post]}.
+     *
+     * @return array of non-generic nominees
+     */
+    public String[][][] getNonGenericNominees() {
+        return nonGenericNominees;
+    }
+
+    /**
+     * Get list of generic (non-group) posts.
+     *
+     * @return list of generic posts
+     */
+    public List<String> getGenericPosts() {
+        return genericPosts;
+    }
+
+    /**
+     * Get list of non-generic (group-wise) posts.
+     *
+     * @return list of non-generic posts
+     */
+    public List<String> getNonGenericPosts() {
+        return nonGenericPosts;
     }
 }
