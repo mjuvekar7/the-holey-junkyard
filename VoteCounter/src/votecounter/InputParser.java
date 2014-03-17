@@ -1,6 +1,6 @@
 /**
  * InputParser.java: parses XML input
- * Copyright (C) 2013 Shardul C.
+ * Copyright (C) 2013, 2014 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -20,7 +20,6 @@
  * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>
  * or <mjuvekar7@gmail.com>.
  */
-
 package votecounter;
 
 import java.io.IOException;
@@ -45,9 +44,9 @@ public class InputParser {
 
     private List<String> groups;
     private List<String> genericPosts;
-    private String[][] genericNominees;
+    private String genericNominees[][];
     private List<String> nonGenericPosts;
-    private String[][][] nonGenericNominees;
+    private String nonGenericNominees[][][];
 
     /**
      * Parse the XML input file and get groups, posts, and nominees.

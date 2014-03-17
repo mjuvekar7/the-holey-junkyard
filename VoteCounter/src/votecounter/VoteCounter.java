@@ -1,6 +1,6 @@
 /**
- * VoteCounter.java: main vote-counting application Copyright (C) 2012, 2013
- * Shardul C.
+ * VoteCounter.java: main vote-counting application
+ * Copyright (C) 2012-2014 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -48,25 +48,25 @@ public class VoteCounter extends javax.swing.JFrame {
     private static final int CATEGORIES = 6;
     private static final int CANDIDATES = 4;
     private static String house;
-    private final static String[] categories = {"Head Boy", "Head Girl", "Sports Prefect Boy", "Sports Prefect Girl", "House Captain", "House Vice Captain"};
-    private final static String[] houseOptions = {"Jaguar", "Sher", "Puma", "Cheetah"};
-    private final static String[] headBoy = {"Anthony", "Bheem", "Cristopher", "Dhruv"};
-    private final static String[] headGirl = {"Anjali", "Beena", "Chhaya", "Dorothy"};
-    private final static String[] sportsBoy = {"Amar", "Bhairav", "Chintamani", "Dhananjay"};
-    private final static String[] sportsGirl = {"Arya", "Bakul", "Cathy", "Droupadi"};
-    private final static String[][] houseCaptain = {{"Arjun", "Beena", "Chhaya", "Dhruv"},
+    private final static String categories[] = {"Head Boy", "Head Girl", "Sports Prefect Boy", "Sports Prefect Girl", "House Captain", "House Vice Captain"};
+    private final static String houseOptions[] = {"Jaguar", "Sher", "Puma", "Cheetah"};
+    private final static String headBoy[] = {"Anthony", "Bheem", "Cristopher", "Dhruv"};
+    private final static String headGirl[] = {"Anjali", "Beena", "Chhaya", "Dorothy"};
+    private final static String sportsBoy[] = {"Amar", "Bhairav", "Chintamani", "Dhananjay"};
+    private final static String sportsGirl[] = {"Arya", "Bakul", "Cathy", "Droupadi"};
+    private final static String houseCaptain[][] = {{"Arjun", "Beena", "Chhaya", "Dhruv"},
         {"Purushottam", "Padma", "Pam", "Pandu"},
         {"Sahadev", "Seema", "Sam", "Sunder"},
         {"Rahul", "Rohini", "Reshma", "Rohan"}};
-    private final static String[][] houseViceCaptain = {{"Edmund", "Mary", "Peter", "Daniel"},
+    private final static String houseViceCaptain[][] = {{"Edmund", "Mary", "Peter", "Daniel"},
         {"Ram", "Hari", "Vishnudas", "Digambar"},
         {"Mohammed", "Ali", "Akbar", "Dawood"},
         {"Antoniette", "Sylvie", "Francois", "Henry"}};
     // number of votes and voters
-    private static int[][] votes = new int[12][CANDIDATES];
-    private static int[] voters = new int[5];
+    private static int votes[][] = new int[12][CANDIDATES];
+    private static int voters[] = new int[5];
     // options for current voting sequence
-    private static String[][] options = new String[CATEGORIES][CANDIDATES];
+    private static String options[][] = new String[CATEGORIES][CANDIDATES];
     private static final long serialVersionUID = 1L;
     // default results file
     private static final java.nio.file.Path path = java.nio.file.Paths.get("results.txt");
@@ -190,47 +190,6 @@ public class VoteCounter extends javax.swing.JFrame {
         opt1.setText(options[step][1]);
         opt2.setText(options[step][2]);
         opt3.setText(options[step][3]);
-    }
-
-    /**
-     * Read XML input file.
-     *
-     * Right now, we are not doing anything with the data other than printing it
-     * out to standard output.
-     *
-     * @param path the XML input file
-     */
-    public static void readXMLInput(String path) {
-        try {
-            votecounter.InputParser parser = new votecounter.InputParser();
-            parser.parse(VoteCounter.class.getResourceAsStream(path));
-            System.out.println(parser.getGroups());
-            System.out.println(parser.getGenericPosts());
-            System.out.println(parser.getNonGenericPosts());
-            System.out.println();
-            String[][] genericNominees = parser.getGenericNominees();
-            for (int i = 0; i < genericNominees.length; i++) {
-                System.out.println(parser.getGenericPosts().get(i) + " -- ");
-                for (int j = 0; j < genericNominees[i].length; j++) {
-                    System.out.println(genericNominees[i][j]);
-                }
-                System.out.println();
-            }
-            String[][][] nonGenericNominees = parser.getNonGenericNominees();
-            for (int i = 0; i < nonGenericNominees.length; i++) {
-                System.out.println(parser.getNonGenericPosts().get(i) + " -- ");
-                for (int j = 0; j < nonGenericNominees[i].length; j++) {
-                    if (nonGenericNominees[i][j] != null) {
-                        for (int k = 0; k < nonGenericNominees[i][j].length; k++) {
-                            System.out.println(nonGenericNominees[i][j][k]);
-                        }
-                    }
-                }
-                System.out.println();
-            }
-        } catch (org.jdom2.JDOMException | java.io.IOException ex) {
-            System.err.println(ex.getLocalizedMessage());
-        }
     }
 
     /**
