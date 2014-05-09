@@ -1,0 +1,6 @@
+Syntax for input files:
+---------------------------------------
+1. No punctuation
+2. No caps (later capitalize only proper nouns)
+3. Each statement on new line
+---------------------------------------
