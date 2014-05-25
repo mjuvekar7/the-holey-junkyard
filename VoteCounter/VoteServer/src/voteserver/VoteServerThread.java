@@ -1,6 +1,6 @@
 /*
  * VoteServerThread.java: vote-counting server thread
- * Copyright (C) 2014 Shardul C.
+ * Copyright (C) 2012 - 2014 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -24,6 +24,7 @@ package voteserver;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 /**
  * Server thread to handle a single client.
@@ -70,17 +71,23 @@ public class VoteServerThread extends Thread {
             out.writeObject(VoteServer.groups);
             out.writeObject(VoteServer.genericPosts);
             out.writeObject(VoteServer.nonGenericPosts);
+            int genSize = VoteServer.genericPosts.size();
+            int nonGenSize = VoteServer.nonGenericPosts.size();
 
             // parts after splitting input from client
             String parts[];
             // current voter's group
             String group;
             // current voter's options
-            String options[][] = new String[VoteServer.genericPosts.size() + VoteServer.nonGenericPosts.size()][VoteServer.NOMINEES];
+            List<List<String>> options = new ArrayList<>();
+
             // initialize the non-changing part of the voter's options (the generic parts)
-            System.arraycopy(VoteServer.genericNominees, 0, options, 0, VoteServer.genericPosts.size());
+            for (int i = 0; i < genSize; i++) {
+                options.add(VoteServer.genericNominees.get(i));
+            }
 
             while (true) {
+                out.reset();
                 // what group?
                 out.writeObject(messages.Messages.GET_GROUP);
                 group = in.readObject().toString();
@@ -91,26 +98,29 @@ public class VoteServerThread extends Thread {
                     break;
                 }
 
+                int groupIndex = VoteServer.groups.indexOf(group);
                 // increment total and group voter numbers
                 VoteServer.voters[0]++;
-                VoteServer.voters[VoteServer.groups.indexOf(group) + 1]++;
+                VoteServer.voters[groupIndex + 1]++;
                 // copy the correct section of the non-generic posts/nominees
-                for (int i = VoteServer.genericPosts.size(); i < VoteServer.genericPosts.size() + VoteServer.nonGenericPosts.size(); i++) {
-                    options[i] = VoteServer.nonGenericNominees[i - VoteServer.genericPosts.size()][VoteServer.groups.indexOf(group)];
+                for (int i = 0; i < nonGenSize; i++) {
+                    options.add(VoteServer.nonGenericNominees.get(i).get(groupIndex));
                 }
                 // send options
                 out.writeObject(options);
 
                 // get votes
-                for (int step = 0; step < options.length; step++) {
+                for (int step = 0; step < options.size(); step++) {
                     parts = ((String) in.readObject()).split(" ");
-                    if (step < VoteServer.genericPosts.size()) {
+                    if (step < genSize) {
                         VoteServer.incVotes(step, Integer.parseInt(parts[1]));
                     } else {
-                        VoteServer.incVotes(step + VoteServer.groups.indexOf(group), Integer.parseInt(parts[1]));
+                        VoteServer.incVotes(step + groupIndex * nonGenSize, Integer.parseInt(parts[1]));
                     }
                 }
                 VoteServer.writeVotes();
+                options.remove(genSize + nonGenSize - 1);
+                options.remove(genSize + nonGenSize - 2);
             }
             VoteServer.writeVotes();
             in.close();

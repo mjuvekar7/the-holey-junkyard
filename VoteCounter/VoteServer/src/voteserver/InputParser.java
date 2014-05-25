@@ -1,6 +1,6 @@
 /**
  * InputParser.java: parses XML input
- * Copyright (C) 2013, 2014 Shardul C.
+ * Copyright (C) 2012 - 2014 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -23,7 +23,7 @@
 package voteserver;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom2.*;
 import org.jdom2.input.*;
@@ -41,12 +41,11 @@ import org.jdom2.input.*;
  * @author shardul
  */
 public class InputParser {
-
-    private List<String> groups;
-    private List<String> genericPosts;
-    private String genericNominees[][];
-    private List<String> nonGenericPosts;
-    private String nonGenericNominees[][][];
+    private List<String> groups = new ArrayList<>();
+    private List<String> genericPosts = new ArrayList<>();
+    private List<List<String>> genericNominees = new ArrayList<>();
+    private List<String> nonGenericPosts = new ArrayList<>();
+    private List<List<List<String>>> nonGenericNominees = new ArrayList<>();
 
     /**
      * Parse the XML input file and get groups, posts, and nominees.
@@ -69,54 +68,65 @@ public class InputParser {
      */
     public void parse(java.io.InputStream is) throws JDOMException, IOException {
         Element root = ((new SAXBuilder()).build(is)).getRootElement();
-        int listSize;
 
         List<Element> groupList = root.getChild("groups").getChildren();
-        String[] groupArray = new String[groupList.size()];
         for (int i = 0; i < groupList.size(); i++) {
-            groupArray[i] = groupList.get(i).getText();
+            groups.add(groupList.get(i).getText());
         }
-        groups = Arrays.asList(groupArray);
 
-        List<Element> genericPostList = root.getChild("posts").getChild("generic").getChildren();
-        listSize = genericPostList.size();
-        List<Element> nominees;
-        String[] genericPostArray = new String[listSize];
-        genericNominees = new String[listSize][];
-        for (int i = 0; i < listSize; i++) {
-            genericPostArray[i] = genericPostList.get(i).getAttributeValue("name");
-            nominees = genericPostList.get(i).getChildren();
-            genericNominees[i] = new String[nominees.size()];
-            for (int j = 0; j < nominees.size(); j++) {
-                genericNominees[i][j] = nominees.get(j).getText();
+        // make this look like the non-generic stuff (much neater)
+
+        List<Element> genericPostElements = root.getChild("posts").getChild("generic").getChildren();
+        for (int i = 0; i < genericPostElements.size(); i++) {
+            genericPosts.add(genericPostElements.get(i).getAttributeValue("name"));
+            genericNominees.add(new ArrayList<String>());
+            List<Element> currentNominees = genericPostElements.get(i).getChildren();
+            for (int j = 0; j < currentNominees.size(); j++) {
+                genericNominees.get(i).add(currentNominees.get(j).getText());
             }
         }
-        genericPosts = Arrays.asList(genericPostArray);
 
         // you better document this stuff NOW
         // or else it'll work, but no-one will know HOW
 
-        List<Element> nonGenericPostList = root.getChild("posts").getChild("nongeneric").getChildren();
-        listSize = nonGenericPostList.size();
-        List<Element> competingGroups;
-        List<Element> groupNominees;
-        String[] nonGenericPostArray = new String[listSize];
-        nonGenericNominees = new String[listSize][][];
-        for (int i = 0; i < listSize; i++) {
-            nonGenericPostArray[i] = nonGenericPostList.get(i).getAttributeValue("name");
-            competingGroups = nonGenericPostList.get(i).getChildren();
-            nonGenericNominees[i] = new String[groups.size()][];
-            int group;
-            for (int j = 0; j < competingGroups.size(); j++) {
-                group = groups.indexOf(competingGroups.get(j).getAttribute("name").getValue());
-                groupNominees = competingGroups.get(j).getChildren();
-                nonGenericNominees[i][group] = new String[groupNominees.size()];
-                for (int k = 0; k < groupNominees.size(); k++) {
-                    nonGenericNominees[i][group][k] = groupNominees.get(k).getText();
+        List<Element> nonGenericPostElements = root.getChild("posts").getChild("nongeneric").getChildren();
+        for (int i = 0; i < nonGenericPostElements.size(); i++) {
+            nonGenericPosts.add(nonGenericPostElements.get(i).getAttributeValue("name"));
+            nonGenericNominees.add(new ArrayList<List<String>>());
+            List<Element> currentGroups = nonGenericPostElements.get(i).getChildren();
+            for (int j = 0; j < currentGroups.size(); j++) {
+                nonGenericNominees.get(i).add(new ArrayList<String>());
+                List<Element> currentNominees = currentGroups.get(j).getChildren();
+                for (int k = 0; k < currentNominees.size(); k++) {
+                    nonGenericNominees.get(i).get(j).add(currentNominees.get(k).getText());
                 }
             }
         }
-        nonGenericPosts = Arrays.asList(nonGenericPostArray);
+    }
+
+    /**
+     * Get nominees for generic posts.
+     *
+     * The return value is a two-dimensional list, with the first dimension
+     * representing posts and the second, individual nominees.
+     *
+     * @return nominees for generic posts
+     */
+    public List<List<String>> getGenericNominees() {
+        return genericNominees;
+    }
+
+    /**
+     * Get nominees for non-generic posts.
+     *
+     * The return value is a three-dimensional list, with the first dimension
+     * representing posts, the second, groups, and the third, individual
+     * nominees.
+     *
+     * @return nominees for non-generic posts
+     */
+    public List<List<List<String>>> getNonGenericNominees() {
+        return nonGenericNominees;
     }
 
     /**
@@ -126,30 +136,6 @@ public class InputParser {
      */
     public List<String> getGroups() {
         return groups;
-    }
-
-    /**
-     * Get array of nominees in generic (non-group) categories.
-     *
-     * The two dimensional array is of the form {@code String[posts][nominees for each
-     * post]}.
-     *
-     * @return array of generic nominees
-     */
-    public String[][] getGenericNominees() {
-        return genericNominees;
-    }
-
-    /**
-     * Get array of nominees in non-generic (group-wise) categories.
-     *
-     * The three dimensional array is of the form
-     * {@code String[posts][contesting groups][nominees for each group in each post]}.
-     *
-     * @return array of non-generic nominees
-     */
-    public String[][][] getNonGenericNominees() {
-        return nonGenericNominees;
     }
 
     /**
