@@ -24,6 +24,7 @@ package voteclient;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import messages.Messages;
@@ -49,7 +50,7 @@ public class VoteClient extends javax.swing.JFrame {
     // might not be fixable (how would I lay out the buttons?)
     static int NOMINEES = 4;
     // options for each voter
-    private static String options[][];
+    private List<List<String>> opts = new ArrayList<>();
     // voter number
     private static int voterNum = 0;
     // serial version UID for serialization
@@ -86,10 +87,11 @@ public class VoteClient extends javax.swing.JFrame {
      * chooser dialog is not shown until the server is ready to accept a new
      * voter.
      */
+    @SuppressWarnings("unchecked")
     private void chooseGroup() {
         try {
             // wait for message
-            in.readObject();
+            Object temp = in.readObject();
             // select group
             group = (String) JOptionPane.showInputDialog(this, "Voter #" + (voterNum + 1) + ": Choose your house:",
                     "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
@@ -101,7 +103,7 @@ public class VoteClient extends javax.swing.JFrame {
             // if-else to test msg cut out because
             // server only sends one message anyway
             out.writeObject(group);
-            options = (String[][]) in.readObject();
+            opts = (List<List<String>>) in.readObject();
             // start individual voting process
             voterStart();
         } catch (IOException ex) {
@@ -126,10 +128,10 @@ public class VoteClient extends javax.swing.JFrame {
             category.setText(group + " " + nonGenericPosts.get(step - genericPosts.size()));
         }
         // set the proper options
-        opt0.setText(options[step][0]);
-        opt1.setText(options[step][1]);
-        opt2.setText(options[step][2]);
-        opt3.setText(options[step][3]);
+        opt0.setText(opts.get(step).get(0));
+        opt1.setText(opts.get(step).get(1));
+        opt2.setText(opts.get(step).get(2));
+        opt3.setText(opts.get(step).get(3));
     }
 
     /**
@@ -322,31 +324,37 @@ public class VoteClient extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void licenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenseActionPerformed
-        // display the license (GPLv3)
+        // display the license
         StringBuilder txt = new StringBuilder();
         try {
-            java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("resources/COPYING"));
-            txt.append(br.readLine());
+            java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(VoteClient.class.getResourceAsStream("/resources/COPYING")));
+            String line = br.readLine();
+            while (line != null) {
+                txt.append(line);
+                txt.append("\n");
+                line = br.readLine();
+            }
         } catch (IOException ex) {
             System.err.println(ex.getLocalizedMessage());
         }
         javax.swing.JTextArea lic = new javax.swing.JTextArea(txt.toString());
-        javax.swing.JScrollPane scroller = new javax.swing.JScrollPane(lic, javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        javax.swing.JScrollPane scroller = new javax.swing.JScrollPane(lic, javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         lic.setVisible(true);
+        lic.setEditable(false);
         scroller.setVisible(true);
-        javax.swing.JDialog licenseDialog = new javax.swing.JDialog(this, "VoteCounter GPL License");
+        javax.swing.JDialog licenseDialog = new javax.swing.JDialog(this, "VoteCounter License");
         licenseDialog.add(scroller);
-        licenseDialog.setSize(600, 800);
+        licenseDialog.setSize(600, 500);
         licenseDialog.setVisible(true);
     }//GEN-LAST:event_licenseActionPerformed
 
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
         // thank you, thank you! <bow to audience>
         javax.swing.JDialog aboutDialog = new javax.swing.JDialog(this, "About VoteCounter");
-        String msg = "<html><pre>   VoteCounter: Java vote counting application    <br />        Copyright (C) 2012, 2013, 2014 Shardul C.       <br /><br />"
-        + "       Bugs, tips, suggestions, requests to       <br />&lt;shardul.chiplunkar@gmail.com&gt; or &lt;mjuvekar7@gmail.com&gt;.</pre></html>";
+        String msg = "<html><center>VoteCounter: Java vote counting application<br />Copyright (C) 2012 - 2014 Shardul C.<br /><br />"
+        + "Bugs, tips, suggestions, requests to<br />&lt;shardul.chiplunkar@gmail.com&gt; or &lt;mjuvekar7@gmail.com&gt;.</center></html>";
         javax.swing.JLabel lbl = new javax.swing.JLabel(msg);
-        lbl.setIcon(new javax.swing.ImageIcon("/resources/gpl-v3-logo-black.jpg", "GPLv3 logo"));
+        lbl.setIcon(new javax.swing.ImageIcon(VoteClient.class.getResource("/resources/gpl-v3-logo.png")));
         lbl.setVisible(true);
         aboutDialog.add(lbl);
         aboutDialog.setSize(400, 150);
@@ -365,7 +373,7 @@ public class VoteClient extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     public static void main(String args[]) {
         System.out.println("VoteCounter");
-        System.out.println("Copyright (C) 2012 - 2014 Shardul C.");
+        System.out.println("Copyright (C) 2012 - 2014 Shardul C. under GNU GPLv3");
 
         // usage message
         if (args.length != 1) {

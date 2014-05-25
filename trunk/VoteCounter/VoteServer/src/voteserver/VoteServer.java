@@ -24,6 +24,7 @@ package voteserver;
 
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,9 +45,9 @@ public class VoteServer {
     // information about groups, posts, nominees, etc.
     static List<String> groups;
     static List<String> genericPosts;
-    static String genericNominees[][];
+    static List<List<String>> genericNominees;
     static List<String> nonGenericPosts;
-    static String nonGenericNominees[][][];
+    static List<List<List<String>>> nonGenericNominees;
 
     // stores number of votes as votes[post][nominee]
     static int votes[][];
@@ -66,7 +67,7 @@ public class VoteServer {
      */
     public static void main(String args[]) {
         System.out.println("VoteCounter");
-        System.out.println("Copyright (C) 2012 - 2014 Shardul C.");
+        System.out.println("Copyright (C) 2012 - 2014 Shardul C. under GNU GPLv3");
 
         if (args.length != 2) {
             System.err.println("Usage is java votecounter.VoteServer <input.xml> <output.txt>");
@@ -77,11 +78,11 @@ public class VoteServer {
         try (java.net.ServerSocket sock = new java.net.ServerSocket(Integer.parseInt(messages.Messages.PORT.msg))) {
             voteserver.InputParser parser = new voteserver.InputParser();
             parser.parse(new java.io.FileInputStream(args[0]));
-            groups = parser.getGroups();
-            genericPosts = parser.getGenericPosts();
-            genericNominees = parser.getGenericNominees();
-            nonGenericPosts = parser.getNonGenericPosts();
-            nonGenericNominees = parser.getNonGenericNominees();
+            groups = Collections.synchronizedList(parser.getGroups());
+            genericPosts = Collections.synchronizedList(parser.getGenericPosts());
+            genericNominees = Collections.synchronizedList(parser.getGenericNominees());
+            nonGenericPosts = Collections.synchronizedList(parser.getNonGenericPosts());
+            nonGenericNominees = Collections.synchronizedList(parser.getNonGenericNominees());
             votes = new int[genericPosts.size() + nonGenericPosts.size()*groups.size()][NOMINEES];
             voters = new int[groups.size() + 1];
             while (true) {
@@ -117,7 +118,7 @@ public class VoteServer {
                 bw.write(genericPosts.get(i) + " --");
                 bw.newLine();
                 for (int j = 0; j < NOMINEES; j++) {
-                    bw.write(genericNominees[i][j] + "\t\t" + votes[i][j]);
+                    bw.write(genericNominees.get(i).get(j) + "\t\t" + votes[i][j]);
                     bw.newLine();
                 }
                 bw.newLine();
@@ -131,7 +132,7 @@ public class VoteServer {
                     bw.write(groups.get(j) + " " + nonGenericPosts.get(i - genericPosts.size()) + ":");
                     bw.newLine();
                     for (int k = 0; k < NOMINEES; k++) {
-                        bw.write(nonGenericNominees[i - genericPosts.size()][j][k] + "\t\t" + votes[i - genericPosts.size() + j][k]);
+                        bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k) + "\t\t" + votes[i + j * VoteServer.nonGenericPosts.size()][k]);
                         bw.newLine();
                     }
                     bw.newLine();
