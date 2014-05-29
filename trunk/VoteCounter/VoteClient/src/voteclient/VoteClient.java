@@ -375,15 +375,11 @@ public class VoteClient extends javax.swing.JFrame {
         System.out.println("VoteCounter");
         System.out.println("Copyright (C) 2012 - 2014 Shardul C. under GNU GPLv3");
 
-        // usage message
-        if (args.length != 1) {
-            System.err.println("Usage: java voteclient.VoteClient <server address>");
-            System.exit(-1);
-        }
+        String ip = JOptionPane.showInputDialog("Enter server ip.");
 
         try {
             // connect to server and create i/o streams
-            Socket sock = new Socket(args[0], Integer.parseInt(messages.Messages.PORT.msg));
+            Socket sock = new Socket(ip, Integer.parseInt(messages.Messages.PORT.msg));
             out = new java.io.ObjectOutputStream(sock.getOutputStream());
             out.flush();
             in = new java.io.ObjectInputStream(sock.getInputStream());
