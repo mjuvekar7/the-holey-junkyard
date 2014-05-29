@@ -118,7 +118,11 @@ public class VoteServer {
                 bw.write(genericPosts.get(i) + " --");
                 bw.newLine();
                 for (int j = 0; j < NOMINEES; j++) {
-                    bw.write(genericNominees.get(i).get(j) + "\t\t" + votes[i][j]);
+                    bw.write(genericNominees.get(i).get(j));
+                    for(int k = 0; k < (20 - genericNominees.get(i).get(j).length()); k++) {
+                        bw.write(" ");
+                    }
+                    bw.write(votes[i][j]);
                     bw.newLine();
                 }
                 bw.newLine();
@@ -132,7 +136,11 @@ public class VoteServer {
                     bw.write(groups.get(j) + " " + nonGenericPosts.get(i - genericPosts.size()) + ":");
                     bw.newLine();
                     for (int k = 0; k < NOMINEES; k++) {
-                        bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k) + "\t\t" + votes[i + j * VoteServer.nonGenericPosts.size()][k]);
+                        bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k));
+                        for(int l = 0; l < (20 - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
+                            bw.write(" ");
+                        }
+                        bw.write(votes[i + j * VoteServer.nonGenericPosts.size()][k]);
                         bw.newLine();
                     }
                     bw.newLine();
