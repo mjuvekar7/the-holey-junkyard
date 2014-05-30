@@ -123,7 +123,7 @@ public class VoteServer {
                     for(int k = 0; k < (WIDTH - genericNominees.get(i).get(j).length()); k++) {
                         bw.write(" ");
                     }
-                    bw.write(votes[i][j]);
+                    bw.write(Integer.toString(votes[i][j]));
                     bw.newLine();
                 }
                 bw.newLine();
@@ -141,7 +141,7 @@ public class VoteServer {
                         for(int l = 0; l < (WIDTH - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
                             bw.write(" ");
                         }
-                        bw.write(votes[i + j * VoteServer.nonGenericPosts.size()][k]);
+                        bw.write(Integer.toString(votes[i + j * VoteServer.nonGenericPosts.size()][k]));
                         bw.newLine();
                     }
                     bw.newLine();

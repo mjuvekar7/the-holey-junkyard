@@ -90,7 +90,7 @@ public class VoteClient extends javax.swing.JFrame {
     private void chooseGroup() {
         try {
             // wait for message
-            Object temp = in.readObject();
+            in.readObject();
             // select group
             group = (String) JOptionPane.showInputDialog(this, "Voter #" + (voterNum + 1) + ": Choose your house:",
                     "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
