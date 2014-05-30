@@ -73,8 +73,6 @@ public class InputParser {
             groups.add(groupList.get(i).getText());
         }
 
-        // make this look like the non-generic stuff (much neater)
-
         List<Element> genericPostElements = root.getChild("posts").getChild("generic").getChildren();
         for (int i = 0; i < genericPostElements.size(); i++) {
             genericPosts.add(genericPostElements.get(i).getAttributeValue("name"));
