@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License along with
  * VoteCounter. If not, see <http://www.gnu.org/licenses/>.
  *
- * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>
- * or <mjuvekar7@gmail.com>.
+ * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>.
  */
 package voteclient;
 
@@ -352,7 +351,7 @@ public class VoteClient extends javax.swing.JFrame {
         // thank you, thank you! <bow to audience>
         javax.swing.JDialog aboutDialog = new javax.swing.JDialog(this, "About VoteCounter");
         String msg = "<html><center>VoteCounter: Java vote counting application<br />Copyright (C) 2012 - 2014 Shardul C.<br /><br />"
-        + "Bugs, tips, suggestions, requests to<br />&lt;shardul.chiplunkar@gmail.com&gt; or &lt;mjuvekar7@gmail.com&gt;.</center></html>";
+        + "Bugs, tips, suggestions, requests to<br />&lt;shardul.chiplunkar@gmail.com&gt.</center></html>";
         javax.swing.JLabel lbl = new javax.swing.JLabel(msg);
         lbl.setIcon(new javax.swing.ImageIcon(VoteClient.class.getResource("/resources/gpl-v3-logo.png")));
         lbl.setVisible(true);
@@ -375,11 +374,9 @@ public class VoteClient extends javax.swing.JFrame {
         System.out.println("VoteCounter");
         System.out.println("Copyright (C) 2012 - 2014 Shardul C. under GNU GPLv3");
 
-        String ip = JOptionPane.showInputDialog("Enter server ip.");
-
         try {
             // connect to server and create i/o streams
-            Socket sock = new Socket(ip, Integer.parseInt(messages.Messages.PORT.msg));
+            Socket sock = new Socket(JOptionPane.showInputDialog("Enter server IP address:"), Integer.parseInt(messages.Messages.PORT.msg));
             out = new java.io.ObjectOutputStream(sock.getOutputStream());
             out.flush();
             in = new java.io.ObjectInputStream(sock.getInputStream());

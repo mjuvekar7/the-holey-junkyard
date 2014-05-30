@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with VoteCounter.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>
- * or <mjuvekar7@gmail.com>.
+ * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>.
  */
 package voteserver;
 
@@ -29,7 +28,7 @@ import org.jdom2.*;
 import org.jdom2.input.*;
 
 /**
- * XML input parser for {@link VoteCounter}.
+ * XML input parser for VoteCounter.
  *
  * This class provides methods for parsing an XML input file and converting the
  * data into a format usable by the vote counting application. Currently, all
