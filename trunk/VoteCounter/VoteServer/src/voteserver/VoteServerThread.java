@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License along with
  * VoteCounter. If not, see <http://www.gnu.org/licenses/>.
  *
- * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>
- * or <mjuvekar7@gmail.com>.
+ * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>.
  */
 package voteserver;
 

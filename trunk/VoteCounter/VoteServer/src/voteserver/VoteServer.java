@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU General Public License along with
  * VoteCounter. If not, see <http://www.gnu.org/licenses/>.
  *
- * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>
- * or <mjuvekar7@gmail.com>.
+ * Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com>.
  */
 package voteserver;
 
@@ -41,6 +40,8 @@ public class VoteServer {
     // only bound is: there have to be *four* nominees per post
     // TODO: fix this!
     static int NOMINEES = 4;
+    // spacing width in results file
+    static int WIDTH = 20;
 
     // information about groups, posts, nominees, etc.
     static List<String> groups;
@@ -119,7 +120,7 @@ public class VoteServer {
                 bw.newLine();
                 for (int j = 0; j < NOMINEES; j++) {
                     bw.write(genericNominees.get(i).get(j));
-                    for(int k = 0; k < (20 - genericNominees.get(i).get(j).length()); k++) {
+                    for(int k = 0; k < (WIDTH - genericNominees.get(i).get(j).length()); k++) {
                         bw.write(" ");
                     }
                     bw.write(votes[i][j]);
@@ -137,7 +138,7 @@ public class VoteServer {
                     bw.newLine();
                     for (int k = 0; k < NOMINEES; k++) {
                         bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k));
-                        for(int l = 0; l < (20 - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
+                        for(int l = 0; l < (WIDTH - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
                             bw.write(" ");
                         }
                         bw.write(votes[i + j * VoteServer.nonGenericPosts.size()][k]);
