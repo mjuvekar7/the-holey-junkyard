@@ -371,8 +371,11 @@ public class VoteClient extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     public static void main(String args[]) {
-        System.out.println("VoteCounter");
-        System.out.println("Copyright (C) 2012 - 2014 Shardul C. under GNU GPLv3");
+        System.out.println("VoteCounter Copyright (C) 2012 - 2014 Shardul C.");
+        System.out.println("This program comes with ABSOLUTELY NO WARRANTY. " +
+                "This is free software, and you are welcome to redistribute " +
+                "it under certain conditions; click 'License' under the " +
+                "'File' menu for more details.");
 
         try {
             // connect to server and create i/o streams
