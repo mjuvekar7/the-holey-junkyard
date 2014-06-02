@@ -67,8 +67,11 @@ public class VoteServer {
      * @param args the command-line arguments: <input.xml> and <output.txt>
      */
     public static void main(String args[]) {
-        System.out.println("VoteCounter");
-        System.out.println("Copyright (C) 2012 - 2014 Shardul C. under GNU GPLv3");
+        System.out.println("VoteCounter Copyright (C) 2012 - 2014 Shardul C.");
+        System.out.println("This program comes with ABSOLUTELY NO WARRANTY. " +
+                "This is free software, and you are welcome to redistribute " +
+                "it under certain conditions; see the COPYING file for more " +
+                "details.");
 
         if (args.length != 2) {
             System.err.println("Usage is java votecounter.VoteServer <input.xml> <output.txt>");
