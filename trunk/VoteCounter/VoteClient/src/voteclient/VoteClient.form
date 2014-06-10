@@ -76,7 +76,7 @@
                   <Component id="opt0" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="opt2" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="140" max="32767" attributes="0"/>
+              <EmptySpace pref="295" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="opt3" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="opt1" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -84,9 +84,9 @@
               <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="160" max="32767" attributes="0"/>
+              <EmptySpace pref="237" max="32767" attributes="0"/>
               <Component id="category" max="32767" attributes="0"/>
-              <EmptySpace pref="90" max="32767" attributes="0"/>
+              <EmptySpace pref="167" max="32767" attributes="0"/>
               <Component id="num" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
