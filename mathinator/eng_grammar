@@ -1,0 +1,23 @@
+Basic grammar for math word problems in English:
+
+question : statements queries
+
+statements : statements
+           | statement
+statement : subject VERB object PUNC
+          | statement CONJUNCTION statement
+subject : DETERMINER adjectives IDENTIFIER
+        | adjectives IDENTIFIER
+object : DETERMINER adjectives IDENTIFIER
+       | adjectives IDENTIFIER
+
+queries : queries
+        | query
+query : WHAT BE PROP DETERMINER adjectives IDENTIFIER
+      | WHAT BE PROP adjectives IDENTIFIER
+      | HOWMANY BE DETERMINER adjectives IDENTIFIER
+      | HOWMANY BE adjectives IDENTIFIER
+
+adjectives : adjectives
+           | ADJECTIVE
+           |
