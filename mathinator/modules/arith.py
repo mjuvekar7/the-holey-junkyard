@@ -1,24 +1,48 @@
-import id_dict
+# This file is part of mathinator.
+# 
+# mathinator is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# mathinator is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with mathinator.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright (C) 2014 Shardul C. and Mandar J.
 
-_keywords = {
-    'sum' : 'ADD',
-    'total' : 'ADD',
-    'plus' : 'ADD',
-    'difference' : 'SUB',
-    'subtract' : 'SUB',
-    'minus' : 'SUB',
+from globdict import ids, Attribute
+
+keywords = {
+    'sum' : 'SUM',
+    'total' : 'TOTL',
+    'plus' : 'PLUS',
+    'difference' : 'DIFF',
+    'minus' : 'MIN',
     'number' : 'NUMB',
 }
 
 def p_arith_statement(p):
-    '''statement : THERE BE NUM ID "\n"'''
-    id_dict.update([(p[4], Attribute('number', p[3]))])
+    '''statement : THERE BE NUM ID'''
+    ids.update([(p[4], Attribute('number', p[3]))])
 
-def p_arith_statement_poss(p):
-    '''statement : ID HAVE NUM ID "\n"'''
-    id_dict.update([(p[1], Attribute(p[4], p[3]))])
+#def p_arith_statement_poss(p):
+#    '''statement : ID HAVE NUM ID'''
+#    ids.update([(p[1], Attribute(p[4], p[3]))])
 
-def p_arith_query(p):
-    '''query : WHAT BE ADD "" NUMB OF ID "\n" ID "\n"
-             | WHAT BE ADD OF NUMB OF ID "\n" ID "\n"'''
-    p[0] = id_dict[p[7]].value + id_dict[p[9]].value
+def p_arith_query_total(p):
+    '''query : WHAT BE TOTL NUMB OF ID AND ID'''
+    p[0] = ids[p[6]].value + ids[p[8]].value
+
+def p_arith_query_difference(p):
+    '''query : WHAT BE DIFF BET NUMB OF ID AND ID'''
+    p[0] = abs(ids[p[7]].value - ids[p[9]].value)
+
+#def p_arith_query(p):
+#    '''query : WHAT BE ADD empty NUMB OF ID AND ID
+#             | WHAT BE ADD OF NUMB OF ID AND ID'''
+#    p[0] = ids[p[7]].value + ids[p[9]].value

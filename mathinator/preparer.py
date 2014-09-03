@@ -1,4 +1,21 @@
-import text2num
+# This file is part of mathinator.
+# 
+# mathinator is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# mathinator is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with mathinator.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright (C) 2014 Shardul C. and Mandar J.
+
+import text2num.text2num as text2num
 
 be = [
     'be',
@@ -18,41 +35,48 @@ have = [
 ]
 
 verbs = [be, have]
+verbdict = {
+    'be' : 'BE',
+    'have' : 'HAVE',
+}
 
 def prepare(problem):
+    problem = problem.lower()
+    problem = problem.replace('. ', '.\n').replace('? ', '?\n')
 
-    # convert 'three' to 3
-    for line in problem.splitlines(True):
-        for word in line.split():
-            try:
-                word = text2num.text2num(word)
-            except text2num.NumberException:
-                pass
-
-    # remove punctuation, replace with newlines
-    # also remove conjunctions
-    problem = problem.lower().replace('.', '\n').replace('?', '\n')
-    for key in list(conjs.keys()):
-        problem = problem.replace(key, '\n').replace(',', '')
-    problem = problem.strip()
     statements, queries = [], []
     for line in problem.splitlines(True):
-        if '?' in line:
+        if line.endswith('?\n'):
             queries.append(line)
         else:
             statements.append(line)
-    problem = ''
-    for line in statements:
-        problem += line
-    problem += '\n'
-    for line in queries:
-        problem += line
 
-    # simplify text
-    # i.e. for now, remove articles, replace verb forms with root
-    for art in ['a', 'an', 'the']:
-        problem = problem.replace(art, '')
-    for word in problem.split():
+    problem = ''
+    for statement in statements:
+        problem += statement
+    for query in queries:
+        problem += query
+
+    words = problem.split()
+    for i in range(0, len(words)):
         for verb in verbs:
-            if word in verbs:
-                problem = problem.replace(word, verb[0], 1)
+            if words[i] in verb:
+                words[i] = verb[0]
+        
+        try:
+            words[i] = str(text2num.text2num(words[i].rstrip('.?')))
+        except text2num.NumberException:
+            pass
+        
+        if words[i] in ['a', 'an', 'the']:
+            words[i] = ''
+    
+    problem = ''
+    for word in words:
+        problem += word
+        if word.endswith(('.', '?')):
+            problem += '\n'
+        else:
+            problem += ' '
+
+    return problem

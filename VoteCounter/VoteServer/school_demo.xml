@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <input>
     <groups>
-        <groupname>Jaguar</groupname>
-        <groupname>Sher</groupname>
-        <groupname>Puma</groupname>
-        <groupname>Cheetah</groupname>
+        <groupname>Red</groupname>
+        <groupname>Yellow</groupname>
+        <groupname>Orange</groupname>
+        <groupname>Blue</groupname>
     </groups>
     <posts>
         <generic>
@@ -35,25 +35,25 @@
         </generic>
         <nongeneric>
             <post name="House Captain">
-                <group name="Jaguar">
+                <group name="Red">
                     <nominee>Arjun</nominee>
                     <nominee>Beena</nominee>
                     <nominee>Chhaya</nominee>
                     <nominee>Dhruv</nominee>
                 </group>
-                <group name="Sher">
+                <group name="Yellow">
                     <nominee>Purushottam</nominee>
                     <nominee>Padma</nominee>
                     <nominee>Pam</nominee>
                     <nominee>Pandu</nominee>
                 </group>
-                <group name="Puma">
+                <group name="Orange">
                     <nominee>Sahadev</nominee>
                     <nominee>Seema</nominee>
                     <nominee>Sam</nominee>
                     <nominee>Sunder</nominee>
                 </group>
-                <group name="Cheetah">
+                <group name="Blue">
                     <nominee>Rahul</nominee>
                     <nominee>Rohini</nominee>
                     <nominee>Reshma</nominee>
@@ -61,25 +61,25 @@
                 </group>
             </post>
             <post name="House Vice Captain">
-                <group name="Jaguar">
+                <group name="Red">
                     <nominee>Edmund</nominee>
                     <nominee>Mary</nominee>
                     <nominee>Peter</nominee>
                     <nominee>Daniel</nominee>
                 </group>
-                <group name="Sher">
+                <group name="Yellow">
                     <nominee>Ram</nominee>
                     <nominee>Hari</nominee>
                     <nominee>Vishnudas</nominee>
                     <nominee>Digambar</nominee>
                 </group>
-                <group name="Puma">
+                <group name="Orange">
                     <nominee>Mohammad</nominee>
                     <nominee>Akbar</nominee>
                     <nominee>Ali</nominee>
                     <nominee>Dawood</nominee>
                 </group>
-                <group name="Cheetah">
+                <group name="Blue">
                     <nominee>Antoniette</nominee>
                     <nominee>Helene</nominee>
                     <nominee>Francois</nominee>
