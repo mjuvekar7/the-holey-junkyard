@@ -1,8 +1,0 @@
-This is the distributed version of VoteCounter.
-To run VoteCounter, do the following:
- -- unzip this zipped folder (presumably already done)
- -- run 'java -jar VoteCounter.jar' in this folder
- -- do NOT run the jarchive without the 'lib' folder
-
-Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com> or
-<mjuvekar7@gmail.com>.
