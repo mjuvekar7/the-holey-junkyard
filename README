@@ -17,10 +17,10 @@ python/
     specific projects.
 
 VoteCounter/
-    This is a Java project designed to act as a voting machine. It is under
-    development (and will remain so for quite some time as there are many things
-    to be done), but works fairly well. The project is configured to be opened
-    with either a text editor or with the NetBeans IDE.
+    This project has been moved to SourceForge with the same name.
+
+mathinator/
+    This project has been moved to SourceForge with the same name.
 
 other/
     Oddball directory containing very random stuff. Includes misc. bash scripts,
