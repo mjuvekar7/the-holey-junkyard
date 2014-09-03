@@ -46,7 +46,6 @@ import messages.Messages;
 public class VoteClient extends javax.swing.JFrame {
     // only bound is: there have to be *four* nominees per post
     // TODO: fix this!
-    // might not be fixable (how would I lay out the buttons?)
     static int NOMINEES = 4;
     // options for each voter
     private List<List<String>> opts = new ArrayList<>();
