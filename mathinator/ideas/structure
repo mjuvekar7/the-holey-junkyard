@@ -1,6 +1,0 @@
-parser.py:
-gets tokens, rules from all modules
-parses, hands over to appropriate module
-
-modules/<module>.py
-defines keywords (tokens), rules, handles
