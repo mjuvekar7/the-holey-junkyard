@@ -1,5 +1,7 @@
-# This file is part of mathinator.
+# Copyright (C) 2014 Shardul C. and Mandar J.
 # 
+# This file is part of mathinator.
+#
 # mathinator is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -12,11 +14,10 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with mathinator.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright (C) 2014 Shardul C. and Mandar J.
 
 import text2num.text2num as text2num
 
+# forms of 'be'
 be = [
     'be',
     'was',
@@ -27,6 +28,7 @@ be = [
     'will be',
 ]
 
+# forms of 'have'
 have = [
     'have',
     'had',
@@ -41,9 +43,11 @@ verbdict = {
 }
 
 def prepare(problem):
+    #convert to lowercase, split lines
     problem = problem.lower()
     problem = problem.replace('. ', '.\n').replace('? ', '?\n')
 
+    # divide into statements and queries
     statements, queries = [], []
     for line in problem.splitlines(True):
         if line.endswith('?\n'):
@@ -59,18 +63,21 @@ def prepare(problem):
 
     words = problem.split()
     for i in range(0, len(words)):
+        # convert verb forms to their roots
         for verb in verbs:
             if words[i] in verb:
                 words[i] = verb[0]
-        
+
+        # also try making them numbers
         try:
             words[i] = str(text2num.text2num(words[i].rstrip('.?')))
         except text2num.NumberException:
             pass
-        
+        # remove articles
         if words[i] in ['a', 'an', 'the']:
             words[i] = ''
     
+    # reconstruct the problem
     problem = ''
     for word in words:
         problem += word

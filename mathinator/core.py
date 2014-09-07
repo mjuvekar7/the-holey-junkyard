@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# Copyright (C) 2014 Shardul C. and Mandar J.
+#
 # This file is part of mathinator.
 # 
 # mathinator is free software: you can redistribute it and/or modify
@@ -14,8 +16,6 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with mathinator.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright (C) 2014 Shardul C. and Mandar J.
 
 import sys
 
@@ -26,9 +26,8 @@ import preparer
 from modules import *
 from globdict import ids, keywords as modkeywords
 
-##
+
 # tokenizer
-##
 
 queries = {
     'what' : 'WHAT',
@@ -43,10 +42,12 @@ reserved = {
     'between' : 'BET',
 }
 
+# make an all-encompassing dictionary of tokens
 alldict = {}
 alldict.update(queries)
 alldict.update(preparer.verbdict)
 alldict.update(reserved)
+# this bit includes individual module keywords
 for moddict in modkeywords:
     alldict.update(moddict)
 
@@ -56,10 +57,12 @@ tokens = [
     'NL',
 ] + list(alldict.values())
 
+# ignore punctuation
 t_ignore = r' .?'
 
 def t_NL(t):
     r'\n'
+    # keep track of lines
     t.lexer.lineno += 1
     return t
 
@@ -76,49 +79,56 @@ def t_NUM(t):
 def find_column(string, token):
     last_cr = string.rfind('\n', 0, token.lexpos)
     if last_cr < 0:
-            last_cr = 0
+        last_cr = 0
     column = (token.lexpos - last_cr) + 1
     return 'line=' + token.lexer.lineno + ' column=' + column
 
 def t_error(t):
-    print('Illegal character "%s" at %s'.format(t.value[0], getpos(t.value[0], t)))
+    print('Illegal character "%s" at %s'.format(t.value[0],
+                                                find_column(t.value[0], t)))
     t.lexer.skip(1)
 
-##
+
 # parser
-##
 
 start = 'question'
 
 def p_question(p):
-    '''question : statements queries'''
+    """question : statements queries"""
     # we want only the answers!
     p[0] = p[2]
 
 def p_statements(p):
-    '''statements : statement NL statements
-                  | statement NL'''
+    """statements : statement NL statements
+                  | statement NL"""
 
 def p_queries(p):
-    '''queries : query NL queries
-               | query NL'''
+    """queries : query NL queries
+               | query NL"""
     try:
         p[0] = str(p[1]) + '\n' + str(p[3])
     except IndexError:
         p[0] = str(p[1])
 
 
-# def p_conjs(p):
-#     '''statements : statement AND statement
-#                  | statement BUT statement
-#        queries : query AND query'''
+def p_conj_statement(p):
+    """statements : statement AND statement
+                 | statement BUT statement"""
 
+def p_conj_query(p):
+       """queries : query AND query"""
+       p[0] = str(p[1]) + '\n' + str(p[3])
 
 def p_empty(p):
-    '''empty :'''
+    """empty :"""
     pass
 
 if __name__ == '__main__':
+    print('mathinator  Copyright (C) 2014 Shardul C. and Mandar J.\n'
+        'This program comes with ABSOLUTELY NO WARRANTY. This is free software, '
+        'and you are welcome to redistribute it under certain conditions.\n'
+        'For details, please see the COPYING file provided with this program.')
+    
     try:
         f = open(sys.argv[1], 'r')
     except NameError:

@@ -1,3 +1,5 @@
+# Copyright (C) 2014 Shardul C. and Mandar J.
+#
 # This file is part of mathinator.
 # 
 # mathinator is free software: you can redistribute it and/or modify
@@ -12,8 +14,6 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with mathinator.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright (C) 2014 Shardul C. and Mandar J.
 
 import os
 import globdict
@@ -27,11 +27,13 @@ for filename in os.listdir(__name__):
     # (which also keeps this module from importing itself)
     if (not filename.startswith('_')) and filename.split('.')[-1] == 'py':
         modulename = filename.split('.')[0]  # filename without extension
+        # black magic follows, don't touch
         package_module = '.'.join([__name__, modulename])
         module = __import__(package_module, modglobals, modlocals, [modulename])
         for name in module.__dict__:
             if not name.startswith('_'):
                 modglobals[name] = module.__dict__[name]
+                # get all the keywords together
                 if name == 'keywords':
                     globdict.keywords.append(module.__dict__['keywords'])
                 __all__.append(name)
