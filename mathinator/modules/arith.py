@@ -36,11 +36,13 @@ def p_arith_statement(p):
 
 def p_arith_query_total(p):
     '''query : WHAT BE TOTL NUMB OF ID AND ID'''
-    p[0] = ids[p[6]].value + ids[p[8]].value
+    total = str(ids[p[6]].value + ids[p[8]].value)
+    p[0] = 'The total number of ' + p[6] + ' and ' + p[8] + ' is '  + total
 
 def p_arith_query_difference(p):
     '''query : WHAT BE DIFF BET NUMB OF ID AND ID'''
-    p[0] = abs(ids[p[7]].value - ids[p[9]].value)
+    diff = str(abs(ids[p[7]].value - ids[p[9]].value))
+    p[0] = 'The difference between the number of ' + p[7] + ' and ' + p[9] + ' is ' + diff
 
 #def p_arith_query(p):
 #    '''query : WHAT BE ADD empty NUMB OF ID AND ID
