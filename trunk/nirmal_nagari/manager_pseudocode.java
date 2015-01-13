@@ -46,8 +46,8 @@ public class manager_pseudocode {
             line = name.get(i) + " " + balance.get(i);
             byte[] liness = line.getBytes();
             System.out.println(line);
-            try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(path, WRITE, APPEND))){ // parameter 'WRITE' doesn't work. Find out why!
-                out.write(liness); //while creating new entry: replaces all previous information with new entry. If appending already existing entry, then works fine.
+            try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(path, WRITE, APPEND))){ 
+                out.write(liness); 
             }
             catch (IOException x){
                 System.err.println(x);
