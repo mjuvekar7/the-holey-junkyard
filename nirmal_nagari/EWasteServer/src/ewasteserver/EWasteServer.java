@@ -45,8 +45,11 @@ public class EWasteServer extends javax.swing.JFrame {
         }, new java.util.Date(), day);
     }
 
-    /*
+    /**
      * Update requests listing.
+     * @param addr collection address
+     * @param desc description of {@code item}
+     * @param item  item to be collected
      */
     public synchronized static void updateData(String addr, String desc, String item) {
         data.append(addr);
