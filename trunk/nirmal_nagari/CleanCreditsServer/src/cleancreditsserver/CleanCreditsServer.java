@@ -4,9 +4,15 @@
  */
 package cleancreditsserver;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import org.python.util.PythonInterpreter;
+
 /**
  *
- * @author shardul
+ * @author mandarj, shardulc
  */
 public class CleanCreditsServer {
 
@@ -26,9 +32,23 @@ public class CleanCreditsServer {
         }
     }
 
-    static synchronized void updateCredits(String admin, String password, String citizen, int change) {
-        // code to update database as per arguments (create record if required)
-        // only if admin matches password!
+    static synchronized void updateCredits(String admin_pass, String password, String citizen, int change) throws FileNotFoundException, IOException {
+        if (admin_pass.equals(password)) {
+            File file = new File("param_update");
+            FileOutputStream fos = new FileOutputStream(file);
+            String param = citizen + " " + Integer.toString(change);
+
+            byte[] paramBytes = param.getBytes();
+            fos.write(paramBytes);
+            
+            PythonInterpreter.initialize(System.getProperties(), System.getProperties(), new String[0]);
+            PythonInterpreter interp = new PythonInterpreter();
+            
+            interp.execfile("update.py");
+            
+        } else {
+            // Send authentication error
+        }
     }
 
     static synchronized int getCredits(String citizen, String password) {
