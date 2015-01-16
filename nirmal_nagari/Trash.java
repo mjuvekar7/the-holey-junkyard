@@ -3,7 +3,7 @@ package nirmal_nagari;
 import java.io.IOException;
 
 /**
- * @author fazer
+ * @author fazer, shardulc, mandarj
  */
 public class Trash {
    
@@ -17,6 +17,7 @@ public class Trash {
             System.out.println("You can either recycle plastic, or reuse it at home!");
             System.out.println("Examples include reusing bottles, jars, carry-bags, " +
                     "and packaging for many purposes.");
+            System.out.println("For more information, refer to - http://en.wikipedia.org/wiki/Plastic_recycling");
         } else if (item.contains("leftovers") || item.contains("peel")) {
             System.out.println("You can create a compost pit to recycle all wet garbage.");
             System.out.println("Do you want to create a compost pit? [y/n]");
@@ -30,9 +31,14 @@ public class Trash {
             }
         } else if (item.contains("tin") || item.contains("aluminium") || item.contains("metal")) {
             System.out.println("All metals can be recycled by sending them to the junkyard.");
+            System.out.println("For more information, visit - http://www.wikihow.com/Recycle-Metals");
         } else if (item.contains("paper")){
             System.out.println("All used paper can be recycled by taking it to " +
                     "the local 'raddiwala' or paper collector.");
+            System.out.println("You can also reuse the used paper to make origami, paper maché and much more!");
+            System.out.println("You can also make recycled paper at home. For more information, visit -");
+            System.out.println("http://www.arvindguptatoys.com/arvindgupta/origamiforeveryone.pdf");
+            System.out.println("http://www.earth911.com/living-well-being/events-entertainement/recycle-your-own-paper/");
         } else if (item.contains("electronic") || item.contains("phone") || item.contains("computer")) {
             System.out.println("Electronic waste can be collected right from your doorstep!");
             System.out.println("Just submit an application with EWasteClient.");
@@ -81,6 +87,8 @@ public class Trash {
             System.out.println("Price: around 4000/- for a moderately big container.");
             System.out.println("After a minimum of 2 months, you can start removing "
                     + "compost from a depth of at least 10 inches.");
+            System.out.println("To get to know more about compost, refer to - http://en.wikipedia.org/wiki/Compost");
+            System.out.println("For an illustrated guide to making compost pits, refer to - http://www.wikihow.com/Make-a-Compost-Pit");
         }
     }
     
