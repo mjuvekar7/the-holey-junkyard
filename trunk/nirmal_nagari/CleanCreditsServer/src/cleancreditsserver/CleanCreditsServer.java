@@ -4,11 +4,10 @@
  */
 package cleancreditsserver;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import org.python.util.PythonInterpreter;
+import java.util.ArrayList;
+import java.io.*;
+import java.nio.file.*;
+import static java.nio.file.StandardOpenOption.*;
 
 /**
  *
@@ -21,7 +20,7 @@ public class CleanCreditsServer {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         while (true) {
             try (java.net.ServerSocket sock = new java.net.ServerSocket(PORT)) {
                 (new cleancreditsserver.CleanCreditsServerThread(sock.accept())).start();
@@ -32,27 +31,62 @@ public class CleanCreditsServer {
         }
     }
 
-    static synchronized void updateCredits(String admin_pass, String password, String citizen, int change) throws FileNotFoundException, IOException {
+    static synchronized void updateCredits(String admin_pass, String password, String citizen, int change) throws IOException {
         if (admin_pass.equals(password)) {
-            File file = new File("param_update");
-            FileOutputStream fos = new FileOutputStream(file);
-            String param = citizen + " " + Integer.toString(change);
+            ArrayList<String> name = new ArrayList();
+            ArrayList<String> balance = new ArrayList();
+            Path path = Paths.get("resources/balance.txt");
 
-            byte[] paramBytes = param.getBytes();
-            fos.write(paramBytes);
-            
-            PythonInterpreter.initialize(System.getProperties(), System.getProperties(), new String[0]);
-            PythonInterpreter interp = new PythonInterpreter();
-            
-            interp.execfile("update.py");
-            
+            try (InputStream in = Files.newInputStream(path);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(" ");
+                    name.add(parts[0]);
+                    balance.add(parts[1]);
+                }
+            } catch (IOException x) {
+                System.err.println(x);
+            }
+
+            int index = name.indexOf(citizen.toLowerCase());
+            int to_set = Integer.parseInt(balance.get(index)) + change;
+            balance.set(index, Integer.toString(to_set));
+
+            for (int i = 0; i < name.size(); i++) {
+                try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(path, WRITE))) {
+                    String tmp = name.get(i) + " " + balance.get(i);
+                    byte[] write = tmp.getBytes();
+                    out.write(write);
+                } catch (IOException x) {
+                    System.err.println(x);
+                }
+            }
+
         } else {
             // Send authentication error
         }
     }
 
-    static synchronized int getCredits(String citizen, String password) {
-        // from database, return credits if password is correct
-        return 0;
+    static synchronized int getCredits(String citizen) {
+        ArrayList<String> name = new ArrayList();
+        ArrayList<String> balance = new ArrayList();
+        Path path = Paths.get("resources/balance.txt");
+
+        try (InputStream in = Files.newInputStream(path);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ");
+                name.add(parts[0]);
+                balance.add(parts[1]);
+            }
+        } catch (IOException x) {
+            System.err.println(x);
+        }
+
+        int index = name.indexOf(citizen.toLowerCase());
+
+        return Integer.parseInt(balance.get(index));
     }
 }

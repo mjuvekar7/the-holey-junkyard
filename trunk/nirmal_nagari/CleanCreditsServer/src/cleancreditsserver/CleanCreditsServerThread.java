@@ -31,7 +31,7 @@ public class CleanCreditsServerThread extends Thread {
                 int change = dis.readInt();
                 CleanCreditsServer.updateCredits(username, password, citizen, change);
             } else if (action.equalsIgnoreCase("get")) {
-                dos.writeInt(CleanCreditsServer.getCredits(username, password));
+                dos.writeInt(CleanCreditsServer.getCredits(username));
             }
         } catch (java.io.IOException ex) {
             System.err.println("Caught IOException: " + ex.getLocalizedMessage());
