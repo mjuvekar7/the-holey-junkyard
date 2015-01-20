@@ -1,0 +1,5 @@
+shardul 50
+abc 90
+mandar 30
+xyz 10
+lmn 10
