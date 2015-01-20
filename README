@@ -12,15 +12,23 @@ AVR/
     and a few sub-directories contain specific projects.
 
 python/
-    This directory contains Python code. It includes utilities which I have
+    This directory contains Python code. It includes utilities which we have
     written in the Python language for various small purposes. There are no
     specific projects.
 
 VoteCounter/
+    This directory contains Java code for a vote counting system.
     This project has been moved to SourceForge with the same name.
 
+nirmal_nagri/
+    This directory contains code written for a programming competition. The code
+    has been made with one goal in mind - to make the city a clean and 'smart'
+    place.
+
 mathinator/
-    This project has been moved to SourceForge with the same name.
+    This directory contains Python code for a simple word problem solver.
+    This project has been moved to SourceForge with the same name and is still
+    under development.
 
 other/
     Oddball directory containing very random stuff. Includes misc. bash scripts,
