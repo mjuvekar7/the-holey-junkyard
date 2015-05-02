@@ -3,7 +3,7 @@ package sources;
 import java.io.IOException;
 
 /**
- * @author fazer, shardulc, mandarj
+ * @author fazerlicourice7, shardulc, mandarj
  */
 public class Trash {
    
