@@ -30,6 +30,10 @@ mathinator/
     This project has been moved to SourceForge with the same name and is still
     under development.
 
+befunge/
+    This directory contains random programs and snippets in the 'befunge'
+    language (a 2D esoteric language).
+
 other/
     Oddball directory containing very random stuff. Includes misc. bash scripts,
     3D models, videos, songs, scribble files, etc.

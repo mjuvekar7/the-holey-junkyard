@@ -1,0 +1,21 @@
+Befunge directory
+author: mandarj
+
+This is the README file located in the Befunge directory of the repository. This
+directory currently contains three files, which are explained below --
+
+Files --
+Eat.b98
+    This file contains befunge source code for a complete program that asks the
+    user for food and gives an appropriate response.
+
+input.b98
+    This file contains a befunge snippet that takes input from user and stores
+    it reversed in the stack (so that the first character popped is the first
+    letter and so on).
+
+README
+    This file.
+
+Bugs, tips, suggestions, requests to <shardul.chiplunkar@gmail.com> or
+<mjuvekar7@gmail.com>. 
