@@ -1,0 +1,104 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;IIPC&#34; Inter IP communication extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;IMAP&#34; Instruction remap extension" href="IMAP.html" />
+    <link rel="prev" title="&#34;ICAL&#34; Some Intercal-like functions" href="ICAL.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="IMAP.html" title="&#34;IMAP&#34; Instruction remap extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ICAL.html" title="&#34;ICAL&#34; Some Intercal-like functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="iipc-inter-ip-communication-extension">
+<span id="iipc"></span><h1><tt class="docutils literal"><span class="pre">&quot;IIPC&quot;</span></tt> Inter IP communication extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x49495043</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#IIPC">RC/Funge-98</a>, implements commands that manipulates the other IP&#8217;s stack and sleeps until the signal. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>parentid</em></span></dt>
+<dd>Pushes the identifier of parent IP, from which current IP is splitted.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Makes the current IP asleep (dormant) until the stack is manipulated by another IP, using <tt class="docutils literal"><span class="pre">G</span></tt> or <tt class="docutils literal"><span class="pre">P</span></tt> commands.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>id</em> &#8212; <em>n</em></span></dt>
+<dd>Pops one item from the stack of the IP which identifier is <em>id</em>, and pushes it to the current IP&#8217;s stack. It could wake up the target IP. Reflects if <em>id</em> is an invalid identifier.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>id</em></span></dt>
+<dd>Pushes the identifier of IP. In PyFunge it is equivalent to <tt class="docutils literal"><span class="pre">8y</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>id</em> &#8212; <em>n</em></span></dt>
+<dd>Same to <tt class="docutils literal"><span class="pre">G</span></tt>, but it doesn&#8217;t pop from the stack of target IP. Since it doesn&#8217;t manipulate the stack it won&#8217;t wake up the target IP either.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> <em>id</em> &#8212;</span></dt>
+<dd>Pushes a value <em>n</em> to the stack of the IP which identifier is <em>id</em>. It could wake up the target IP. Reflects if <em>id</em> is an invalid identifier.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="IMAP.html" title="&#34;IMAP&#34; Instruction remap extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ICAL.html" title="&#34;ICAL&#34; Some Intercal-like functions"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

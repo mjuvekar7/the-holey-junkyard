@@ -1,0 +1,139 @@
+#!/usr/bin/awk -f
+BEGIN {
+	goodcount = 0
+	badcount = 0
+	undefcount = 0
+	unsurecount = 0
+
+	# cannot be ENVIRON["PATH"] since it could be run in other environment...
+	curpath = ""
+}
+
+function GOOD() { print "\x1b[1;32m" $0 "\x1b[m"; goodcount += 1 }
+function BAD() { print "\x1b[1;31m" $0 "\x1b[m"; badcount += 1 }
+function BADPARTIAL(s,t) { print s "\x1b[1;31m" t "\x1b[m"; badcount += 1 }
+function UNDEF() { print "\x1b[1;33m" $0 "\x1b[m"; undefcount += 1 }
+function UNSURE() { print "\x1b[1;35m" $0 "\x1b[m"; unsurecount += 1 }
+
+############################################################
+
+# first check for GOOD: and BAD:. BAD: is not necessarily at first column...
+/^.+BAD: / {
+	pos = match($0, "BAD:")
+	BADPARTIAL(substr($0,1,pos-1), substr($0,pos)); next
+}
+/^GOOD: / { GOOD(); next }
+/^BAD: / { BAD(); next }
+
+# PERL fingerprint
+/^UNDEF: 0"5-1" E pushed 52 $/ { UNSURE(); next }
+/^UNDEF: 0"5-1" I pushed 4 $/ { UNSURE(); next }
+
+# BASE fingerprint (warning: possible false negative)
+/^UNDEF: B outputs 40 as 101000 *$/ { GOOD(); next }
+/^UNDEF: H outputs 40 as 28 *$/ { GOOD(); next }
+/^UNDEF: O outputs 40 as 50 *$/ { GOOD(); next }
+/^UNDEF: [BNO] outputs 40 as/ { BAD(); next }
+/^UNDEF: N outputs 40 in base 2 as 101000 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 3 as 1111 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 4 as 220 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 5 as 130 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 6 as 104 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 7 as 55 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 8 as 50 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 9 as 44 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 10 as 40 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 11 as 37 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 12 as 34 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 13 as 31 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 14 as 2[cC] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 15 as 2[aA] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 16 as 28 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 17 as 26 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 18 as 24 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 19 as 22 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 20 as 20 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 21 as 1[jJ] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 22 as 1[iI] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 23 as 1[hH] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 24 as 1[gG] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 25 as 1[fF] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 26 as 1[eE] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 27 as 1[dD] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 28 as 1[cC] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 29 as 1[bB] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 30 as 1[aA] *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 31 as 19 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 32 as 18 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 33 as 17 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 34 as 16 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 35 as 15 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base 36 as 14 *$/ { GOOD(); next }
+/^UNDEF: N outputs 40 in base ([2-9]|[12][0-9]|3[0-6]) as / { BAD(); next }
+
+# CPLI fingerprint
+/^UNDEF: (a|0a-)(b|0b-)O outputs / { UNSURE(); next }
+
+# EVAR fingerprint
+/^UNDEF: "PATH"G worked and pushed / {
+	if (substr($0, 34) == curpath) GOOD(); else UNSURE();
+	next
+}
+
+# FIXP fingerprint
+/^UNDEF: called 3D 9 times and got \[ [012] [012] [012] [012] [012] [012] [012] [012] [012] \] *$/ { UNSURE(); next }
+/^UNDEF: called 3D 9 times and got / { BAD(); next }
+
+# FPSP/FPDP fingerprints
+/^UNDEF: cFP outputs / { UNSURE(); next }
+/^UNDEF: 0"1234.567890"R results in / { UNSURE(); next }
+/^UNDEF: (aFeFA|cF7FS|6FaFM) results in / { UNSURE(); next }
+/^UNDEF: ASMDF say 355\/113 is / { UNSURE(); next }
+/^UNDEF: D says -?1\/0 is / { UNSURE(); next }
+/^UNDEF: N says -0 is / { UNSURE(); next }
+/^UNDEF: Y says pow\([-.0-9]*, [-.0-9]*\) is / { UNSURE(); next }
+/^UNDEF: . says (a?sin|a?cos|a?tan|ln|log10|exp|abs|sqrt)\([-.0-9]*\) is / { UNSURE(); next }
+
+# IIPC fingerprint
+/^Testing fingerprint IIPC\.\.\. loaded\.$/ { should_wakeup = 0; }
+/^Child should still be dormant\.$/ { should_wakeup = 1; }
+/^GOOD: G with child's 8y works$/ { if (should_wakeup) { BAD(); should_wakeup = 0 } }
+/^UNDEF: woke up from dormancy$/ { if (should_wakeup) { GOOD(); should_wakeup = 0 } else BAD(); next }
+
+# TIME fingerprint
+/^UNDEF: YODHMS claim that the (local|GMT  ) time is \(or was a few moments ago\) / { UNSURE(); next }
+/^UNDEF: F claims that it is the ([1-9][0-9]?|[12][0-9][0-9]|3[0-5][0-9]|36[0-6]) day of the year *$/ { UNSURE(); next }
+/^UNDEF: F claims that it is the / { BAD(); next }
+/^UNDEF: W claims that it is the [1-7] day of the week, starting from sunday *$/ { UNSURE(); next }
+/^UNDEF: W claims that it is the / { BAD(); next }
+
+/^UNDEF: / { UNDEF(); next }
+
+# output of sysinfo
+/^\tThat this Funge has 2 dimensions$/ { GOOD(); next }
+/^\tThat the position of the IP was \( 64 89 \)$/ { GOOD(); next }
+/^\tThat the delta of the IP was \( -1 0 \)$/ { GOOD(); next }
+/^\tThat the offset of the IP was \( 0 0 \)$/ { GOOD(); next }
+/^\tThat the least point containing a non-space cell is \( -1 -1 \)$/ { GOOD(); next }
+/^\tThat the greatest point, relative to that point, is \( 180 795 \)$/ { GOOD(); next }
+/^\tThat the day of the month is ([1-9]|[12][0-9]|3[01]) $/ { UNSURE(); next }
+/^\tThat the month is ([1-9]|1[0-2]) $/ { UNSURE(); next }
+/^\tThat the year is [12][0-9][0-9][0-9] $/ { UNSURE(); next }
+/^\tThat the time is ([01][0-9]|2[0-3]) : [0-5][0-9] : [0-5][0-9] $/ { UNSURE(); next }
+/^\tThat the (day of the month|month|year|time) is / { BAD(); next }
+/^\tThat the size of the stack stack is 1 $/ { GOOD(); next }
+/^\tThat the stack sizes are \[ 0 \] from top to bottom$/ { GOOD(); next }
+/^\tThat the command-line arguments were: \[ .* \]$/ { UNSURE(); next }
+/^\t\tPATH=/ { curpath = substr($0, 8) }
+
+# STRN fingerprint
+/Cannot test D reliably\. If this line begins with "GOOD: ", it worked\.$/ { BAD(); next }
+
+{ print $0 }
+
+############################################################
+
+END {
+	print
+	print "*** GOOD " goodcount ", BAD " badcount ", UNDEF " undefcount ", UNSURE " unsurecount
+}

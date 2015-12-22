@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+        <param name="Window Styles" value="0x801227">
+        <param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="PyFunge 0.5-rc2 documentation">
+    <param name="Local" value="index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Python Module Index">
+    <param name="Local" value="py-modindex.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Introduction">
+    <param name="Local" value="introduction.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="What is Funge?">
+    <param name="Local" value="introduction.html#what-is-funge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Funge family of languages">
+    <param name="Local" value="introduction.html#funge-family-of-languages">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="What&#x27;s PyFunge then?">
+    <param name="Local" value="introduction.html#what-s-pyfunge-then">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Installation">
+    <param name="Local" value="install.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Requirements">
+    <param name="Local" value="install.html#requirements">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Installing">
+    <param name="Local" value="install.html#installing">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Self-check">
+    <param name="Local" value="install.html#self-check">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Invocation">
+    <param name="Local" value="invocation.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="pyfunge(1)">
+    <param name="Local" value="invocation.html#pyfunge-1">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="General options">
+    <param name="Local" value="invocation.html#general-options">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Funge options">
+    <param name="Local" value="invocation.html#funge-options">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Befunge-93 options">
+    <param name="Local" value="invocation.html#befunge-93-options">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Funge-98 options">
+    <param name="Local" value="invocation.html#funge-98-options">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Environment variables">
+    <param name="Local" value="invocation.html#environment-variables">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Supported Languages">
+    <param name="Local" value="languages.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Befunge-93 Semantics">
+    <param name="Local" value="languages.html#befunge-93-semantics">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Undefined behaviors">
+    <param name="Local" value="languages.html#undefined-behaviors">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Funge-98 Semantics">
+    <param name="Local" value="languages.html#funge-98-semantics">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Undefined behaviors">
+    <param name="Local" value="languages.html#id1">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Supported fingerprints">
+    <param name="Local" value="languages.html#supported-fingerprints">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;3DSP&quot; 3D space manipulation extension">
+    <param name="Local" value="fingerprint/3DSP.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;BASE&quot; I/O for numbers in other bases">
+    <param name="Local" value="fingerprint/BASE.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;BOOL&quot; Logic functions">
+    <param name="Local" value="fingerprint/BOOL.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;CPLI&quot; Complex Integer extension">
+    <param name="Local" value="fingerprint/CPLI.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;DATE&quot; Date Functions">
+    <param name="Local" value="fingerprint/DATE.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;DIRF&quot; Directory functions extension">
+    <param name="Local" value="fingerprint/DIRF.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;EVAR&quot; Environment variables extension">
+    <param name="Local" value="fingerprint/EVAR.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;FILE&quot; File I/O functions">
+    <param name="Local" value="fingerprint/FILE.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;FIXP&quot; Some useful fixed point math functions">
+    <param name="Local" value="fingerprint/FIXP.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;FPRT&quot; Formatted print">
+    <param name="Local" value="fingerprint/FPRT.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;FPDP&quot; Double precision floating point and &quot;FPSP&quot; Single precision floating point">
+    <param name="Local" value="fingerprint/FPxP.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;FRTH&quot; Some common forth commands">
+    <param name="Local" value="fingerprint/FRTH.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;HRTI&quot; High-Resolution Timer Interface">
+    <param name="Local" value="fingerprint/HRTI.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;ICAL&quot; Some Intercal-like functions">
+    <param name="Local" value="fingerprint/ICAL.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;IIPC&quot; Inter IP communication extension">
+    <param name="Local" value="fingerprint/IIPC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;IMAP&quot; Instruction remap extension">
+    <param name="Local" value="fingerprint/IMAP.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;IMTH&quot; Some integer math functions">
+    <param name="Local" value="fingerprint/IMTH.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;INDV&quot; Pointer functions">
+    <param name="Local" value="fingerprint/INDV.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;JSTR&quot; Jesse van Herk&#x27;s extensions to string functions">
+    <param name="Local" value="fingerprint/JSTR.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;LONG&quot; Long Integers">
+    <param name="Local" value="fingerprint/LONG.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;MODE&quot; Funge-98 Standard Modes">
+    <param name="Local" value="fingerprint/MODE.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;MODU&quot; Modulo Arithmetic Extension">
+    <param name="Local" value="fingerprint/MODU.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;NCRS&quot; Ncurses extension">
+    <param name="Local" value="fingerprint/NCRS.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;NULL&quot; Funge-98 Null Fingerprint">
+    <param name="Local" value="fingerprint/NULL.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;ORTH&quot; Orthogonal Easement Library">
+    <param name="Local" value="fingerprint/ORTH.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;PERL&quot; Generic Interface to the Perl Language">
+    <param name="Local" value="fingerprint/PERL.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;REFC&quot; Referenced Cells Extension">
+    <param name="Local" value="fingerprint/REFC.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;ROMA&quot; Funge-98 Roman Numerals">
+    <param name="Local" value="fingerprint/ROMA.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;SCKE&quot; GLFunge98&#x27;s extension to SOCK">
+    <param name="Local" value="fingerprint/SCKE.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;SETS&quot; Set operations">
+    <param name="Local" value="fingerprint/SETS.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;SOCK&quot; TCP/IP socket extension">
+    <param name="Local" value="fingerprint/SOCK.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;STRN&quot; String functions">
+    <param name="Local" value="fingerprint/STRN.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;SUBR&quot; Subroutine extension">
+    <param name="Local" value="fingerprint/SUBR.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;TERM&quot; Terminal extension">
+    <param name="Local" value="fingerprint/TERM.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;TIME&quot; Time and Date functions">
+    <param name="Local" value="fingerprint/TIME.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="&quot;TOYS&quot; Funge-98 Standard Toys">
+    <param name="Local" value="fingerprint/TOYS.html">
+</OBJECT>
+</UL>
+</UL>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Internals">
+    <param name="Local" value="internals.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.main -- PyFunge front-end">
+    <param name="Local" value="internals.html#module-funge.main">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.program -- Entry point">
+    <param name="Local" value="internals.html#module-funge.program">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.vector -- Vector classes">
+    <param name="Local" value="internals.html#module-funge.vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.stack -- Stack stack">
+    <param name="Local" value="internals.html#module-funge.stack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.space -- Funge space">
+    <param name="Local" value="internals.html#module-funge.space">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.ip -- Instruction pointer">
+    <param name="Local" value="internals.html#module-funge.ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.exception -- Exceptions">
+    <param name="Local" value="internals.html#module-funge.exception">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.semantics -- Command semantics">
+    <param name="Local" value="internals.html#module-funge.semantics">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.languages -- Language implementations">
+    <param name="Local" value="internals.html#module-funge.languages">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.languages.befunge93 -- Befunge-93 implementation">
+    <param name="Local" value="internals.html#module-funge.languages.befunge93">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.languages.funge98 -- Core Funge-98 implementation">
+    <param name="Local" value="internals.html#module-funge.languages.funge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.languages.funge98opt -- Concurrent and filesystem Funges">
+    <param name="Local" value="internals.html#module-funge.languages.funge98opt">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.platform -- Platform abstraction">
+    <param name="Local" value="internals.html#module-funge.platform">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.fingerprint -- Fingerprint management">
+    <param name="Local" value="internals.html#module-funge.fingerprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="funge.fp -- Fingerprints">
+    <param name="Local" value="internals.html#module-funge.fp">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Extending PyFunge">
+    <param name="Local" value="extending.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Writing fingerprint">
+    <param name="Local" value="extending.html#writing-fingerprint">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Fingerprint class">
+    <param name="Local" value="extending.html#fingerprint-class">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Initialization and finalization">
+    <param name="Local" value="extending.html#initialization-and-finalization">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Storing additional information">
+    <param name="Local" value="extending.html#storing-additional-information">
+</OBJECT>
+</UL>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Tests">
+    <param name="Local" value="tests.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Test format">
+    <param name="Local" value="tests.html#test-format">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Test categories">
+    <param name="Local" value="tests.html#test-categories">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Test against Mycology suite">
+    <param name="Local" value="tests.html#test-against-mycology-suite">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="Changes in PyFunge">
+    <param name="Local" value="changes.html">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="0.5-rc2 (2009-04-24)">
+    <param name="Local" value="changes.html#rc2-2009-04-24">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="0.5-rc1 (2009-04-15)">
+    <param name="Local" value="changes.html#rc1-2009-04-15">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Name" value="0.2-beta1 (2004-06-11)">
+    <param name="Local" value="changes.html#beta1-2004-06-11">
+</OBJECT>
+</UL>
+</UL></BODY></HTML>

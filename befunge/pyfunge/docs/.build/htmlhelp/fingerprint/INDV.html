@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;INDV&#34; Pointer functions</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;JSTR&#34; Jesse van Herk&#8217;s extensions to string functions" href="JSTR.html" />
+    <link rel="prev" title="&#34;IMTH&#34; Some integer math functions" href="IMTH.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="JSTR.html" title="&#34;JSTR&#34; Jesse van Herk&#8217;s extensions to string functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IMTH.html" title="&#34;IMTH&#34; Some integer math functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="indv-pointer-functions">
+<span id="indv"></span><h1><tt class="docutils literal"><span class="pre">&quot;INDV&quot;</span></tt> Pointer functions</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x494e4456</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#INDV">RC/Funge-98</a>, implements the indirect get and put. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>pos</em><sup>v</sup> &#8212; <em>value</em></span></dt>
+<dd>Reads one vector from <em>pos</em>, and pushes the cell at that vector. The vector in Funge space is read rightwards in the reverse order (Y and X in Befunge mode, Z, Y and X in Trefunge mode).</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> <em>pos</em><sup>v</sup> &#8212;</span></dt>
+<dd>Reads one vector from <em>pos</em>, and puts the <em>value</em> to the cell at that vector. The vector in Funge space is read rightwards in the reverse order.</dd>
+<dt><tt class="docutils literal"><span class="pre">V</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>pos</em><sup>v</sup> &#8212; <em>vec</em><sup>v</sup></span></dt>
+<dd>Same to <tt class="docutils literal"><span class="pre">G</span></tt> but it reads a vector instead of a scalar. The vector is read in the same way.</dd>
+<dt><tt class="docutils literal"><span class="pre">W</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>vec</em><sup>v</sup> <em>pos</em><sup>v</sup> &#8212;</span></dt>
+<dd>Same to <tt class="docutils literal"><span class="pre">P</span></tt> but it puts a vector instead of a scalar. The vector is written in the same way.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="JSTR.html" title="&#34;JSTR&#34; Jesse van Herk&#8217;s extensions to string functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="IMTH.html" title="&#34;IMTH&#34; Some integer math functions"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

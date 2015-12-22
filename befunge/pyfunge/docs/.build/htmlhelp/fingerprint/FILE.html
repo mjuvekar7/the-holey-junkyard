@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;FILE&#34; File I/O functions</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;FIXP&#34; Some useful fixed point math functions" href="FIXP.html" />
+    <link rel="prev" title="&#34;EVAR&#34; Environment variables extension" href="EVAR.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="FIXP.html" title="&#34;FIXP&#34; Some useful fixed point math functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="EVAR.html" title="&#34;EVAR&#34; Environment variables extension"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="file-file-i-o-functions">
+<span id="file"></span><h1><tt class="docutils literal"><span class="pre">&quot;FILE&quot;</span></tt> File I/O functions</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x46494c45</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#FILE">RC/Funge-98</a>, implements file-related functions. It uses an IP-local list of file handles associated to I/O buffer in the Funge space. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> &#8212;</span></dt>
+<dd>Closes the file.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>path</em><sup>s</sup> &#8212;</span></dt>
+<dd>Removes the given file.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> &#8212; <em>handle</em> <em>line</em><sup>s</sup> <em>len</em></span></dt>
+<dd>Reads one line from the given file. Also pushes the number of characters so it can detect mid-line null characters. Pushes null string at EOF.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> &#8212; <em>handle</em> <em>pos</em><sup>v</sup></span></dt>
+<dd>Pushes the current location of the given file pointer.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>bufpos</em><sup>v</sup> <em>mode</em> <em>path</em><sup>s</sup> &#8212; <em>handle</em></span></dt>
+<dd><p class="first">Opens a file with given mode and I/O buffer.</p>
+<ul class="last simple">
+<li>If <em>mode</em> is 0, the file can be only read. (<tt class="docutils literal"><span class="pre">fopen</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">&quot;r&quot;</span></tt> mode)</li>
+<li>If <em>mode</em> is 1, the file can be only written and it truncates at first. (<tt class="docutils literal"><span class="pre">fopen</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">&quot;w&quot;</span></tt> mode)</li>
+<li>If <em>mode</em> is 2, the file can be only written but it starts at end of the file. (<tt class="docutils literal"><span class="pre">fopen</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">&quot;a&quot;</span></tt> mode)</li>
+<li>If <em>mode</em> is 3, the file can be both read and written and it starts at start of the file. (<tt class="docutils literal"><span class="pre">fopen</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">&quot;r+&quot;</span></tt> mode)</li>
+<li>If <em>mode</em> is 4, the file can be both read and written but it truncates at first. (<tt class="docutils literal"><span class="pre">fopen</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">&quot;w+&quot;</span></tt> mode)</li>
+<li>If <em>mode</em> is 5, the file can be both read and written but it starts at end of the file. (<tt class="docutils literal"><span class="pre">fopen</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">&quot;a+&quot;</span></tt> mode)</li>
+<li>Everything else is error.</li>
+</ul>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> <em>str</em><sup>s</sup> &#8212; <em>handle</em></span></dt>
+<dd>Writes the string to the given file.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> <em>n</em> &#8212; <em>handle</em></span></dt>
+<dd>Reads <em>n</em> bytes from the file, and writes it to I/O buffer in Funge space rightwards.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> <em>mode</em> <em>n</em> &#8212; <em>handle</em></span></dt>
+<dd><p class="first">Changes the given file pointer.</p>
+<ul class="last simple">
+<li>If <em>mode</em> is 0, the file pointer is set to <em>n</em>-th byte from beginning.</li>
+<li>If <em>mode</em> is 1, the file pointer is set to <em>n</em>-th byte from current location.</li>
+<li>If <em>mode</em> is 2, the file pointer is set to <em>n</em>-th byte from end. (useful for files opened for append)</li>
+<li>Everything else is error.</li>
+</ul>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">W</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> <em>n</em> &#8212; <em>handle</em></span></dt>
+<dd>Reads <em>n</em> bytes from I/O buffer in Funge space rightwards, and writes it to the file.</dd>
+</dl>
+<p>All commands reflects on failure. For every string written to the file only the least significant byte is used. When the fingerprint is unloaded every opened files are closed automatically.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="FIXP.html" title="&#34;FIXP&#34; Some useful fixed point math functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="EVAR.html" title="&#34;EVAR&#34; Environment variables extension"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

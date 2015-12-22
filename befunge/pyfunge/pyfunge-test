@@ -1,0 +1,46 @@
+#!/bin/bash
+OUTPUTPATH=/tmp/$$\$\$\$pyfungetestoutput
+DIFFPATH=/tmp/$$\$\$\$pyfungetestdiff
+
+trap "rm -f $OUTPUTPATH $DIFFPATH; exit" INT TERM EXIT
+
+pyfunge_test() {
+	TESTED=$(($TESTED+1))
+	if [ ! -f ${1/.*/.expected} ]; then
+		echo "*** SKIPPED $@: missing expected file."
+		return
+	fi
+	if [ -f ${1/.*/.input} ]; then
+		INPUTPATH=${1/.*/.input}
+	else
+		INPUTPATH=/dev/null
+	fi
+	OPTIONS=`cat ${1/.*/.options} 2> /dev/null`
+	./pyfunge $OPTIONS "$@" < $INPUTPATH &> $OUTPUTPATH || {
+		echo "*** FAILED $@: terminated with exit code $?, output follows:"
+		cat $OUTPUTPATH
+		return
+	}
+	echo >> $OUTPUTPATH
+	diff -u ${1/.*/.expected} $OUTPUTPATH > $DIFFPATH || {
+		echo "*** FAILED $@: unexpected output, diff follows:"
+		tail -n +3 $DIFFPATH
+		return
+	}
+	PASSED=$(($PASSED+1))
+}
+
+TESTED=0
+PASSED=0
+
+for f in `find tests -name '*.bf' -or -name '*.u98' -or -name '*.b98' -or -name '*.t98'`; do
+	pyfunge_test $f
+done
+rm -f $OUTPUTPATH $DIFFPATH
+
+echo "Done, $PASSED out of $TESTED test(s) passed."
+if [ $PASSED -ne $TESTED ]; then
+	exit 1
+fi
+exit 0
+

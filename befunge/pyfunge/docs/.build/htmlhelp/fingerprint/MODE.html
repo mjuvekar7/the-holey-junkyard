@@ -1,0 +1,135 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;MODE&#34; Funge-98 Standard Modes</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;MODU&#34; Modulo Arithmetic Extension" href="MODU.html" />
+    <link rel="prev" title="&#34;LONG&#34; Long Integers" href="LONG.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="MODU.html" title="&#34;MODU&#34; Modulo Arithmetic Extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="LONG.html" title="&#34;LONG&#34; Long Integers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="mode-funge-98-standard-modes">
+<span id="mode"></span><h1><tt class="docutils literal"><span class="pre">&quot;MODE&quot;</span></tt> Funge-98 Standard Modes</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x4d4f4445</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://catseye.tc/projects/funge98/library/MODE.html">Cat&#8217;s Eye Technologies</a>, implements four modes applicable to IP. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">H</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd><p class="first">Toggles <em>hovermode</em> on and off. Hovermode is disabled by default. If hovermode is enabled the following commands are altered:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">&lt;</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Decreases X component of delta: in the other words it accelerates delta leftwards.</dd>
+<dt><tt class="docutils literal"><span class="pre">^</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Decreases Y component of delta: in the other words it accelerates delta upwards. Reflects in Unefunge mode.</dd>
+<dt><tt class="docutils literal"><span class="pre">l</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Decreases Z component of delta: in the other words it accelerates delta towards lower layers. Reflects in Unefunge and Befunge mode.</dd>
+<dt><tt class="docutils literal"><span class="pre">&gt;</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Increases X component of delta: in the other words it accelerates delta rightwards.</dd>
+<dt><tt class="docutils literal"><span class="pre">v</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Increases Y component of delta: in the other words it accelerates delta downwards. Reflects in Unefunge mode.</dd>
+<dt><tt class="docutils literal"><span class="pre">h</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Increases Z component of delta: in the other words it accelerates delta towards upper layers. Reflects in Unefunge and Befunge mode.</dd>
+<dt><tt class="docutils literal"><span class="pre">_</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> &#8212;</span></dt>
+<dd>Acts like modified semantics of <tt class="docutils literal"><span class="pre">&lt;</span></tt> and <tt class="docutils literal"><span class="pre">&gt;</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">|</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> &#8212;</span></dt>
+<dd>Acts like modified semantics of <tt class="docutils literal"><span class="pre">^</span></tt> and <tt class="docutils literal"><span class="pre">v</span></tt>. Reflects in Unefunge mode.</dd>
+<dt><tt class="docutils literal"><span class="pre">m</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> &#8212;</span></dt>
+<dd>Acts like modified semantics of <tt class="docutils literal"><span class="pre">l</span></tt> and <tt class="docutils literal"><span class="pre">h</span></tt>. Reflects in Unefunge and Befunge mode.</dd>
+</dl>
+<p class="last">The original specification didn&#8217;t mention about <tt class="docutils literal"><span class="pre">l</span></tt>, <tt class="docutils literal"><span class="pre">h</span></tt> and <tt class="docutils literal"><span class="pre">m</span></tt> commands, but it is logical to extend hovermode to them.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Toggles <em>invertmode</em> on and off. If invertmode is enabled, IP pushes the value to the bottom instead of the top of the stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">Q</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Toggles <em>queuemode</em> on and off. If queuemode is enabled, IP pops the value from the bottom instead of the top of the stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd><p class="first">Toggles <em>switchmode</em> on and off. If switchmode is enabled the following commands are altered:</p>
+<dl class="last docutils">
+<dt><tt class="docutils literal"><span class="pre">[</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Acts like Funge-98 <tt class="docutils literal"><span class="pre">[</span></tt> command, but also changes the current cell in the Funge space to <tt class="docutils literal"><span class="pre">]</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">]</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Acts like Funge-98 <tt class="docutils literal"><span class="pre">]</span></tt> command, but also changes the current cell in the Funge space to <tt class="docutils literal"><span class="pre">[</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">{</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">... <em>n</em> &#8212; <em>offset</em>; ...</span></dt>
+<dd>Acts like Funge-98 <tt class="docutils literal"><span class="pre">{</span></tt> command, but also changes the current cell in the Funge space to <tt class="docutils literal"><span class="pre">}</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">}</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>offset</em>; ... <em>n</em> &#8212;</span></dt>
+<dd>Acts like Funge-98 <tt class="docutils literal"><span class="pre">}</span></tt> command, but also changes the current cell in the Funge space to <tt class="docutils literal"><span class="pre">{</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">(</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>id</em><sup>A</sup> &#8212; <em>idvalue</em> 1</span></dt>
+<dd>Acts like Funge-98 <tt class="docutils literal"><span class="pre">(</span></tt> command, but also changes the current cell in the Funge space to <tt class="docutils literal"><span class="pre">)</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">)</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>id</em><sup>A</sup> &#8212;</span></dt>
+<dd>Acts like Funge-98 <tt class="docutils literal"><span class="pre">)</span></tt> command, but also changes the current cell in the Funge space to <tt class="docutils literal"><span class="pre">(</span></tt>.</dd>
+</dl>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="MODU.html" title="&#34;MODU&#34; Modulo Arithmetic Extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="LONG.html" title="&#34;LONG&#34; Long Integers"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

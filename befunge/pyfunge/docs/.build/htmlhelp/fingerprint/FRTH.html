@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;FRTH&#34; Some common forth commands</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;HRTI&#34; High-Resolution Timer Interface" href="HRTI.html" />
+    <link rel="prev" title="&#34;FPDP&#34; Double precision floating point and &#34;FPSP&#34; Single precision floating point" href="FPxP.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="HRTI.html" title="&#34;HRTI&#34; High-Resolution Timer Interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="FPxP.html" title="&#34;FPDP&#34; Double precision floating point and &#34;FPSP&#34; Single precision floating point"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="frth-some-common-forth-commands">
+<span id="frth"></span><h1><tt class="docutils literal"><span class="pre">&quot;FRTH&quot;</span></tt> Some common forth commands</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x46525448</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#FRTH">RC/Funge-98</a>, implements common stack operations from Forth. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">... &#8212; ... <em>size</em></span></dt>
+<dd>Pushes the size of stack before execution. Same to <tt class="docutils literal"><span class="pre">7y5*d+y</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">... <em>n</em> &#8212; ...</span></dt>
+<dd>Pops <em>n</em>. Then moves (<em>n</em>+1)-th cell to the top if <em>n</em> is positive or moves the top to (-<em>n</em>+1)-th cell if negative. (For example, <tt class="docutils literal"><span class="pre">123453L</span></tt> is same to <tt class="docutils literal"><span class="pre">13452</span></tt> and <tt class="docutils literal"><span class="pre">1234503-L</span></tt> is same to <tt class="docutils literal"><span class="pre">15234</span></tt>.) Assumes that the stack has infinite zeroes under the bottom if <em>n</em> is out of bound.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>a</em> <em>b</em> <em>a</em></span></dt>
+<dd>Pushes second-to-the-top cell in the stack. Same to <tt class="docutils literal"><span class="pre">1P</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">... <em>n</em> &#8212; ... <em>value</em></span></dt>
+<dd>Pushes (<em>n</em>+1)-th cell in the stack. Assumes that the stack has infinite zeroes under the bottom if <em>n</em> is out of bound. Reflects if <em>n</em> is negative.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> <em>c</em> &#8212; <em>b</em> <em>c</em> <em>a</em></span></dt>
+<dd>Moves third-to-the-top cell to the top. Same to <tt class="docutils literal"><span class="pre">2L</span></tt>.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="HRTI.html" title="&#34;HRTI&#34; High-Resolution Timer Interface"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="FPxP.html" title="&#34;FPDP&#34; Double precision floating point and &#34;FPSP&#34; Single precision floating point"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

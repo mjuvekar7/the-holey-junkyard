@@ -1,0 +1,1060 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Internals</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="next" title="Extending PyFunge" href="extending.html" />
+    <link rel="prev" title="&#34;TOYS&#34; Funge-98 Standard Toys" href="fingerprint/TOYS.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extending.html" title="Extending PyFunge"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fingerprint/TOYS.html" title="&#34;TOYS&#34; Funge-98 Standard Toys"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="internals">
+<span id="id1"></span><h1>Internals</h1>
+<span class="target" id="module-funge"></span><p>All PyFunge modules are contained in <a class="reference internal" href="#module-funge" title="funge: PyFunge package."><tt class="xref py py-mod docutils literal"><span class="pre">funge</span></tt></a> package. With an exception of front-end modules, all modules are orthogonal to other methods and can be used independently.</p>
+<div class="section" id="module-funge.main">
+<span id="funge-main-pyfunge-front-end"></span><h2><a class="reference internal" href="#module-funge.main" title="funge.main: Implements front-end of PyFunge. (Meant to be used by driver script)"><tt class="xref py py-mod docutils literal"><span class="pre">funge.main</span></tt></a> &#8211; PyFunge front-end</h2>
+<p>This front-end is used by the driver script, <a class="reference internal" href="invocation.html#pyfunge-driver"><em>pyfunge(1)</em></a>.</p>
+<dl class="function">
+<dt id="funge.main.main">
+<tt class="descclassname">funge.main.</tt><tt class="descname">main</tt><big>(</big><em>argv</em><big>)</big></dt>
+<dd><p>Parses given arguments (normally from <tt class="docutils literal"><span class="pre">sys.argv</span></tt>) and does an appropriate action.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.program">
+<span id="funge-program-entry-point"></span><h2><a class="reference internal" href="#module-funge.program" title="funge.program: Executes Funge program."><tt class="xref py py-mod docutils literal"><span class="pre">funge.program</span></tt></a> &#8211; Entry point</h2>
+<p>This module combines all other modules into the execution environment. If you have to run Funge code you may want to use <a class="reference internal" href="#funge.program.Program" title="funge.program.Program"><tt class="xref py py-class docutils literal"><span class="pre">Program</span></tt></a> class.</p>
+<dl class="class">
+<dt id="funge.program.Program">
+<em class="property">class </em><tt class="descclassname">funge.program.</tt><tt class="descname">Program</tt><big>(</big><em>semantics</em>, <em>platform=None</em>, <em>args=None</em>, <em>environ=None</em>, <em>warnings=False</em><big>)</big></dt>
+<dd><p>The Funge environment class.</p>
+<dl class="attribute">
+<dt id="funge.program.Program.ips">
+<tt class="descname">ips</tt></dt>
+<dd><p>The list of <a class="reference internal" href="#funge.ip.IP" title="funge.ip.IP"><tt class="xref py py-class docutils literal"><span class="pre">IP</span></tt></a> objects. Every tick IPs are executed in the order listed in the list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.add_ip">
+<tt class="descname">add_ip</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Adds given IP to the current IP list. If this method is called while <a class="reference internal" href="#funge.program.Program.execute_step" title="funge.program.Program.execute_step"><tt class="xref py py-meth docutils literal"><span class="pre">execute_step()</span></tt></a> is called, given IP gets executed at first of next call.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.remove_ip">
+<tt class="descname">remove_ip</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Removes given IP from the current IP list if any, without any finalization process. This method is useful for <em>hibernating</em> IP, for example. Returns given IP, or <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> if none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.create_ip">
+<tt class="descname">create_ip</tt><big>(</big><big>)</big></dt>
+<dd><p>Creates new IP and adds it to current IP list. Returns the new IP.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.clone_ip">
+<tt class="descname">clone_ip</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Clones given IP with opposite delta and adds it to current IP list. Returns the new IP.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.load_code">
+<tt class="descname">load_code</tt><big>(</big><em>code</em><big>)</big></dt>
+<dd><p>Puts given Funge code string to Funge space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.execute_step">
+<tt class="descname">execute_step</tt><big>(</big><big>)</big></dt>
+<dd><p>Executes instructions at all IPs in the <a class="reference internal" href="#funge.program.Program.ips" title="funge.program.Program.ips"><tt class="xref py py-attr docutils literal"><span class="pre">ips</span></tt></a>. It takes one tick. One can override this method to provide debugger functionality, like <a class="reference internal" href="#funge.program.DebuggingProgram" title="funge.program.DebuggingProgram"><tt class="xref py py-class docutils literal"><span class="pre">DebuggingProgram</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.program.Program.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big></dt>
+<dd><p>Calls <a class="reference internal" href="#funge.program.Program.execute_step" title="funge.program.Program.execute_step"><tt class="xref py py-meth docutils literal"><span class="pre">execute_step()</span></tt></a> forever, until <a class="reference internal" href="#funge.exception.IPQuitted" title="funge.exception.IPQuitted"><tt class="xref py py-exc docutils literal"><span class="pre">IPQuitted</span></tt></a> exception is raised. Returns the exit code from that exception.</p>
+<p>This call is far more efficient than individual <a class="reference internal" href="#funge.program.Program.execute_step" title="funge.program.Program.execute_step"><tt class="xref py py-meth docutils literal"><span class="pre">execute_step()</span></tt></a> calls, since it optimizes the IP list with length 1 &#8212; very common case. But it will call <a class="reference internal" href="#funge.program.Program.execute_step" title="funge.program.Program.execute_step"><tt class="xref py py-meth docutils literal"><span class="pre">execute_step()</span></tt></a> anyway if it is overridden.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.program.DebuggingProgram">
+<em class="property">class </em><tt class="descclassname">funge.program.</tt><tt class="descname">DebuggingProgram</tt><big>(</big><em>semantics</em>, <em>args</em>, <em>stoppos=None</em>, <em>warnings=None</em><big>)</big></dt>
+<dd><p>Same to <a class="reference internal" href="#funge.program.Program" title="funge.program.Program"><tt class="xref py py-class docutils literal"><span class="pre">Program</span></tt></a>, but shows the status of IPs each tick. This is intended to provide the minimum debugger functionality.</p>
+<p>The trace will start when any IP hits the cell at <em>stoppos</em> in Funge space. If any fatal exception (mainly because of bugs in PyFunge) is raised it will dump current status as well.</p>
+<dl class="method">
+<dt id="funge.program.DebuggingProgram.dump_ips">
+<tt class="descname">dump_ips</tt><big>(</big><big>)</big></dt>
+<dd><p>Dumps the status of IPs.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.vector">
+<span id="funge-vector-vector-classes"></span><h2><a class="reference internal" href="#module-funge.vector" title="funge.vector: Implements vector classes."><tt class="xref py py-mod docutils literal"><span class="pre">funge.vector</span></tt></a> &#8211; Vector classes</h2>
+<p>This module implements an efficient vector class(es).</p>
+<dl class="class">
+<dt id="funge.vector.Vector">
+<em class="property">class </em><tt class="descclassname">funge.vector.</tt><tt class="descname">Vector</tt><big>(</big><em>iterable</em><big>)</big></dt>
+<dd><p>The vector class, which is a subclass of tuple and supports the following operations:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operation</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></tt></td>
+<td>Pairwise addition</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></tt></td>
+<td>Pairwise subtraction</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span></tt></td>
+<td>Pairwise multiplication by scalar</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">x</span> <span class="pre">/</span> <span class="pre">y</span></tt></td>
+<td>Pairwise integer division by scalar</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">x</span> <span class="pre">//</span> <span class="pre">y</span></tt></td>
+<td>Pairwise integer division by scalar</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></tt></td>
+<td>Pairwise remainder by scalar</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">+x</span></tt></td>
+<td><em>x</em> unchanged</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">-x</span></tt></td>
+<td><em>x</em> negated</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">x.between(min,</span> <span class="pre">max)</span></tt></td>
+<td><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if every element is between
+corresponding element of min and max</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">x.pairwise_min(y)</span></tt></td>
+<td>Pairwise minimum element</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">x.pairwise_max(y)</span></tt></td>
+<td>Pairwise maximum element</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">x.replace(_0=a,</span> <span class="pre">...)</span></tt></td>
+<td>Changes particular element</td>
+</tr>
+</tbody>
+</table>
+<p>The vector class uses different class for different number of dimensions internally, so these operations are more efficient than generic class.</p>
+<dl class="staticmethod">
+<dt id="funge.vector.Vector.zero">
+<em class="property">static </em><tt class="descname">zero</tt><big>(</big><em>dimension</em><big>)</big></dt>
+<dd><p>Returns <em>dimension</em>-tuple with all zeroes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.vector.Vector.between">
+<tt class="descname">between</tt><big>(</big><em>min</em>, <em>max</em><big>)</big></dt>
+<dd><p>Returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> only if every element is between corresponding element of <em>min</em> and <em>max</em>. In the other words, it returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if a point which coordinate is <em>self</em> is within a hypercube defined by <em>min</em> and <em>max</em>, or lies on it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.vector.Vector.pairwise_min">
+<tt class="descname">pairwise_min</tt><big>(</big><em>vec</em><big>)</big></dt>
+<dd><p>Returns a vector whose elements greater than corresponding element of <em>vec</em> are replaced to it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.vector.Vector.pairwise_max">
+<tt class="descname">pairwise_max</tt><big>(</big><em>vec</em><big>)</big></dt>
+<dd><p>Returns a vector whose elements less than corresponding element of <em>vec</em> are replaced to it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.vector.Vector.replace">
+<tt class="descname">replace</tt><big>(</big><em>_0=None</em>, <em>_1=None</em>, <em>_2=None</em>, <em>...</em><big>)</big></dt>
+<dd><p>Returns a vector whose elements are replaced by <em>_0</em> (for X coordinate), <em>_1</em> (for Y coordinate) and so on. Only non-<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> elements will be replaced.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.stack">
+<span id="funge-stack-stack-stack"></span><h2><a class="reference internal" href="#module-funge.stack" title="funge.stack: Implements Funge stack stack."><tt class="xref py py-mod docutils literal"><span class="pre">funge.stack</span></tt></a> &#8211; Stack stack</h2>
+<p>This module implements Funge stack and Funge-98 stack stack.</p>
+<dl class="class">
+<dt id="funge.stack.Stack">
+<em class="property">class </em><tt class="descclassname">funge.stack.</tt><tt class="descname">Stack</tt></dt>
+<dd><p>One stack. This class is inherited from Python list so all methods and operations of list can be applied.</p>
+<p>The following stack operations are unique to this class. Every <tt class="docutils literal"><span class="pre">push*</span></tt> and <tt class="docutils literal"><span class="pre">pop*</span></tt> methods has its counterpart, <tt class="docutils literal"><span class="pre">rpush*</span></tt> and <tt class="docutils literal"><span class="pre">rpop*</span></tt> methods, only differ that <tt class="docutils literal"><span class="pre">r</span></tt>-prefixed methods treat the stack reversed. For example, <a class="reference internal" href="#funge.stack.Stack.push" title="funge.stack.Stack.push"><tt class="xref py py-meth docutils literal"><span class="pre">push()</span></tt></a> pushes to the top but <a class="reference internal" href="#funge.stack.Stack.rpush" title="funge.stack.Stack.rpush"><tt class="xref py py-meth docutils literal"><span class="pre">rpush()</span></tt></a> pushes to the bottom. These counterparts are needed mainly for <tt class="xref py py-meth docutils literal"><span class="pre">MODE</span></tt> fingerprint.</p>
+<dl class="method">
+<dt id="funge.stack.Stack.push">
+<tt class="descname">push</tt><big>(</big><em>item</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rpush">
+<tt class="descname">rpush</tt><big>(</big><em>item</em><big>)</big></dt>
+<dd><p>Pushes a value to the top or the bottom of the stack.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.pushmany">
+<tt class="descname">pushmany</tt><big>(</big><em>items</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rpushmany">
+<tt class="descname">rpushmany</tt><big>(</big><em>items</em><big>)</big></dt>
+<dd><p>Pushes values to the top or the bottom of the stack. Values will be pushed in the reverse order, so they will be in the given order when popped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.push_string">
+<tt class="descname">push_string</tt><big>(</big><em>s</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rpush_string">
+<tt class="descname">rpush_string</tt><big>(</big><em>s</em><big>)</big></dt>
+<dd><p>Pushes given string to the top or the bottom of the stack. The string will be pushed as null-terminated one (&#8220;0gnirts&#8221;).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.push_vector">
+<tt class="descname">push_vector</tt><big>(</big><em>v</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rpush_vector">
+<tt class="descname">rpush_vector</tt><big>(</big><em>v</em><big>)</big></dt>
+<dd><p>Pushes a vector or any iterable to the top or the bottom of the stack. It is mainly used for pushing position or delta (hence the name).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.discard">
+<tt class="descname">discard</tt><big>(</big><em>n=1</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rdiscard">
+<tt class="descname">rdiscard</tt><big>(</big><em>n=1</em><big>)</big></dt>
+<dd><p>Pops <em>n</em> items from the top or the bottom of the stack and discards them. <em>n</em> can be larger than the size of the stack.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.pop">
+<tt class="descname">pop</tt><big>(</big><big>)</big></dt>
+<dt id="funge.stack.Stack.rpop">
+<tt class="descname">rpop</tt><big>(</big><big>)</big></dt>
+<dd><p>Pops a value from the top or the bottom of the stack and returns it.</p>
+<p>If the stack is empty, it will pop zero.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.popmany">
+<tt class="descname">popmany</tt><big>(</big><em>n</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rpopmany">
+<tt class="descname">rpopmany</tt><big>(</big><em>n</em><big>)</big></dt>
+<dd><p>Pops <em>n</em> values from the top or the bottom of the stack and returns them. Values will be returned in the popped order.</p>
+<p>If the stack is empty, it will pop zeroes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.pop_string">
+<tt class="descname">pop_string</tt><big>(</big><big>)</big></dt>
+<dt id="funge.stack.Stack.rpop_string">
+<tt class="descname">rpop_string</tt><big>(</big><big>)</big></dt>
+<dd><p>Pops a null-terminated string (&#8220;0gnirts&#8221;) from the top or the bottom of the stack and returns it.</p>
+<p>If the stack is empty, the string ends at the bottom of the stack and it won&#8217;t raise any exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.pop_vector">
+<tt class="descname">pop_vector</tt><big>(</big><em>n</em><big>)</big></dt>
+<dt id="funge.stack.Stack.rpop_vector">
+<tt class="descname">rpop_vector</tt><big>(</big><em>n</em><big>)</big></dt>
+<dd><p>Pops a list of size <em>n</em> from the top or the bottom of the stack and return it. A vector will be popped in the pushed order (i.e. the reverse popped order), so it is mainly used for pushing position or delta (hence the name).</p>
+<p>If the stack is empty, one or more first elements will be zero.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.Stack.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big></dt>
+<dd><p>Empties the stack in place.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="funge.stack.TOSS">
+<tt class="descclassname">funge.stack.</tt><tt class="descname">TOSS</tt></dt>
+<dt id="funge.stack.SOSS">
+<tt class="descclassname">funge.stack.</tt><tt class="descname">SOSS</tt></dt>
+<dd><p>Refers to the top of stack stack and the second-to-top of stack stack. They can be used for stack stack indices or <tt class="docutils literal"><span class="pre">stack</span></tt> argument to every stack stack operations.</p>
+<p>They are equal to <tt class="docutils literal"><span class="pre">-1</span></tt> and <tt class="docutils literal"><span class="pre">-2</span></tt>, respectively. It is recommended that use these symbolic constants than numerical indices.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.stack.StackStack">
+<em class="property">class </em><tt class="descclassname">funge.stack.</tt><tt class="descname">StackStack</tt></dt>
+<dd><p>Funge-98 stack stack. It mainly provides convenience methods for accessing the top of stack stack.</p>
+<p>A stack stack itself is organized by Python list, and can be indexed to access individual stack object. For example <tt class="docutils literal"><span class="pre">sstack[TOSS]</span></tt> returns the top of stack stack, and <tt class="docutils literal"><span class="pre">sstack[3]</span></tt> returns the 4th stack from the bottom of stack stack. Also <tt class="docutils literal"><span class="pre">len(sstack)</span></tt> gives the size of stack stack.</p>
+<dl class="attribute">
+<dt id="funge.stack.StackStack.invertmode">
+<tt class="descname">invertmode</tt></dt>
+<dd><p>Gets or sets <em>invertmode</em>. If invertmode is enabled push operations push to the bottom, not the top. It is disabled by default, and can be copied by <a class="reference internal" href="#funge.stack.StackStack.copy" title="funge.stack.StackStack.copy"><tt class="xref py py-meth docutils literal"><span class="pre">copy()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.stack.StackStack.queuemode">
+<tt class="descname">queuemode</tt></dt>
+<dd><p>Gets or sets <em>queuemode</em>. If queuemode is enabled pop operations pop from the bottom, not the top. It is disabled by default, and can be copied by <a class="reference internal" href="#funge.stack.StackStack.copy" title="funge.stack.StackStack.copy"><tt class="xref py py-meth docutils literal"><span class="pre">copy()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.StackStack.push_stack">
+<tt class="descname">push_stack</tt><big>(</big><big>)</big></dt>
+<dd><p>Pushes new empty stack to the top of stack stack.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.StackStack.pop_stack">
+<tt class="descname">pop_stack</tt><big>(</big><big>)</big></dt>
+<dd><p>Pops the top of stack stack and discards it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.StackStack.push">
+<tt class="descname">push</tt><big>(</big><em>item</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.pushmany">
+<tt class="descname">pushmany</tt><big>(</big><em>items</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.push_string">
+<tt class="descname">push_string</tt><big>(</big><em>s</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.push_vector">
+<tt class="descname">push_vector</tt><big>(</big><em>v</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.discard">
+<tt class="descname">discard</tt><big>(</big><em>n=1</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.pop">
+<tt class="descname">pop</tt><big>(</big><em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.popmany">
+<tt class="descname">popmany</tt><big>(</big><em>n</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.pop_string">
+<tt class="descname">pop_string</tt><big>(</big><em>stack=TOSS</em><big>)</big></dt>
+<dt id="funge.stack.StackStack.pop_vector">
+<tt class="descname">pop_vector</tt><big>(</big><em>n</em>, <em>stack=TOSS</em><big>)</big></dt>
+<dd><p>Does given operation on the given <em>stack</em>, with current <a class="reference internal" href="#funge.stack.StackStack.invertmode" title="funge.stack.StackStack.invertmode"><tt class="xref py py-attr docutils literal"><span class="pre">invertmode</span></tt></a> and <a class="reference internal" href="#funge.stack.StackStack.queuemode" title="funge.stack.StackStack.queuemode"><tt class="xref py py-attr docutils literal"><span class="pre">queuemode</span></tt></a>.</p>
+<p>For example <tt class="docutils literal"><span class="pre">sstack.push(42,</span> <span class="pre">TOSS)</span></tt> is equal to the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">sstack</span><span class="o">.</span><span class="n">invertmode</span><span class="p">:</span>
+    <span class="n">sstack</span><span class="p">[</span><span class="n">TOSS</span><span class="p">]</span><span class="o">.</span><span class="n">rpush</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sstack</span><span class="p">[</span><span class="n">TOSS</span><span class="p">]</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.stack.StackStack.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big></dt>
+<dd><p>Creates a deep copy of the stack stack.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.space">
+<span id="funge-space-funge-space"></span><h2><a class="reference internal" href="#module-funge.space" title="funge.space: Implements bounded and unbounded Funge spaces."><tt class="xref py py-mod docutils literal"><span class="pre">funge.space</span></tt></a> &#8211; Funge space</h2>
+<p>This module implements Funge spaces.</p>
+<dl class="class">
+<dt id="funge.space.Space">
+<em class="property">class </em><tt class="descclassname">funge.space.</tt><tt class="descname">Space</tt><big>(</big><em>dimension</em>, <em>default=32</em><big>)</big></dt>
+<dd><p>Infinite Funge-98 space. Dimension can be larger than 3 (though <a class="reference internal" href="#funge.space.Space.getspace" title="funge.space.Space.getspace"><tt class="xref py py-meth docutils literal"><span class="pre">getspace()</span></tt></a> and <a class="reference internal" href="#funge.space.Space.putspace" title="funge.space.Space.putspace"><tt class="xref py py-meth docutils literal"><span class="pre">putspace()</span></tt></a> won&#8217;t work then).</p>
+<dl class="attribute">
+<dt id="funge.space.Space.boundmin">
+<tt class="descname">boundmin</tt></dt>
+<dt id="funge.space.Space.boundmax">
+<tt class="descname">boundmax</tt></dt>
+<dd><p>Returns the least and greatest point of rectangle covers every non-space cells in the space. Note that this rectangle can be larger than needed, since calculating the exact bounds is quite expensive. See <a class="reference internal" href="#funge.space.Space.getrect" title="funge.space.Space.getrect"><tt class="xref py py-meth docutils literal"><span class="pre">getrect()</span></tt></a> for the exact bounds.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.get">
+<tt class="descname">get</tt><big>(</big><em>pos</em><big>)</big></dt>
+<dd><p>Returns the cell at given position, or default value if none. The position can be <a class="reference internal" href="#funge.vector.Vector" title="funge.vector.Vector"><tt class="xref py py-class docutils literal"><span class="pre">Vector</span></tt></a> or tuple.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.put">
+<tt class="descname">put</tt><big>(</big><em>pos</em>, <em>value</em>, <em>update_bounds=True</em><big>)</big></dt>
+<dd><p>Writes the value to given position. If value is equal to default value, the cell will be removed from the space.</p>
+<p>If <em>update_bounds</em> is <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>, it doesn&#8217;t update <a class="reference internal" href="#funge.space.Space.boundmin" title="funge.space.Space.boundmin"><tt class="xref py py-attr docutils literal"><span class="pre">boundmin</span></tt></a> and <a class="reference internal" href="#funge.space.Space.boundmax" title="funge.space.Space.boundmax"><tt class="xref py py-attr docutils literal"><span class="pre">boundmax</span></tt></a>. It is useful for putting many cells once, but then you have to notify the change of Funge space using <a class="reference internal" href="#funge.space.Space.notifyrect" title="funge.space.Space.notifyrect"><tt class="xref py py-meth docutils literal"><span class="pre">notifyrect()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.getspace">
+<tt class="descname">getspace</tt><big>(</big><em>pos</em>, <em>size</em>, <em>rtrim=True</em><big>)</big></dt>
+<dd><p>Captures Funge space given by lowest point and size, and returns the string. If rtrim is <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, it strips every spaces before newline and every newline before form-feed. This is mainly used for <tt class="docutils literal"><span class="pre">o</span></tt> command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.putspace">
+<tt class="descname">putspace</tt><big>(</big><em>pos</em>, <em>str</em><big>)</big></dt>
+<dd><p>Writes the string to the space starting at given position. Newline or form-feed is recognized or stripped according to the number of dimension. After writing it, returns the size of written area as a <a class="reference internal" href="#funge.vector.Vector" title="funge.vector.Vector"><tt class="xref py py-class docutils literal"><span class="pre">Vector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.getrect">
+<tt class="descname">getrect</tt><big>(</big><big>)</big></dt>
+<dd><p>Returns the smallest rectangle covers every non-space cells in the Funge space. This is an expensive operation, and mainly exists for <tt class="docutils literal"><span class="pre">y</span></tt> command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.notifyrect">
+<tt class="descname">notifyrect</tt><big>(</big><em>minpos</em>, <em>maxpos</em><big>)</big></dt>
+<dd><p>Notifies the given area in the Funge space is updated, and bounds should be recalculated accordingly. <em>minpos</em> and <em>maxpos</em> is all inclusive, and do not need to be exact rectangle. This method is only useful if you put cells without updating bounds (<em>update_bounds</em> argument).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.normalize">
+<tt class="descname">normalize</tt><big>(</big><em>position</em>, <em>delta</em><big>)</big></dt>
+<dd><p>Normalizes given position so it is in the bounds and the difference between original and normalized position is a multiple of delta.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.space.Space.scanuntil">
+<tt class="descname">scanuntil</tt><big>(</big><em>position</em>, <em>delta</em>, <em>value</em><big>)</big></dt>
+<dt id="funge.space.Space.scanwhile">
+<tt class="descname">scanwhile</tt><big>(</big><em>position</em>, <em>delta</em>, <em>value</em><big>)</big></dt>
+<dd><p>Finds the next cell in the path starting at <em>position</em> towards <em>delta</em>, which is equal (for <a class="reference internal" href="#funge.space.Space.scanuntil" title="funge.space.Space.scanuntil"><tt class="xref py py-meth docutils literal"><span class="pre">scanuntil()</span></tt></a>) or not equal (for <a class="reference internal" href="#funge.space.Space.scanwhile" title="funge.space.Space.scanwhile"><tt class="xref py py-meth docutils literal"><span class="pre">scanwhile()</span></tt></a>) to given <em>value</em>. Returns the coordinate of that cell.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.space.BoundedSpace">
+<em class="property">class </em><tt class="descclassname">funge.space.</tt><tt class="descname">BoundedSpace</tt><big>(</big><em>dimension</em>, <em>rectmin</em>, <em>rectmax</em>, <em>default=32</em><big>)</big></dt>
+<dd><p>The space with explicit bounds. This is a base class of <a class="reference internal" href="#funge.space.Befunge93Space" title="funge.space.Befunge93Space"><tt class="xref py py-class docutils literal"><span class="pre">Befunge93Space</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.space.Befunge93Space">
+<em class="property">class </em><tt class="descclassname">funge.space.</tt><tt class="descname">Befunge93Space</tt><big>(</big><em>width=80</em>, <em>height=25</em><big>)</big></dt>
+<dd><p>The Befunge-93 space, which is two-dimensional, 80 columns wide and 25 rows high by default. It differs from <a class="reference internal" href="#funge.space.BoundedSpace" title="funge.space.BoundedSpace"><tt class="xref py py-class docutils literal"><span class="pre">BoundedSpace</span></tt></a> that it treats every cell as 8-bit unsigned integer, as the reference implementation does.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.ip">
+<span id="funge-ip-instruction-pointer"></span><h2><a class="reference internal" href="#module-funge.ip" title="funge.ip: Implements Funge instruction pointer."><tt class="xref py py-mod docutils literal"><span class="pre">funge.ip</span></tt></a> &#8211; Instruction pointer</h2>
+<p>This module implements Funge instruction pointer, which has independent position, direction and stack stack.</p>
+<dl class="class">
+<dt id="funge.ip.IP">
+<em class="property">class </em><tt class="descclassname">funge.ip.</tt><tt class="descname">IP</tt><big>(</big><em>program</em>, <em>id</em>, <em>parent=None</em><big>)</big></dt>
+<dd><p>An instruction pointer (IP). If <em>parent</em> is given it is used for initializing default environment (namely <a class="reference internal" href="#funge.ip.IP.parentid" title="funge.ip.IP.parentid"><tt class="xref py py-attr docutils literal"><span class="pre">parentid</span></tt></a>, <a class="reference internal" href="#funge.ip.IP.position" title="funge.ip.IP.position"><tt class="xref py py-attr docutils literal"><span class="pre">position</span></tt></a>, <a class="reference internal" href="#funge.ip.IP.delta" title="funge.ip.IP.delta"><tt class="xref py py-attr docutils literal"><span class="pre">delta</span></tt></a>, <a class="reference internal" href="#funge.ip.IP.offset" title="funge.ip.IP.offset"><tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt></a> and <a class="reference internal" href="#funge.ip.IP.stack" title="funge.ip.IP.stack"><tt class="xref py py-attr docutils literal"><span class="pre">stack</span></tt></a>) of IP.</p>
+<dl class="attribute">
+<dt id="funge.ip.IP.team">
+<tt class="descname">team</tt></dt>
+<dd><p>Returns the team identifier of IP. PyFunge does not make use of this, and always sets it to <tt class="docutils literal"><span class="pre">1</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.id">
+<tt class="descname">id</tt></dt>
+<dd><p>Returns the identifier of IP.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.parentid">
+<tt class="descname">parentid</tt></dt>
+<dd><p>Returns the identifier of parent IP, or <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> if none.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.dimension">
+<tt class="descname">dimension</tt></dt>
+<dd><p>Returns the number of dimensions in Funge space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.space">
+<tt class="descname">space</tt></dt>
+<dd><p>Returns the attached Funge space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.position">
+<tt class="descname">position</tt></dt>
+<dd><p>Returns or sets the position of IP.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.delta">
+<tt class="descname">delta</tt></dt>
+<dd><p>Returns or set the direction (delta) of IP.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.offset">
+<tt class="descname">offset</tt></dt>
+<dd><p>Returns or set the storage offset of IP. It defaults to the origin.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.stack">
+<tt class="descname">stack</tt></dt>
+<dd><p>Returns the attached stack stack.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.stringmode">
+<tt class="descname">stringmode</tt></dt>
+<dd><p>Returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if <em>stringmode</em> is set to the IP, or <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.invertmode">
+<tt class="descname">invertmode</tt></dt>
+<dt id="funge.ip.IP.queuemode">
+<tt class="descname">queuemode</tt></dt>
+<dd><p>Returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if <em>invertmode</em> or <em>queuemode</em> is set to the <a class="reference internal" href="#funge.stack.StackStack" title="funge.stack.StackStack"><tt class="xref py py-class docutils literal"><span class="pre">stack</span> <span class="pre">stack</span></tt></a>, or <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+<p>Setting them affects stack stack methods of current IP. Indeed, these attributes are connected to the stack stack attributes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.ip.IP.commands">
+<tt class="descname">commands</tt></dt>
+<dd><p>The commands available to the IP. This is a dictionary that maps the cell value to callbacks: one can execute an arbitrary command by <tt class="docutils literal"><span class="pre">ip.commands[instr](ip)</span></tt>. It should be altered by <a class="reference internal" href="#funge.ip.IP.add_commands" title="funge.ip.IP.add_commands"><tt class="xref py py-meth docutils literal"><span class="pre">add_commands()</span></tt></a> and <a class="reference internal" href="#funge.ip.IP.remove_commands" title="funge.ip.IP.remove_commands"><tt class="xref py py-meth docutils literal"><span class="pre">remove_commands()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.add_command">
+<tt class="descname">add_command</tt><big>(</big><em>command</em>, <em>callback</em><big>)</big></dt>
+<dd><p>Adds one command with given callback. If callback is <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>, it removes the current command. (But it can be restored with <a class="reference internal" href="#funge.ip.IP.remove_command" title="funge.ip.IP.remove_command"><tt class="xref py py-meth docutils literal"><span class="pre">remove_command()</span></tt></a>.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.add_commands">
+<tt class="descname">add_commands</tt><big>(</big><em>overlay</em><big>)</big></dt>
+<dd><p>Adds commands from the given semantics overlay, e.g. fingerprint object. See <a class="reference internal" href="#funge.ip.IP.add_command" title="funge.ip.IP.add_command"><tt class="xref py py-meth docutils literal"><span class="pre">add_command()</span></tt></a> for precise behavior.</p>
+<p>It pushes new command to the internal stack for each cell value. This is required by Funge-98 specification: as a consequence, if <a class="reference internal" href="#funge.ip.IP.add_commands" title="funge.ip.IP.add_commands"><tt class="xref py py-meth docutils literal"><span class="pre">add_commands()</span></tt></a> and <a class="reference internal" href="#funge.ip.IP.remove_commands" title="funge.ip.IP.remove_commands"><tt class="xref py py-meth docutils literal"><span class="pre">remove_commands()</span></tt></a> are not called in the correct order it can execute a command from unloaded fingerprint.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.remove_command">
+<tt class="descname">remove_command</tt><big>(</big><em>command</em><big>)</big></dt>
+<dd><p>Removes one command and restores to the original callback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.remove_commands">
+<tt class="descname">remove_commands</tt><big>(</big><em>overlay</em><big>)</big></dt>
+<dd><p>Removes commands of the given semantics overlay, e.g. fingerprint object. See <a class="reference internal" href="#funge.ip.IP.add_commands" title="funge.ip.IP.add_commands"><tt class="xref py py-meth docutils literal"><span class="pre">add_commands()</span></tt></a> for precise behavior.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.load_fingerprint">
+<tt class="descname">load_fingerprint</tt><big>(</big><em>fpid</em><big>)</big></dt>
+<dd><p>Loads a fingerprint of given identifier and initializes it. Returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> unless the fingerprint is non-existent, or the fingerprint initialization is failed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.unload_fingerprint">
+<tt class="descname">unload_fingerprint</tt><big>(</big><em>fpid</em><big>)</big></dt>
+<dd><p>Unloads a fingerprint of given identifier and finalizes it. Returns <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> unless the fingerprint is not yet loaded, or the fingerprint finalization is failed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.push">
+<tt class="descname">push</tt><big>(</big><em>item</em><big>)</big></dt>
+<dt id="funge.ip.IP.pushmany">
+<tt class="descname">pushmany</tt><big>(</big><em>items</em><big>)</big></dt>
+<dt id="funge.ip.IP.push_string">
+<tt class="descname">push_string</tt><big>(</big><em>s</em><big>)</big></dt>
+<dt id="funge.ip.IP.push_vector">
+<tt class="descname">push_vector</tt><big>(</big><em>v</em><big>)</big></dt>
+<dd><p>Pushes to the top of the stack stack. They are same to <a class="reference internal" href="#funge.stack.StackStack" title="funge.stack.StackStack"><tt class="xref py py-class docutils literal"><span class="pre">StackStack</span></tt></a>&#8216;s corresponding methods, but affected by <a class="reference internal" href="#funge.ip.IP.invertmode" title="funge.ip.IP.invertmode"><tt class="xref py py-attr docutils literal"><span class="pre">invertmode</span></tt></a> flag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.ip.IP.discard">
+<tt class="descname">discard</tt><big>(</big><em>n=1</em><big>)</big></dt>
+<dt id="funge.ip.IP.pop">
+<tt class="descname">pop</tt><big>(</big><big>)</big></dt>
+<dt id="funge.ip.IP.popmany">
+<tt class="descname">popmany</tt><big>(</big><em>n</em><big>)</big></dt>
+<dt id="funge.ip.IP.pop_string">
+<tt class="descname">pop_string</tt><big>(</big><big>)</big></dt>
+<dt id="funge.ip.IP.pop_vector">
+<tt class="descname">pop_vector</tt><big>(</big><big>)</big></dt>
+<dd><p>Pops from the top of the stack stack. They are same to <a class="reference internal" href="#funge.stack.StackStack" title="funge.stack.StackStack"><tt class="xref py py-class docutils literal"><span class="pre">StackStack</span></tt></a>&#8216;s corresponding methods, but affected by <a class="reference internal" href="#funge.ip.IP.queuemode" title="funge.ip.IP.queuemode"><tt class="xref py py-attr docutils literal"><span class="pre">queuemode</span></tt></a> flag.</p>
+<p><a class="reference internal" href="#funge.ip.IP.pop_vector" title="funge.ip.IP.pop_vector"><tt class="xref py py-meth docutils literal"><span class="pre">pop_vector()</span></tt></a> is a special case, since it always pops and returns a <a class="reference internal" href="#funge.vector.Vector" title="funge.vector.Vector"><tt class="xref py py-class docutils literal"><span class="pre">Vector</span></tt></a> whose size is same to the number of dimensions in Funge space.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.exception">
+<span id="funge-exception-exceptions"></span><h2><a class="reference internal" href="#module-funge.exception" title="funge.exception: Defines package-wide exceptions."><tt class="xref py py-mod docutils literal"><span class="pre">funge.exception</span></tt></a> &#8211; Exceptions</h2>
+<p>This module defines some package-wide exceptions.</p>
+<dl class="exception">
+<dt id="funge.exception.IPStopped">
+<em class="property">exception </em><tt class="descclassname">funge.exception.</tt><tt class="descname">IPStopped</tt></dt>
+<dd><p>Raised when the IP hits <tt class="docutils literal"><span class="pre">&#64;</span></tt> instruction in Funge-98 mode. The caller should remove the IP from the queue.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="funge.exception.IPQuitted">
+<em class="property">exception </em><tt class="descclassname">funge.exception.</tt><tt class="descname">IPQuitted</tt><big>(</big><em>exitcode</em><big>)</big></dt>
+<dd><p>Raised when the IP hits <tt class="docutils literal"><span class="pre">&#64;</span></tt> instruction in Befunge-93 mode, or <tt class="docutils literal"><span class="pre">q</span></tt> instruction in Funge-98 mode. The caller should terminate all IPs.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.semantics">
+<span id="funge-semantics-command-semantics"></span><h2><a class="reference internal" href="#module-funge.semantics" title="funge.semantics: Defines a base class for semantics."><tt class="xref py py-mod docutils literal"><span class="pre">funge.semantics</span></tt></a> &#8211; Command semantics</h2>
+<p>This module provides a base class for core semantics (<a class="reference internal" href="#funge.semantics.Semantics" title="funge.semantics.Semantics"><tt class="xref py py-class docutils literal"><span class="pre">Semantics</span></tt></a>) and overlay (<a class="reference internal" href="#funge.semantics.SemanticsOverlay" title="funge.semantics.SemanticsOverlay"><tt class="xref py py-class docutils literal"><span class="pre">SemanticsOverlay</span></tt></a>).</p>
+<dl class="class">
+<dt id="funge.semantics.SemanticsBase">
+<em class="property">class </em><tt class="descclassname">funge.semantics.</tt><tt class="descname">SemanticsBase</tt></dt>
+<dd><p>The base of semantics implementation.</p>
+<dl class="attribute">
+<dt id="funge.semantics.SemanticsBase.commands">
+<tt class="descname">commands</tt></dt>
+<dd><p>Returns the dictionary maps the cell value to corresponding callback. The callback should have one argument, <a class="reference internal" href="#funge.ip.IP" title="funge.ip.IP"><tt class="xref py py-class docutils literal"><span class="pre">IP</span></tt></a> object. This class attribute is automatically generated via <a class="reference internal" href="#funge.semantics.SemanticsBase.register" title="funge.semantics.SemanticsBase.register"><tt class="xref py py-meth docutils literal"><span class="pre">register()</span></tt></a> decorator.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="funge.semantics.SemanticsBase.register">
+<em class="property">static </em><tt class="descname">register</tt><big>(</big><em>commands</em>, <em>**kwargs</em><big>)</big></dt>
+<dd><p>This is a decorator for commands. Typical example of semantics classes is like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SomeSemantics</span><span class="p">(</span><span class="n">SemanticsBase</span><span class="p">):</span>
+    <span class="nd">@SemanticsBase.register</span><span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">squiggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;IP hit a squiggle! Awwwww!!!&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">IPStopped</span><span class="p">()</span>
+
+    <span class="nd">@SemanticsBase.register</span><span class="p">(</span><span class="s">&#39;0123456789&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;You should not use numbers. Pushes the answer instead.&#39;</span><span class="p">)</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>commands</em> can be a string or a list of character values. <em>kwargs</em> are stored in the method directory: they can be used as a hint of the instruction. (Note that PyFunge 0.5.0 doesn&#8217;t use this hint yet.)</p>
+<p>Commands can be inherited and overridden from other classes. If two different methods implement same command the result is undefined.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.semantics.Semantics">
+<em class="property">class </em><tt class="descclassname">funge.semantics.</tt><tt class="descname">Semantics</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements a core semantics, usable for an argument to <a class="reference internal" href="#funge.program.Program" title="funge.program.Program"><tt class="xref py py-class docutils literal"><span class="pre">Program</span></tt></a>. It has to implement several methods besides from commands.</p>
+<dl class="staticmethod">
+<dt id="funge.semantics.Semantics.create_space">
+<em class="property">static </em><tt class="descname">create_space</tt><big>(</big><big>)</big></dt>
+<dd><p>Creates and returns the space appropriate for current semantics.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="funge.semantics.Semantics.init_ip">
+<em class="property">static </em><tt class="descname">init_ip</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Initializes the given IP at the start of the program. For example, most semantics will initialize IP to travel towards right.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.semantics.Semantics.walk">
+<tt class="descname">walk</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Finds the next executable instruction and changes IP&#8217;s position. By default it moves towards delta and normalizes the position. It should skip spaces or markers in Funge-98 mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.semantics.Semantics.command">
+<tt class="descname">command</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Executes one command at current position of IP. Every tick this method and <a class="reference internal" href="#funge.semantics.Semantics.walk" title="funge.semantics.Semantics.walk"><tt class="xref py py-meth docutils literal"><span class="pre">walk()</span></tt></a>  have to be called, since this method alone doesn&#8217;t seek to next instruction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.semantics.Semantics.undefined">
+<tt class="descname">undefined</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Called when IP hits an undefined command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.semantics.Semantics.stringmode">
+<tt class="descname">stringmode</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>Called when string mode is enabled.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.semantics.SemanticsOverlay">
+<em class="property">class </em><tt class="descclassname">funge.semantics.</tt><tt class="descname">SemanticsOverlay</tt><big>(</big><em>semantics</em><big>)</big></dt>
+<dd><p>Implements <em>semantics overlay</em>, which can attach to IP and detach from IP in the runtime. <a class="reference internal" href="#funge.fingerprint.Fingerprint" title="funge.fingerprint.Fingerprint"><tt class="xref py py-class docutils literal"><span class="pre">Fingerprint</span></tt></a> object is a kind of semantics overlay. Its argument is a core semantics and can be called as overlays&#8217; method.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.languages">
+<span id="funge-languages-language-implementations"></span><h2><a class="reference internal" href="#module-funge.languages" title="funge.languages: Provides language semantics."><tt class="xref py py-mod docutils literal"><span class="pre">funge.languages</span></tt></a> &#8211; Language implementations</h2>
+<p>This package provides language semantics for Befunge-93 and Funge-98 languages.</p>
+<div class="section" id="module-funge.languages.befunge93">
+<span id="funge-languages-befunge93-befunge-93-implementation"></span><h3><a class="reference internal" href="#module-funge.languages.befunge93" title="funge.languages.befunge93: Implements Befunge-93 commands."><tt class="xref py py-mod docutils literal"><span class="pre">funge.languages.befunge93</span></tt></a> &#8211; Befunge-93 implementation</h3>
+<p>This module implements Befunge-93 commands.</p>
+<dl class="class">
+<dt id="funge.languages.befunge93.Unefunge93">
+<em class="property">class </em><tt class="descclassname">funge.languages.befunge93.</tt><tt class="descname">Unefunge93</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements an one-dimensional subset of Befunge-93 commands. Such language doesn&#8217;t exist but it is used for the base class of <a class="reference internal" href="#funge.languages.funge98.Unefunge98" title="funge.languages.funge98.Unefunge98"><tt class="xref py py-class docutils literal"><span class="pre">Unefunge98</span></tt></a>.</p>
+<dl class="attribute">
+<dt id="funge.languages.befunge93.Unefunge93.delta_right">
+<tt class="descname">delta_right</tt></dt>
+<dt id="funge.languages.befunge93.Unefunge93.delta_left">
+<tt class="descname">delta_left</tt></dt>
+<dd><p>Equal to <tt class="docutils literal"><span class="pre">Vector(self.dimension).replace(_0=-1)</span></tt> and <tt class="docutils literal"><span class="pre">Vector(self.dimension).replace(_0=1)</span></tt>, respectively.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.befunge93.Befunge93">
+<em class="property">class </em><tt class="descclassname">funge.languages.befunge93.</tt><tt class="descname">Befunge93</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements full Befunge-93 commands.</p>
+<dl class="attribute">
+<dt id="funge.languages.befunge93.Befunge93.delta_up">
+<tt class="descname">delta_up</tt></dt>
+<dt id="funge.languages.befunge93.Befunge93.delta_down">
+<tt class="descname">delta_down</tt></dt>
+<dd><p>Equal to <tt class="docutils literal"><span class="pre">Vector(self.dimension).replace(_1=-1)</span></tt> and <tt class="docutils literal"><span class="pre">Vector(self.dimension).replace(_1=1)</span></tt>, respectively.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.befunge93.Befunge93_divbyzero_stop">
+<em class="property">class </em><tt class="descclassname">funge.languages.befunge93.</tt><tt class="descname">Befunge93_divbyzero_stop</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Same to <a class="reference internal" href="#funge.languages.befunge93.Befunge93" title="funge.languages.befunge93.Befunge93"><tt class="xref py py-class docutils literal"><span class="pre">Befunge93</span></tt></a> class, but IP terminates with exit code if division by zero occurs.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.befunge93.Befunge93_divbyzero_value">
+<em class="property">class </em><tt class="descclassname">funge.languages.befunge93.</tt><tt class="descname">Befunge93_divbyzero_value</tt><big>(</big><em>platform</em>, <em>divbyzero</em><big>)</big></dt>
+<dd><p>Same to <a class="reference internal" href="#funge.languages.befunge93.Befunge93" title="funge.languages.befunge93.Befunge93"><tt class="xref py py-class docutils literal"><span class="pre">Befunge93</span></tt></a> class, but pushes given value if division by zero occurs.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.languages.funge98">
+<span id="funge-languages-funge98-core-funge-98-implementation"></span><h3><a class="reference internal" href="#module-funge.languages.funge98" title="funge.languages.funge98: Implements core Funge-98 commands."><tt class="xref py py-mod docutils literal"><span class="pre">funge.languages.funge98</span></tt></a> &#8211; Core Funge-98 implementation</h3>
+<p>This module implements core Funge-98 commands. &#8220;Core&#8221; means no filesystem Funge and no concurrent Funge: see <a class="reference internal" href="#module-funge.languages.funge98opt" title="funge.languages.funge98opt: Implements concurrent and filesystem Funge commands."><tt class="xref py py-mod docutils literal"><span class="pre">funge.languages.funge98opt</span></tt></a> module for those.</p>
+<dl class="class">
+<dt id="funge.languages.funge98.Unefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98.</tt><tt class="descname">Unefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements core Unefunge-98 commands.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.funge98.Befunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98.</tt><tt class="descname">Befunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements core Befunge-98 commands.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.funge98.Trefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98.</tt><tt class="descname">Trefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements core Trefunge-98 commands.</p>
+<dl class="attribute">
+<dt id="funge.languages.funge98.Trefunge98.delta_high">
+<tt class="descname">delta_high</tt></dt>
+<dt id="funge.languages.funge98.Trefunge98.delta_low">
+<tt class="descname">delta_low</tt></dt>
+<dd><p>Equal to <tt class="docutils literal"><span class="pre">Vector(self.dimension).replace(_2=-1)</span></tt> and <tt class="docutils literal"><span class="pre">Vector(self.dimension).replace(_2=1)</span></tt>, respectively.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.languages.funge98opt">
+<span id="funge-languages-funge98opt-concurrent-and-filesystem-funges"></span><h3><a class="reference internal" href="#module-funge.languages.funge98opt" title="funge.languages.funge98opt: Implements concurrent and filesystem Funge commands."><tt class="xref py py-mod docutils literal"><span class="pre">funge.languages.funge98opt</span></tt></a> &#8211; Concurrent and filesystem Funges</h3>
+<p>This module implements additional concurrent and filesystem Funge commands.</p>
+<dl class="class">
+<dt id="funge.languages.funge98opt.FilesystemFunge">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">FilesystemFunge</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements filesystem Funge commands (<tt class="docutils literal"><span class="pre">=</span></tt>, <tt class="docutils literal"><span class="pre">i</span></tt>, <tt class="docutils literal"><span class="pre">o</span></tt>). This is a base class for real languages.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.funge98opt.ConcurrentFunge">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentFunge</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements concurrent Funge commands (<tt class="docutils literal"><span class="pre">t</span></tt>, <tt class="docutils literal"><span class="pre">&#64;</span></tt>). This is a base class for real languages.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.languages.funge98opt.FilesystemUnefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">FilesystemUnefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.FilesystemBefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">FilesystemBefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.FilesystemTrefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">FilesystemTrefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.ConcurrentUnefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentUnefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.ConcurrentBefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentBefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.ConcurrentTrefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentTrefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.ConcurrentFilesystemUnefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentFilesystemUnefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.ConcurrentFilesystemBefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentFilesystemBefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dt id="funge.languages.funge98opt.ConcurrentFilesystemTrefunge98">
+<em class="property">class </em><tt class="descclassname">funge.languages.funge98opt.</tt><tt class="descname">ConcurrentFilesystemTrefunge98</tt><big>(</big><em>platform</em><big>)</big></dt>
+<dd><p>Implements filesystem or concurrent Funge commands along with core Funge-98 commands. There are nine such combinations provided.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-funge.platform">
+<span id="funge-platform-platform-abstraction"></span><h2><a class="reference internal" href="#module-funge.platform" title="funge.platform: Abstracts the external system."><tt class="xref py py-mod docutils literal"><span class="pre">funge.platform</span></tt></a> &#8211; Platform abstraction</h2>
+<p>This module defines a class for interfacing with external system.</p>
+<dl class="class">
+<dt id="funge.platform.Platform">
+<em class="property">class </em><tt class="descclassname">funge.platform.</tt><tt class="descname">Platform</tt><big>(</big><em>args</em>, <em>environ</em>, <em>warnings=False</em><big>)</big></dt>
+<dd><p>Base class for platform abstraction. The classes should override I/O functions, and optionally file-related functions or <a class="reference internal" href="#funge.platform.Platform.system" title="funge.platform.Platform.system"><tt class="xref py py-meth docutils literal"><span class="pre">system()</span></tt></a>.</p>
+<dl class="attribute">
+<dt id="funge.platform.Platform.args">
+<tt class="descname">args</tt></dt>
+<dd><p>Returns the list of command-line arguments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="funge.platform.Platform.environ">
+<tt class="descname">environ</tt></dt>
+<dd><p>Returns the dictionary of environment variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.warn">
+<tt class="descname">warn</tt><big>(</big><em>message</em><big>)</big></dt>
+<dd><p>Optionally displays the warning.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.prompt">
+<tt class="descname">prompt</tt><big>(</big><em>message</em>, <em>process=...</em><big>)</big></dt>
+<dd><p>Displays given message and prompts for input. When the user inputs, it is processed with process callback and returned. If the callback raises the exception it prompts again. By default process returns given line unchanged.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big></dt>
+<dd><p>Flushes the output. It is only explicitly called before the user inputs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.getchar">
+<tt class="descname">getchar</tt><big>(</big><big>)</big></dt>
+<dd><p>Reads one character from the input and returns its code.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.ungetchar">
+<tt class="descname">ungetchar</tt><big>(</big><em>ch</em><big>)</big></dt>
+<dd><p>Pushes given character code back to input buffer. Next <a class="reference internal" href="#funge.platform.Platform.getchar" title="funge.platform.Platform.getchar"><tt class="xref py py-meth docutils literal"><span class="pre">getchar()</span></tt></a> should return that character.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.putchar">
+<tt class="descname">putchar</tt><big>(</big><em>ch</em><big>)</big></dt>
+<dd><p>Writes one character whose code is ch to the output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.getint">
+<tt class="descname">getint</tt><big>(</big><big>)</big></dt>
+<dd><p>Reads one integer from the input. It follows Funge-98 specification so discards every non-digits. If you have to input an interpreter-specific thing use <a class="reference internal" href="#funge.platform.Platform.prompt" title="funge.platform.Platform.prompt"><tt class="xref py py-meth docutils literal"><span class="pre">prompt()</span></tt></a> instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.putint">
+<tt class="descname">putint</tt><big>(</big><em>num</em><big>)</big></dt>
+<dd><p>Writes the integer and one space character to the output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.putstr">
+<tt class="descname">putstr</tt><big>(</big><em>s</em><big>)</big></dt>
+<dd><p>Prints the given string to the output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.readfile">
+<tt class="descname">readfile</tt><big>(</big><em>filename</em><big>)</big></dt>
+<dd><p>Returns the contents of given file, or raises the exception on failure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.writefile">
+<tt class="descname">writefile</tt><big>(</big><em>filename</em>, <em>data</em><big>)</big></dt>
+<dd><p>Writes given contents to the file, or raises the exception on failure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.platform.Platform.system">
+<tt class="descname">system</tt><big>(</big><em>command</em><big>)</big></dt>
+<dd><p>Executes given command and returns the exit code.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.platform.BufferedPlatform">
+<em class="property">class </em><tt class="descclassname">funge.platform.</tt><tt class="descname">BufferedPlatform</tt><big>(</big><em>args</em>, <em>environ</em>, <em>stdin=sys.stdin</em>, <em>stdout=sys.stdout</em>, <em>warnings=False</em><big>)</big></dt>
+<dd><p>A platform with buffered input; it only reads whole line when the buffer is empty. It also automatically flushes when printing newline.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.fingerprint">
+<span id="funge-fingerprint-fingerprint-management"></span><h2><a class="reference internal" href="#module-funge.fingerprint" title="funge.fingerprint: Manages Funge-98 fingerprints."><tt class="xref py py-mod docutils literal"><span class="pre">funge.fingerprint</span></tt></a> &#8211; Fingerprint management</h2>
+<p>This module provides a lookup and base class for Funge-98 fingerprints.</p>
+<dl class="class">
+<dt id="funge.fingerprint.FingerprintLookup">
+<em class="property">class </em><tt class="descclassname">funge.fingerprint.</tt><tt class="descname">FingerprintLookup</tt></dt>
+<dd><p>This class manages a list of available fingerprints.</p>
+<dl class="method">
+<dt id="funge.fingerprint.FingerprintLookup.module_from_name">
+<tt class="descname">module_from_name</tt><big>(</big><em>name</em><big>)</big></dt>
+<dd><p>Returns a module object from given name, like <tt class="docutils literal"><span class="pre">funge.fp.fp_NULL</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.fingerprint.FingerprintLookup.search_module">
+<tt class="descname">search_module</tt><big>(</big><em>mod</em><big>)</big></dt>
+<dd><p>Searches fingerprint classes from the given module, and returns a list of them. See <a class="reference internal" href="#funge.fingerprint.Fingerprint" title="funge.fingerprint.Fingerprint"><tt class="xref py py-class docutils literal"><span class="pre">Fingerprint</span></tt></a> for criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.fingerprint.FingerprintLookup.add_module">
+<tt class="descname">add_module</tt><big>(</big><em>name</em><big>)</big></dt>
+<dd><p>Adds all fingerprint classes available from a module of the given name to the lookup.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.fingerprint.FingerprintLookup.add_class">
+<tt class="descname">add_class</tt><big>(</big><em>cls</em><big>)</big></dt>
+<dd><p>Adds a fingerprint class to the lookup.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="funge.fingerprint.Fingerprint">
+<em class="property">class </em><tt class="descclassname">funge.fingerprint.</tt><tt class="descname">Fingerprint</tt><big>(</big><em>semantics</em><big>)</big></dt>
+<dd><p>A fingerprint object. It is a <a class="reference internal" href="#funge.semantics.SemanticsOverlay" title="funge.semantics.SemanticsOverlay"><tt class="xref py py-class docutils literal"><span class="pre">SemanticsOverlay</span></tt></a> with additional methods below.</p>
+<p>Fingerprint class, to be added by <a class="reference internal" href="#funge.fingerprint.FingerprintLookup" title="funge.fingerprint.FingerprintLookup"><tt class="xref py py-class docutils literal"><span class="pre">FingerprintLookup</span></tt></a>, should have two attributes: <tt class="docutils literal"><span class="pre">API</span></tt> and <tt class="docutils literal"><span class="pre">ID</span></tt>. The former identifies the incompatible revisions of fingerprint API, where current revision is <tt class="docutils literal"><span class="pre">&quot;PyFunge</span> <span class="pre">v2&quot;</span></tt>. (This is only supported revision for now.) The latter is a fingerprint identifier, like <tt class="docutils literal"><span class="pre">0x4e554c4c</span></tt> for <tt class="docutils literal"><span class="pre">NULL</span></tt> fingerprint.</p>
+<dl class="method">
+<dt id="funge.fingerprint.Fingerprint.init">
+<tt class="descname">init</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>This method is executed when IP loads the fingerprint object. By default it registers itself to IP via <a class="reference internal" href="#funge.ip.IP.add_commands" title="funge.ip.IP.add_commands"><tt class="xref py py-meth docutils literal"><span class="pre">IP.add_commands()</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="funge.fingerprint.Fingerprint.final">
+<tt class="descname">final</tt><big>(</big><em>ip</em><big>)</big></dt>
+<dd><p>This method is executed when IP unloads the fingerprint object. By default it unregisters itself from IP via <a class="reference internal" href="#funge.ip.IP.remove_commands" title="funge.ip.IP.remove_commands"><tt class="xref py py-meth docutils literal"><span class="pre">IP.remove_commands()</span></tt></a> method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-funge.fp">
+<span id="funge-fp-fingerprints"></span><h2><a class="reference internal" href="#module-funge.fp" title="funge.fp: Contains default fingerprints."><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp</span></tt></a> &#8211; Fingerprints</h2>
+<p>This package contains implementations of default fingerprints. The complete list of modules is:</p>
+<ul class="simple">
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_3DSP</span></tt> for <a class="reference internal" href="fingerprint/3DSP.html#dsp"><em>&#8220;3DSP&#8221; 3D space manipulation extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_BASE</span></tt> for <a class="reference internal" href="fingerprint/BASE.html#base"><em>&#8220;BASE&#8221; I/O for numbers in other bases</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_BOOL</span></tt> for <a class="reference internal" href="fingerprint/BOOL.html#bool"><em>&#8220;BOOL&#8221; Logic functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_CPLI</span></tt> for <a class="reference internal" href="fingerprint/CPLI.html#cpli"><em>&#8220;CPLI&#8221; Complex Integer extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_DATE</span></tt> for <a class="reference internal" href="fingerprint/DATE.html#date"><em>&#8220;DATE&#8221; Date Functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_DIRF</span></tt> for <a class="reference internal" href="fingerprint/DIRF.html#dirf"><em>&#8220;DIRF&#8221; Directory functions extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_EVAR</span></tt> for <a class="reference internal" href="fingerprint/EVAR.html#evar"><em>&#8220;EVAR&#8221; Environment variables extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_FILE</span></tt> for <a class="reference internal" href="fingerprint/FILE.html#file"><em>&#8220;FILE&#8221; File I/O functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_FIXP</span></tt> for <a class="reference internal" href="fingerprint/FIXP.html#fixp"><em>&#8220;FIXP&#8221; Some useful fixed point math functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_FPDP</span></tt> for <a class="reference internal" href="fingerprint/FPxP.html#fpdp"><em>&#8220;FPDP&#8221; Double precision floating point</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_FPRT</span></tt> for <a class="reference internal" href="fingerprint/FPRT.html#fprt"><em>&#8220;FPRT&#8221; Formatted print</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_FPSP</span></tt> for <a class="reference internal" href="fingerprint/FPxP.html#fpsp"><em>&#8220;FPSP&#8221; Single precision floating point</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_FRTH</span></tt> for <a class="reference internal" href="fingerprint/FRTH.html#frth"><em>&#8220;FRTH&#8221; Some common forth commands</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_HRTI</span></tt> for <a class="reference internal" href="fingerprint/HRTI.html#hrti"><em>&#8220;HRTI&#8221; High-Resolution Timer Interface</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_ICAL</span></tt> for <a class="reference internal" href="fingerprint/ICAL.html#ical"><em>&#8220;ICAL&#8221; Some Intercal-like functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_IIPC</span></tt> for <a class="reference internal" href="fingerprint/IIPC.html#iipc"><em>&#8220;IIPC&#8221; Inter IP communication extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_IMAP</span></tt> for <a class="reference internal" href="fingerprint/IMAP.html#imap"><em>&#8220;IMAP&#8221; Instruction remap extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_IMTH</span></tt> for <a class="reference internal" href="fingerprint/IMTH.html#imth"><em>&#8220;IMTH&#8221; Some integer math functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_INDV</span></tt> for <a class="reference internal" href="fingerprint/INDV.html#indv"><em>&#8220;INDV&#8221; Pointer functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_JSTR</span></tt> for <a class="reference internal" href="fingerprint/JSTR.html#jstr"><em>&#8220;JSTR&#8221; Jesse van Herk&#8217;s extensions to string functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_LONG</span></tt> for <a class="reference internal" href="fingerprint/LONG.html#long"><em>&#8220;LONG&#8221; Long Integers</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_MODE</span></tt> for <a class="reference internal" href="fingerprint/MODE.html#mode"><em>&#8220;MODE&#8221; Funge-98 Standard Modes</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_MODU</span></tt> for <a class="reference internal" href="fingerprint/MODU.html#modu"><em>&#8220;MODU&#8221; Modulo Arithmetic Extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_NCRS</span></tt> for <a class="reference internal" href="fingerprint/NCRS.html#ncrs"><em>&#8220;NCRS&#8221; Ncurses extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_NULL</span></tt> for <a class="reference internal" href="fingerprint/NULL.html#null"><em>&#8220;NULL&#8221; Funge-98 Null Fingerprint</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_ORTH</span></tt> for <a class="reference internal" href="fingerprint/ORTH.html#orth"><em>&#8220;ORTH&#8221; Orthogonal Easement Library</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_PERL</span></tt> for <a class="reference internal" href="fingerprint/PERL.html#perl"><em>&#8220;PERL&#8221; Generic Interface to the Perl Language</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_REFC</span></tt> for <a class="reference internal" href="fingerprint/REFC.html#refc"><em>&#8220;REFC&#8221; Referenced Cells Extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_ROMA</span></tt> for <a class="reference internal" href="fingerprint/ROMA.html#roma"><em>&#8220;ROMA&#8221; Funge-98 Roman Numerals</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_SCKE</span></tt> for <a class="reference internal" href="fingerprint/SCKE.html#scke"><em>&#8220;SCKE&#8221; GLFunge98&#8217;s extension to SOCK</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_SETS</span></tt> for <a class="reference internal" href="fingerprint/SETS.html#sets"><em>&#8220;SETS&#8221; Set operations</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_SOCK</span></tt> for <a class="reference internal" href="fingerprint/SOCK.html#sock"><em>&#8220;SOCK&#8221; TCP/IP socket extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_STRN</span></tt> for <a class="reference internal" href="fingerprint/STRN.html#strn"><em>&#8220;STRN&#8221; String functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_SUBR</span></tt> for <a class="reference internal" href="fingerprint/SUBR.html#subr"><em>&#8220;SUBR&#8221; Subroutine extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_TERM</span></tt> for <a class="reference internal" href="fingerprint/TERM.html#term"><em>&#8220;TERM&#8221; Terminal extension</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_TIME</span></tt> for <a class="reference internal" href="fingerprint/TIME.html#time"><em>&#8220;TIME&#8221; Time and Date functions</em></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp.fp_TOYS</span></tt> for <a class="reference internal" href="fingerprint/TOYS.html#toys"><em>&#8220;TOYS&#8221; Funge-98 Standard Toys</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extending.html" title="Extending PyFunge"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fingerprint/TOYS.html" title="&#34;TOYS&#34; Funge-98 Standard Toys"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

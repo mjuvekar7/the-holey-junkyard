@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;HRTI&#34; High-Resolution Timer Interface</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;ICAL&#34; Some Intercal-like functions" href="ICAL.html" />
+    <link rel="prev" title="&#34;FRTH&#34; Some common forth commands" href="FRTH.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ICAL.html" title="&#34;ICAL&#34; Some Intercal-like functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="FRTH.html" title="&#34;FRTH&#34; Some common forth commands"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="hrti-high-resolution-timer-interface">
+<span id="hrti"></span><h1><tt class="docutils literal"><span class="pre">&quot;HRTI&quot;</span></tt> High-Resolution Timer Interface</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x48525449</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://catseye.tc/projects/funge98/library/HRTI.html">Cat&#8217;s Eye Technologies</a>, implements sub-second precision timer. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Erases any existing mark set by <tt class="docutils literal"><span class="pre">M</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>ticks</em></span></dt>
+<dd>Pushes the smallest clock tick the system can handle, measured in microseconds.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Marks current clock tick for later use.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>ticks</em></span></dt>
+<dd>Pushes the number of microseconds elapsed since the last whole second.</dd>
+<dt><tt class="docutils literal"><span class="pre">T</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>ticks</em></span></dt>
+<dd>Pushes the number of microseconds elapsed since last mark. Reflects if there is no mark set.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ICAL.html" title="&#34;ICAL&#34; Some Intercal-like functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="FRTH.html" title="&#34;FRTH&#34; Some common forth commands"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

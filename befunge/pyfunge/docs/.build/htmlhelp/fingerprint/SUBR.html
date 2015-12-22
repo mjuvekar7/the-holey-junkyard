@@ -1,0 +1,102 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;SUBR&#34; Subroutine extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;TERM&#34; Terminal extension" href="TERM.html" />
+    <link rel="prev" title="&#34;STRN&#34; String functions" href="STRN.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="TERM.html" title="&#34;TERM&#34; Terminal extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="STRN.html" title="&#34;STRN&#34; String functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="subr-subroutine-extension">
+<span id="subr"></span><h1><tt class="docutils literal"><span class="pre">&quot;SUBR&quot;</span></tt> Subroutine extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x53554252</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#SUBR">RC/Funge-98</a>, implements a function call to arbitrary Funge code and a return from it. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Sets the absolute mode, so the jump location is independent to IP&#8217;s storage offset. This is a default behavior.</dd>
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sub>1</sub> ... <em>a</em><sub>n</sub> <em>pos</em><sup>v</sup> <em>n</em> &#8212; <em>origpos</em><sup>v</sup> <em>origdelta</em><sup>v</sup> <em>a</em><sub>1</sub> ... <em>a</em><sub>n</sub></span></dt>
+<dd>Calls a subroutine at <em>pos</em> and saves the original position and delta as <em>origpos</em> and <em>origdelta</em>. After the call IP travels towards right. It pops <em>n</em> items from the stack as well, and moves them to the top of the stack. Reflects if <em>n</em> is negative.</dd>
+<dt><tt class="docutils literal"><span class="pre">J</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>pos</em><sup>v</sup> &#8212;</span></dt>
+<dd>Jumps to given <em>pos</em>, and make IP travels towards right. It doesn&#8217;t store any return information.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Sets the relative mode, so the jump location is relative to IP&#8217;s storage offset.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>origpos</em><sup>v</sup> <em>origdelta</em><sup>v</sup> <em>a</em><sub>1</sub> ... <em>a</em><sub>n</sub> <em>n</em> &#8212; <em>a</em><sub>1</sub> ... <em>a</em><sub>n</sub></span></dt>
+<dd>Returns from a subroutine and restores the position and delta to <em>origpos</em> and <em>origdelta</em>, respectively. It also pops <em>n</em> items from the stack and moes them to the top of the stack. Reflects if <em>n</em> is negative.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="TERM.html" title="&#34;TERM&#34; Terminal extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="STRN.html" title="&#34;STRN&#34; String functions"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

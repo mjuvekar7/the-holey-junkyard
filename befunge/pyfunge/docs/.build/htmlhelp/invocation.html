@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Invocation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="next" title="Supported Languages" href="languages.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="languages.html" title="Supported Languages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="invocation">
+<span id="id1"></span><h1>Invocation</h1>
+<p>PyFunge supports a command-line front end for executing Funge program.</p>
+<div class="section" id="pyfunge-1">
+<span id="pyfunge-driver"></span><h2><em class="manpage">pyfunge(1)</em></h2>
+<p><tt class="docutils literal"><span class="pre">pyfunge</span></tt> is a driver script, used for interpreting a Funge program. In short, you can simply execute Funge program by providing a file name:</p>
+<div class="highlight-python"><pre>$ pyfunge hello.bf</pre>
+</div>
+<p>It can read the source code from the standard input (<tt class="docutils literal"><span class="pre">-</span></tt>), but you have to specify the version and number of dimensions (only if it is not Befunge) manually. (See also <a class="reference internal" href="#cmdoption-v"><em class="xref std std-option">-v</em></a> and <a class="reference internal" href="#cmdoption-d"><em class="xref std std-option">-d</em></a>.)</p>
+<div class="highlight-python"><pre>$ pyfunge -v98 -d3 -</pre>
+</div>
+<div class="section" id="general-options">
+<h3>General options</h3>
+<dl class="cmdoption">
+<dt id="cmdoption-h">
+<tt class="descname">-h</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--help">
+<tt class="descname">--help</tt><tt class="descclassname"></tt></dt>
+<dd><p>Shows the help message.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-V">
+<tt class="descname">-V</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--version">
+<tt class="descname">--version</tt><tt class="descclassname"></tt></dt>
+<dd><p>Shows the version of PyFunge.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-w">
+<tt class="descname">-w</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--warnings">
+<tt class="descname">--warnings</tt><tt class="descclassname"></tt></dt>
+<dd><p>Enables warnings. PyFunge generates warnings under the following circumstances:</p>
+<ul class="simple">
+<li>Division by zero in Befunge-93 mode.</li>
+</ul>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-x">
+<tt class="descname">-x</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--skip-first-line">
+<tt class="descname">--skip-first-line</tt><tt class="descclassname"></tt></dt>
+<dd><p>Skips the first line of Funge code. This is useful for standalone script or CGI:</p>
+<div class="highlight-python"><pre>#!/usr/bin/env pyfunge -x -v98
+a&quot;!dlrow ,olleH&quot;&gt;:#,_0q</pre>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="funge-options">
+<h3>Funge options</h3>
+<dl class="cmdoption">
+<dt id="cmdoption-v">
+<tt class="descname">-v</tt><tt class="descclassname"> standard</tt></dt>
+<dt id="cmdoption--std">
+<tt class="descname">--std</tt><tt class="descclassname"> standard</tt></dt>
+<dd><p>Selects the language standard to be used. PyFunge currently supports the following standards:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">93</span></tt>, <tt class="docutils literal"><span class="pre">befunge93</span></tt></dt>
+<dd>The program will run in Befunge-93 mode: Funge space is bounded and every non-Befunge-93 commands do nothing.</dd>
+<dt><tt class="docutils literal"><span class="pre">98</span></tt>, <tt class="docutils literal"><span class="pre">funge98</span></tt></dt>
+<dd>The program will run in standard Funge-98 mode. This is default.</dd>
+</dl>
+<p>PyFunge tries to infer this option from source code extension, so you don&#8217;t have to use this generally. If the extension is <tt class="docutils literal"><span class="pre">.bf</span></tt> it is Befunge-93 code, and if it is one of <tt class="docutils literal"><span class="pre">.u98</span></tt>, <tt class="docutils literal"><span class="pre">.b98</span></tt> and <tt class="docutils literal"><span class="pre">.t98</span></tt> it is Funge-98 code. But if you have to run the standalone script or C-Funge polyglot this option will be useful.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-d">
+<tt class="descname">-d</tt><tt class="descclassname"> dimension</tt></dt>
+<dt id="cmdoption--dimension">
+<tt class="descname">--dimension</tt><tt class="descclassname"> dimension</tt></dt>
+<dd><p>Sets how many dimensions are in the Funge space. <em>dimension</em> can be 1 (Unefunge), 2 (Befunge) or 3 (Trefunge). Note that there is no Unefunge-93 nor Trefunge-93, so a combination like <tt class="docutils literal"><span class="pre">-v93</span> <span class="pre">-d1</span></tt> will raise an error.</p>
+<p>PyFunge tries to infer this option from source code extension (like <a class="reference internal" href="#cmdoption-v"><em class="xref std std-option">-v</em></a>), and if it cannot the number of dimensions defaults to 2, i.e. Befunge.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-1">
+<tt class="descname">-1</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--unefunge">
+<tt class="descname">--unefunge</tt><tt class="descclassname"></tt></dt>
+<dd><p>Short for <tt class="docutils literal"><span class="pre">--dimension</span> <span class="pre">1</span></tt>.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-2">
+<tt class="descname">-2</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--befunge">
+<tt class="descname">--befunge</tt><tt class="descclassname"></tt></dt>
+<dd><p>Short for <tt class="docutils literal"><span class="pre">--dimension</span> <span class="pre">2</span></tt>.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-3">
+<tt class="descname">-3</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--trefunge">
+<tt class="descname">--trefunge</tt><tt class="descclassname"></tt></dt>
+<dd><p>Short for <tt class="docutils literal"><span class="pre">--dimension</span> <span class="pre">3</span></tt>.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption--statistics">
+<tt class="descname">--statistics</tt><tt class="descclassname"></tt></dt>
+<dd><p>Shows statistics after the program is terminated. It displays the elapsed time, the real time (excluding the user input), how many commands are executed and how many ticks are elapsed.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="befunge-93-options">
+<h3>Befunge-93 options</h3>
+<p>These options will work only in Befunge-93 mode (<tt class="docutils literal"><span class="pre">-v</span> <span class="pre">93</span></tt>).</p>
+<dl class="cmdoption">
+<dt id="cmdoption--division-by-zero">
+<tt class="descname">--division-by-zero</tt><tt class="descclassname"> value</tt></dt>
+<dd><p>Selects the behavior when division by zero occurs. <em>value</em> can be one of the following:</p>
+<dl class="docutils">
+<dt>number</dt>
+<dd>Division by zero results in given value, no matter what the dividend is. If warnings are enabled it will issue the warning for it.</dd>
+<dt><tt class="docutils literal"><span class="pre">prompt</span></tt></dt>
+<dd>PyFunge will ask for a result of division by zero. This is default behavior.</dd>
+<dt><tt class="docutils literal"><span class="pre">stop</span></tt></dt>
+<dd>The program will be terminated when division by zero occurs. If warnings are enabled it will issue the warning for it.</dd>
+</dl>
+<p>Funge-98 explicitly states that division by zero results in zero, so this option cannot be applied.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="funge-98-options">
+<h3>Funge-98 options</h3>
+<p>These options will work only in Funge-98 mode (<tt class="docutils literal"><span class="pre">-v</span> <span class="pre">98</span></tt>).</p>
+<dl class="cmdoption">
+<dt id="cmdoption-f">
+<tt class="descname">-f</tt><tt class="descclassname"> fingerprints</tt></dt>
+<dt id="cmdoption--fprint">
+<tt class="descname">--fprint</tt><tt class="descclassname"> fingerprints</tt></dt>
+<dd><p>Uses the given fingerprints. Fingerprint names are given as comma-delimited list, and it defaults to every fingerprints in default search path (i.e. <a class="reference internal" href="internals.html#module-funge.fp" title="funge.fp: Contains default fingerprints."><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp</span></tt></a> package).</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption--disable-fprint">
+<tt class="descname">--disable-fprint</tt><tt class="descclassname"></tt></dt>
+<dd><p>Disables all fingerprints.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-I">
+<tt class="descname">-I</tt><tt class="descclassname"> fingerprintpath</tt></dt>
+<dt id="cmdoption--fprint-include">
+<tt class="descname">--fprint-include</tt><tt class="descclassname"> fingerprintpath</tt></dt>
+<dd><p>Adds fingerprint search path. See <span class="target" id="index-0"></span><a class="reference internal" href="#envvar-PYFUNGE_FPRINT_PATH"><tt class="xref std std-envvar docutils literal"><span class="pre">PYFUNGE_FPRINT_PATH</span></tt></a> for the format and detail.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption--concurrent">
+<tt class="descname">--concurrent</tt><tt class="descclassname"></tt></dt>
+<dd><p>Enables the concurrent Funge. This is default in Funge-98 mode.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption--filesystem">
+<tt class="descname">--filesystem</tt><tt class="descclassname"></tt></dt>
+<dd><p>Enables the filesystem Funge. This is default in Funge-98 mode.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-C">
+<tt class="descname">-C</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--no-concurrent">
+<tt class="descname">--no-concurrent</tt><tt class="descclassname"></tt></dt>
+<dd><p>Disables the concurrent Funge.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-F">
+<tt class="descname">-F</tt><tt class="descclassname"></tt></dt>
+<dt id="cmdoption--no-filesystem">
+<tt class="descname">--no-filesystem</tt><tt class="descclassname"></tt></dt>
+<dd><p>Disables the filesystem Funge.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption--list-fprints">
+<tt class="descname">--list-fprints</tt><tt class="descclassname"></tt></dt>
+<dd><p>Lists all available fingerprints and exits. If <span class="target" id="index-1"></span><a class="reference internal" href="#envvar-PYFUNGE_FPRINT_PATH"><tt class="xref std std-envvar docutils literal"><span class="pre">PYFUNGE_FPRINT_PATH</span></tt></a> or <a class="reference internal" href="#cmdoption-I"><em class="xref std std-option">-I</em></a> is set it is used to search additional fingerprints.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment variables</h2>
+<p>PyFunge internally recognizes the following environment variables, if any:</p>
+<dl class="envvar">
+<dt id="envvar-PYFUNGE_NO_PSYCO">
+<tt class="descname">PYFUNGE_NO_PSYCO</tt></dt>
+<dd><p>If this is set to a non-empty string it disables JIT compilation provided by Psyco. It can slow down the execution quite much, but it is useful for debugging and profiling.</p>
+</dd></dl>
+
+<dl class="envvar">
+<dt id="envvar-PYFUNGE_FPRINT_PATH">
+<tt class="descname">PYFUNGE_FPRINT_PATH</tt></dt>
+<dd><p>If this is set to a non-empty string it finds fingerprints from given paths separated by path separator, in addition to default search path (which points <a class="reference internal" href="internals.html#module-funge.fp" title="funge.fp: Contains default fingerprints."><tt class="xref py py-mod docutils literal"><span class="pre">funge.fp</span></tt></a> package). A path separator is semicolon in Windows and colon in Unix.</p>
+<p>Default search path has a priority over search paths set by this one, and this search paths have a priority over search paths set by <a class="reference internal" href="#cmdoption-I"><em class="xref std std-option">-I</em></a> option.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="languages.html" title="Supported Languages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

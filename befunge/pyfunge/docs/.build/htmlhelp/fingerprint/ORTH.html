@@ -1,0 +1,115 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;ORTH&#34; Orthogonal Easement Library</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;PERL&#34; Generic Interface to the Perl Language" href="PERL.html" />
+    <link rel="prev" title="&#34;NULL&#34; Funge-98 Null Fingerprint" href="NULL.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="PERL.html" title="&#34;PERL&#34; Generic Interface to the Perl Language"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="NULL.html" title="&#34;NULL&#34; Funge-98 Null Fingerprint"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="orth-orthogonal-easement-library">
+<span id="orth"></span><h1><tt class="docutils literal"><span class="pre">&quot;ORTH&quot;</span></tt> Orthogonal Easement Library</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x4f525448</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://catseye.tc/projects/funge98/library/ORTH.html">Cat&#8217;s Eye Technologies</a>, implements some commands present in <a class="reference external" href="http://www.muppetlabs.com/~breadbox/orth/">Orthogonal programming language</a> but not in Funge-98. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a AND b)</em></span></dt>
+<dd>Performs bitwise AND.</dd>
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a XOR b)</em></span></dt>
+<dd>Performs bitwise exclusive OR.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>pos</em><sup>v</sup> &#8212;</span></dt>
+<dd>Same to <tt class="docutils literal"><span class="pre">g</span></tt>, but the coordinates are pushed in the reverse order. PyFunge supports this command in Unefunge and Trefunge mode as well.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a OR b)</em></span></dt>
+<dd>Performs bitwise OR.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> <em>pos</em><sup>v</sup> &#8212;</span></dt>
+<dd>Same to <tt class="docutils literal"><span class="pre">p</span></tt>, but the coordinates are pushed in the reverse order. PyFunge supports this command in Unefunge and Trefunge mode as well.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>str</em><sup>s</sup> &#8212;</span></dt>
+<dd>Pops the null-terminated string and prints it.</dd>
+<dt><tt class="docutils literal"><span class="pre">V</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>dx</em> &#8212;</span></dt>
+<dd>Changes current X coordinate of delta.</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em> &#8212;</span></dt>
+<dd>Changes current X coordinate.</dd>
+<dt><tt class="docutils literal"><span class="pre">Z</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212;</span></dt>
+<dd>Pops <em>a</em> and skips next command (as like <tt class="docutils literal"><span class="pre">#</span></tt>) if it is zero.</dd>
+</dl>
+<p>The following commands reflect in Unefunge mode.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">W</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>dy</em> &#8212;</span></dt>
+<dd>Changes current Y coordinate of delta.</dd>
+<dt><tt class="docutils literal"><span class="pre">Y</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>y</em> &#8212;</span></dt>
+<dd>Changes current Y coordinate.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="PERL.html" title="&#34;PERL&#34; Generic Interface to the Perl Language"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="NULL.html" title="&#34;NULL&#34; Funge-98 Null Fingerprint"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

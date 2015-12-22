@@ -1,0 +1,132 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;FPDP&#34; Double precision floating point and &#34;FPSP&#34; Single precision floating point</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;FRTH&#34; Some common forth commands" href="FRTH.html" />
+    <link rel="prev" title="&#34;FPRT&#34; Formatted print" href="FPRT.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="FRTH.html" title="&#34;FRTH&#34; Some common forth commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="FPRT.html" title="&#34;FPRT&#34; Formatted print"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="fpdp-double-precision-floating-point-and-fpsp-single-precision-floating-point">
+<span id="fpsp"></span><span id="fpdp"></span><h1><tt class="docutils literal"><span class="pre">&quot;FPDP&quot;</span></tt> Double precision floating point and <tt class="docutils literal"><span class="pre">&quot;FPSP&quot;</span></tt> Single precision floating point</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x46504450 (FPDP) and 0x46505350 (FPSP)</td>
+</tr>
+</tbody>
+</table>
+<p>These fingerprints, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#FPSP">RC/Funge-98</a>, implement operations on single and double precision floating point number. Single precision floating point number occupies one stack cell, while double precision occupies two stack cells. They provide the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> <em>y</em><sup>fp</sup> &#8212; <em>(x+y)</em><sup>fp</sup></span></dt>
+<dd>Adds two floating point numbers.</dd>
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>sin(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates sine of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>cos(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates cosine of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> <em>y</em><sup>fp</sup> &#8212; <em>(x÷y)</em><sup>fp</sup></span></dt>
+<dd>Divides two floating point numbers.</dd>
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>arcsin(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates arcsine of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">F</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> &#8212; <em>x</em><sup>fp</sup></span></dt>
+<dd>Converts integer to floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>arctan(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates arctangent of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">H</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>arccos(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates arccosine of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>n</em></span></dt>
+<dd>Converts floating point number to integer, discarding the fraction part.</dd>
+<dt><tt class="docutils literal"><span class="pre">K</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>log(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates natural logarithm of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>log10(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates common (base 10) logarithm of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> <em>y</em><sup>fp</sup> &#8212; <em>(x×y)</em><sup>fp</sup></span></dt>
+<dd>Multiplies two floating point numbers.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>-x</em><sup>fp</sup></span></dt>
+<dd>Negates floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212;</span></dt>
+<dd>Prints floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">Q</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>sqrt(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates the square root of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> <em>y</em><sup>fp</sup> &#8212; <em>(x-y)</em><sup>fp</sup></span></dt>
+<dd>Subtracts two floating point numbers.</dd>
+<dt><tt class="docutils literal"><span class="pre">T</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>tan(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates tangent of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">V</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>abs(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates the absolute value of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> &#8212; <em>exp(x)</em><sup>fp</sup></span></dt>
+<dd>Calculates the exponential of floating point number.</dd>
+<dt><tt class="docutils literal"><span class="pre">Y</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>fp</sup> <em>y</em><sup>fp</sup> &#8212; <em>(x^y)</em><sup>fp</sup></span></dt>
+<dd>Raises <em>y</em> to the power of <em>x</em>.</dd>
+</dl>
+<p>In PyFunge these single and double precision floating point number are implemented as IEEE 754 single precision (32-bit) and double precision (64-bit) format. A single precision number occupies one cell, and a double precision number occupies two cells for lower and upper 32 bits, in the unspecified (endian-specific) order. PyFunge ignores all bits except the lowermost 32 bits for such cells.</p>
+<p>The precise operations on floating point numbers are done as specified in IEEE 754. So it correctly handles infinities and NaNs (Not a Number).</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="FRTH.html" title="&#34;FRTH&#34; Some common forth commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="FPRT.html" title="&#34;FPRT&#34; Formatted print"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;ICAL&#34; Some Intercal-like functions</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;IIPC&#34; Inter IP communication extension" href="IIPC.html" />
+    <link rel="prev" title="&#34;HRTI&#34; High-Resolution Timer Interface" href="HRTI.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="IIPC.html" title="&#34;IIPC&#34; Inter IP communication extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="HRTI.html" title="&#34;HRTI&#34; High-Resolution Timer Interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="ical-some-intercal-like-functions">
+<span id="ical"></span><h1><tt class="docutils literal"><span class="pre">&quot;ICAL&quot;</span></tt> Some Intercal-like functions</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x4943414c</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#ICAL">RC/Funge-98</a>, implements INTERCAL-esque operations. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; &amp;<em>a</em></span></dt>
+<dd>Performs unary AND operation, defined as <tt class="docutils literal"><span class="pre">a</span> <span class="pre">AND</span> <span class="pre">ror(a,</span> <span class="pre">1)</span></tt> where <tt class="docutils literal"><span class="pre">ror</span></tt> stands for bitwise rotate-right operation.</dd>
+<dt><tt class="docutils literal"><span class="pre">F</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> &#8212;</span></dt>
+<dd>Works like INTERCAL&#8217;s FORGET command. It discards <em>n</em> vectors from the address stack. Reflects if <em>n</em> is negative; it is no-op when <em>n</em> is zero. This command doesn&#8217;t change delta.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>a</em>$<em>b</em></span></dt>
+<dd><p class="first">Performs mingle operation.</p>
+<p class="last">Mingle interleaves bits from <em>a</em> and <em>b</em>, so if <em>a</em> = <em>a</em><sub>3</sub><em>a</em><sub>2</sub><em>a</em><sub>1</sub><em>a</em><sub>0</sub> and <em>b</em> = <em>b</em><sub>3</sub><em>b</em><sub>2</sub><em>b</em><sub>1</sub><em>b</em><sub>0</sub> then <em>a</em>$<em>b</em> = <em>a</em><sub>3</sub><em>b</em><sub>3</sub><em>a</em><sub>2</sub><em>b</em><sub>2</sub><em>a</em><sub>1</sub><em>b</em><sub>1</sub><em>a</em><sub>0</sub><em>b</em><sub>0</sub>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>target</em><sup>v</sup> &#8212;</span></dt>
+<dd>Works like INTERCAL&#8217;s NEXT command. It pushes the position of IP to the address stack, and jumps to <em>target</em> so for next time that cell is executed. Reflects if the address stack contains 79 entries already. (This is original INTERCAL-72 behavior, indeed.)</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; V<em>a</em></span></dt>
+<dd>Performs unary OR operation, defined as <tt class="docutils literal"><span class="pre">a</span> <span class="pre">OR</span> <span class="pre">ror(a,</span> <span class="pre">1)</span></tt> where <tt class="docutils literal"><span class="pre">ror</span></tt> stands for bitwise rotate-right operation.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> &#8212;</span></dt>
+<dd>Works like INTERCAL&#8217;s RESUME command. It pops <em>n</em> vectors from the address stack, and jumps to last popped vector so for next time that cell is executed. Reflects if <em>n</em> is negative. If <em>n</em> is larger than the size of address stack, the address stack will be emptied and the position won&#8217;t change. This command doesn&#8217;t change delta.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>a</em>~<em>b</em></span></dt>
+<dd><p class="first">Performs select operation.</p>
+<p class="last">Select collects bits from <em>a</em>, such that corresponding bit from <em>b</em> is set. Collected bits are left-padded and stored in the order: for example <tt class="docutils literal"><span class="pre">1100</span> <span class="pre">~</span> <span class="pre">101</span></tt> is <tt class="docutils literal"><span class="pre">10</span></tt>, since <em>b</em> has bit 2 and 0 set.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; &#8704;<em>a</em></span></dt>
+<dd>Performs unary XOR operation, defined as <tt class="docutils literal"><span class="pre">a</span> <span class="pre">XOR</span> <span class="pre">ror(a,</span> <span class="pre">1)</span></tt> where <tt class="docutils literal"><span class="pre">ror</span></tt> stands for bitwise rotate-right operation.</dd>
+</dl>
+<p>INTERCAL uses the fixed integer size but PyFunge doesn&#8217;t, so it uses certain heuristics. If an operand of unary commands (<tt class="docutils literal"><span class="pre">A</span></tt>, <tt class="docutils literal"><span class="pre">O</span></tt>, <tt class="docutils literal"><span class="pre">X</span></tt>) is larger than 16 bits, it assumes the integer size of 32 bits; if it is larger than 32 bits, it assumes the integer size of 64 bits; and so on. This is consistent with RC/Funge-98&#8217;s behavior too.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="IIPC.html" title="&#34;IIPC&#34; Inter IP communication extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="HRTI.html" title="&#34;HRTI&#34; High-Resolution Timer Interface"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

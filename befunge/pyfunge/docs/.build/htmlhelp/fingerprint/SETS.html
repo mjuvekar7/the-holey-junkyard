@@ -1,0 +1,119 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;SETS&#34; Set operations</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;SOCK&#34; TCP/IP socket extension" href="SOCK.html" />
+    <link rel="prev" title="&#34;SCKE&#34; GLFunge98&#8217;s extension to SOCK" href="SCKE.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="SOCK.html" title="&#34;SOCK&#34; TCP/IP socket extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="SCKE.html" title="&#34;SCKE&#34; GLFunge98&#8217;s extension to SOCK"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="sets-set-operations">
+<span id="sets"></span><h1><tt class="docutils literal"><span class="pre">&quot;SETS&quot;</span></tt> Set operations</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x53455453</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#SETS">RC/Funge-98</a>, implements set operations. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> <em>value</em> &#8212; <em>(set&#8746;{value})</em><sup>A</sup></span></dt>
+<dd>Adds <em>value</em> to the <em>set</em>. If there is <em>value</em> in the <em>set</em>, it will do nothing.</dd>
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> &#8212; <em>set</em><sup>A</sup> <em>len</em></span></dt>
+<dd>Pushes the size of the <em>set</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> &#8212; <em>set</em><sup>A</sup> <em>set</em><sup>A</sup></span></dt>
+<dd>Duplicates the set.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>delta</em><sup>v</sup> <em>source</em><sup>v</sup> &#8212; <em>set</em><sup>A</sup></span></dt>
+<dd>Reads the set from the Funge space, starting from <em>source</em> with given <em>delta</em>. The set is retrieved in the stack order: the cell at <em>source</em> should contain the number of items. Reflects if the stored set is invalid.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>A</sup> <em>b</em><sup>A</sup> &#8212; <em>(a&#8745;b)</em><sup>A</sup></span></dt>
+<dd>Pushes the intersection of two sets <em>a</em> and <em>b</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> <em>value</em> &#8212; <em>result</em></span></dt>
+<dd>Pushes 1 if <em>value</em> is in the <em>set</em>, or 0 otherwise.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> &#8212; <em>set</em><sup>A</sup></span></dt>
+<dd>Prints the <em>set</em> to the standard output.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> <em>value</em> &#8212; <em>(set-{value})</em><sup>A</sup></span></dt>
+<dd>Removes <em>value</em> from the <em>set</em>. If there is no <em>value</em> in the <em>set</em>, it will do nothing.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>A</sup> <em>b</em><sup>A</sup> &#8212; <em>(a-b)</em><sup>A</sup></span></dt>
+<dd>Pushes the difference of two sets <em>a</em> and <em>b</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">U</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>A</sup> <em>b</em><sup>A</sup> &#8212; <em>(a&#8746;b)</em><sup>A</sup></span></dt>
+<dd>Pushes the union of two sets <em>a</em> and <em>b</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">W</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> <em>delta</em><sup>v</sup> <em>dest</em><sup>v</sup> &#8212; <em>set</em><sup>A</sup></span></dt>
+<dd>Writes the set to the Funge space, starting from <em>dest</em> with given <em>delta</em>. The set is stored in the stack order: the cell at <em>dest</em> will contain the number of items.</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>A</sup> <em>b</em><sup>A</sup> &#8212; <em>b</em><sup>A</sup> <em>a</em><sup>A</sup></span></dt>
+<dd>Exchanges two sets <em>a</em> and <em>b</em> in the top of the stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">Z</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>set</em><sup>A</sup> &#8212;</span></dt>
+<dd>Pops and discards the <em>set</em> in the top of the stack.</dd>
+</dl>
+<p>All commands reflect if given set is invalid: stack underflow has been occurred, the size of set is negative, or there is duplicates in the set.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="SOCK.html" title="&#34;SOCK&#34; TCP/IP socket extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="SCKE.html" title="&#34;SCKE&#34; GLFunge98&#8217;s extension to SOCK"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

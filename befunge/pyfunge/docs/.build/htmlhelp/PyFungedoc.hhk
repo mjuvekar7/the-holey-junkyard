@@ -1,0 +1,1114 @@
+<UL>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--befunge">
+    <param name="See Also" value="--befunge">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--befunge">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--concurrent">
+    <param name="See Also" value="--concurrent">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--concurrent">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--dimension dimension">
+    <param name="See Also" value="--dimension dimension">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--dimension">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--disable-fprint">
+    <param name="See Also" value="--disable-fprint">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--disable-fprint">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--division-by-zero value">
+    <param name="See Also" value="--division-by-zero value">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--division-by-zero">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--filesystem">
+    <param name="See Also" value="--filesystem">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--filesystem">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--fprint fingerprints">
+    <param name="See Also" value="--fprint fingerprints">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--fprint">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--fprint-include fingerprintpath">
+    <param name="See Also" value="--fprint-include fingerprintpath">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--fprint-include">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--help">
+    <param name="See Also" value="--help">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--help">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--list-fprints">
+    <param name="See Also" value="--list-fprints">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--list-fprints">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--no-concurrent">
+    <param name="See Also" value="--no-concurrent">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--no-concurrent">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--no-filesystem">
+    <param name="See Also" value="--no-filesystem">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--no-filesystem">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--skip-first-line">
+    <param name="See Also" value="--skip-first-line">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--skip-first-line">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--statistics">
+    <param name="See Also" value="--statistics">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--statistics">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--std standard">
+    <param name="See Also" value="--std standard">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--std">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--trefunge">
+    <param name="See Also" value="--trefunge">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--trefunge">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--unefunge">
+    <param name="See Also" value="--unefunge">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--unefunge">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--version">
+    <param name="See Also" value="--version">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--version">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--warnings">
+    <param name="See Also" value="--warnings">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption--warnings">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-1">
+    <param name="See Also" value="-1">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-1">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-2">
+    <param name="See Also" value="-2">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-2">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-3">
+    <param name="See Also" value="-3">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-3">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-C">
+    <param name="See Also" value="-C">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-C">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-d dimension">
+    <param name="See Also" value="-d dimension">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-d">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-F">
+    <param name="See Also" value="-F">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-F">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-f fingerprints">
+    <param name="See Also" value="-f fingerprints">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-f">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-h">
+    <param name="See Also" value="-h">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-h">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-I fingerprintpath">
+    <param name="See Also" value="-I fingerprintpath">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-I">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-V">
+    <param name="See Also" value="-V">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-V">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-v standard">
+    <param name="See Also" value="-v standard">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-v">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-w">
+    <param name="See Also" value="-w">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-w">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-x">
+    <param name="See Also" value="-x">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="Local" value="invocation.html#cmdoption-x">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="add_class() (funge.fingerprint.FingerprintLookup method)">
+    <param name="Local" value="internals.html#funge.fingerprint.FingerprintLookup.add_class">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="add_command() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.add_command">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="add_commands() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.add_commands">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="add_ip() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.add_ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="add_module() (funge.fingerprint.FingerprintLookup method)">
+    <param name="Local" value="internals.html#funge.fingerprint.FingerprintLookup.add_module">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="args (funge.platform.Platform attribute)">
+    <param name="Local" value="internals.html#funge.platform.Platform.args">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Befunge93 (class in funge.languages.befunge93)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Befunge93">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Befunge93_divbyzero_stop (class in funge.languages.befunge93)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Befunge93_divbyzero_stop">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Befunge93_divbyzero_value (class in funge.languages.befunge93)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Befunge93_divbyzero_value">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Befunge93Space (class in funge.space)">
+    <param name="Local" value="internals.html#funge.space.Befunge93Space">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Befunge98 (class in funge.languages.funge98)">
+    <param name="Local" value="internals.html#funge.languages.funge98.Befunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="between() (funge.vector.Vector method)">
+    <param name="Local" value="internals.html#funge.vector.Vector.between">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="BoundedSpace (class in funge.space)">
+    <param name="Local" value="internals.html#funge.space.BoundedSpace">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="boundmax (funge.space.Space attribute)">
+    <param name="Local" value="internals.html#funge.space.Space.boundmax">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="boundmin (funge.space.Space attribute)">
+    <param name="Local" value="internals.html#funge.space.Space.boundmin">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="BufferedPlatform (class in funge.platform)">
+    <param name="Local" value="internals.html#funge.platform.BufferedPlatform">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="clear() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.clear">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="clone_ip() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.clone_ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command line option">
+    <param name="See Also" value="command line option">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--befunge">
+    <param name="Local" value="invocation.html#cmdoption--befunge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--concurrent">
+    <param name="Local" value="invocation.html#cmdoption--concurrent">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--dimension dimension">
+    <param name="Local" value="invocation.html#cmdoption--dimension">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--disable-fprint">
+    <param name="Local" value="invocation.html#cmdoption--disable-fprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--division-by-zero value">
+    <param name="Local" value="invocation.html#cmdoption--division-by-zero">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--filesystem">
+    <param name="Local" value="invocation.html#cmdoption--filesystem">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--fprint fingerprints">
+    <param name="Local" value="invocation.html#cmdoption--fprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--fprint-include fingerprintpath">
+    <param name="Local" value="invocation.html#cmdoption--fprint-include">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--help">
+    <param name="Local" value="invocation.html#cmdoption--help">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--list-fprints">
+    <param name="Local" value="invocation.html#cmdoption--list-fprints">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--no-concurrent">
+    <param name="Local" value="invocation.html#cmdoption--no-concurrent">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--no-filesystem">
+    <param name="Local" value="invocation.html#cmdoption--no-filesystem">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--skip-first-line">
+    <param name="Local" value="invocation.html#cmdoption--skip-first-line">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--statistics">
+    <param name="Local" value="invocation.html#cmdoption--statistics">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--std standard">
+    <param name="Local" value="invocation.html#cmdoption--std">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--trefunge">
+    <param name="Local" value="invocation.html#cmdoption--trefunge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--unefunge">
+    <param name="Local" value="invocation.html#cmdoption--unefunge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--version">
+    <param name="Local" value="invocation.html#cmdoption--version">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="--warnings">
+    <param name="Local" value="invocation.html#cmdoption--warnings">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-1">
+    <param name="Local" value="invocation.html#cmdoption-1">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-2">
+    <param name="Local" value="invocation.html#cmdoption-2">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-3">
+    <param name="Local" value="invocation.html#cmdoption-3">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-C">
+    <param name="Local" value="invocation.html#cmdoption-C">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-F">
+    <param name="Local" value="invocation.html#cmdoption-F">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-I fingerprintpath">
+    <param name="Local" value="invocation.html#cmdoption-I">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-V">
+    <param name="Local" value="invocation.html#cmdoption-V">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-d dimension">
+    <param name="Local" value="invocation.html#cmdoption-d">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-f fingerprints">
+    <param name="Local" value="invocation.html#cmdoption-f">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-h">
+    <param name="Local" value="invocation.html#cmdoption-h">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-v standard">
+    <param name="Local" value="invocation.html#cmdoption-v">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-w">
+    <param name="Local" value="invocation.html#cmdoption-w">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="-x">
+    <param name="Local" value="invocation.html#cmdoption-x">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="command() (funge.semantics.Semantics method)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics.command">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="commands (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.commands">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.semantics.SemanticsBase attribute)">
+    <param name="Local" value="internals.html#funge.semantics.SemanticsBase.commands">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentBefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentBefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentFilesystemBefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentFilesystemBefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentFilesystemTrefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentFilesystemTrefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentFilesystemUnefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentFilesystemUnefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentFunge (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentFunge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentTrefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentTrefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ConcurrentUnefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.ConcurrentUnefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="copy() (funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.copy">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="create_ip() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.create_ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="create_space() (funge.semantics.Semantics static method)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics.create_space">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="DebuggingProgram (class in funge.program)">
+    <param name="Local" value="internals.html#funge.program.DebuggingProgram">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.delta">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta_down (funge.languages.befunge93.Befunge93 attribute)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Befunge93.delta_down">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta_high (funge.languages.funge98.Trefunge98 attribute)">
+    <param name="Local" value="internals.html#funge.languages.funge98.Trefunge98.delta_high">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta_left (funge.languages.befunge93.Unefunge93 attribute)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Unefunge93.delta_left">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta_low (funge.languages.funge98.Trefunge98 attribute)">
+    <param name="Local" value="internals.html#funge.languages.funge98.Trefunge98.delta_low">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta_right (funge.languages.befunge93.Unefunge93 attribute)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Unefunge93.delta_right">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="delta_up (funge.languages.befunge93.Befunge93 attribute)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Befunge93.delta_up">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="dimension (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.dimension">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="discard() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.discard">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.discard">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.discard">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="dump_ips() (funge.program.DebuggingProgram method)">
+    <param name="Local" value="internals.html#funge.program.DebuggingProgram.dump_ips">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="environ (funge.platform.Platform attribute)">
+    <param name="Local" value="internals.html#funge.platform.Platform.environ">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="environment variable">
+    <param name="See Also" value="environment variable">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="PYFUNGE_FPRINT_PATH">
+    <param name="Name" value="[0] invocation.html#index-0">
+    <param name="Local" value="invocation.html#index-0">
+    <param name="Name" value="[1] invocation.html#index-1">
+    <param name="Local" value="invocation.html#index-1">
+    <param name="Name" value="[2] invocation.html#envvar-PYFUNGE_FPRINT_PATH">
+    <param name="Local" value="invocation.html#envvar-PYFUNGE_FPRINT_PATH">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="PYFUNGE_NO_PSYCO">
+    <param name="Local" value="invocation.html#envvar-PYFUNGE_NO_PSYCO">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="execute() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.execute">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="execute_step() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.execute_step">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="FilesystemBefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.FilesystemBefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="FilesystemFunge (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.FilesystemFunge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="FilesystemTrefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.FilesystemTrefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="FilesystemUnefunge98 (class in funge.languages.funge98opt)">
+    <param name="Local" value="internals.html#funge.languages.funge98opt.FilesystemUnefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="final() (funge.fingerprint.Fingerprint method)">
+    <param name="Local" value="internals.html#funge.fingerprint.Fingerprint.final">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Fingerprint (class in funge.fingerprint)">
+    <param name="Local" value="internals.html#funge.fingerprint.Fingerprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="FingerprintLookup (class in funge.fingerprint)">
+    <param name="Local" value="internals.html#funge.fingerprint.FingerprintLookup">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="flush() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.flush">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge (module)">
+    <param name="Local" value="internals.html#module-funge">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.exception (module)">
+    <param name="Local" value="internals.html#module-funge.exception">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.fingerprint (module)">
+    <param name="Local" value="internals.html#module-funge.fingerprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.fp (module)">
+    <param name="Local" value="internals.html#module-funge.fp">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.ip (module)">
+    <param name="Local" value="internals.html#module-funge.ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.languages (module)">
+    <param name="Local" value="internals.html#module-funge.languages">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.languages.befunge93 (module)">
+    <param name="Local" value="internals.html#module-funge.languages.befunge93">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.languages.funge98 (module)">
+    <param name="Local" value="internals.html#module-funge.languages.funge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.languages.funge98opt (module)">
+    <param name="Local" value="internals.html#module-funge.languages.funge98opt">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.main (module)">
+    <param name="Local" value="internals.html#module-funge.main">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.platform (module)">
+    <param name="Local" value="internals.html#module-funge.platform">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.program (module)">
+    <param name="Local" value="internals.html#module-funge.program">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.semantics (module)">
+    <param name="Local" value="internals.html#module-funge.semantics">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.space (module)">
+    <param name="Local" value="internals.html#module-funge.space">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.stack (module)">
+    <param name="Local" value="internals.html#module-funge.stack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="funge.vector (module)">
+    <param name="Local" value="internals.html#module-funge.vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="get() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.get">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="getchar() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.getchar">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="getint() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.getint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="getrect() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.getrect">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="getspace() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.getspace">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="id (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.id">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="init() (funge.fingerprint.Fingerprint method)">
+    <param name="Local" value="internals.html#funge.fingerprint.Fingerprint.init">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="init_ip() (funge.semantics.Semantics static method)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics.init_ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="invertmode (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.invertmode">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack attribute)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.invertmode">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="IP (class in funge.ip)">
+    <param name="Local" value="internals.html#funge.ip.IP">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="IPQuitted">
+    <param name="Local" value="internals.html#funge.exception.IPQuitted">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ips (funge.program.Program attribute)">
+    <param name="Local" value="internals.html#funge.program.Program.ips">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="IPStopped">
+    <param name="Local" value="internals.html#funge.exception.IPStopped">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="load_code() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.load_code">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="load_fingerprint() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.load_fingerprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="main() (in module funge.main)">
+    <param name="Local" value="internals.html#funge.main.main">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="module_from_name() (funge.fingerprint.FingerprintLookup method)">
+    <param name="Local" value="internals.html#funge.fingerprint.FingerprintLookup.module_from_name">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="normalize() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.normalize">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="notifyrect() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.notifyrect">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="offset (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.offset">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pairwise_max() (funge.vector.Vector method)">
+    <param name="Local" value="internals.html#funge.vector.Vector.pairwise_max">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pairwise_min() (funge.vector.Vector method)">
+    <param name="Local" value="internals.html#funge.vector.Vector.pairwise_min">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="parentid (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.parentid">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Platform (class in funge.platform)">
+    <param name="Local" value="internals.html#funge.platform.Platform">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pop() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.pop">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.pop">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.pop">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pop_stack() (funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.pop_stack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pop_string() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.pop_string">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.pop_string">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.pop_string">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pop_vector() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.pop_vector">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.pop_vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.pop_vector">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="popmany() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.popmany">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.popmany">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.popmany">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="position (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.position">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Program (class in funge.program)">
+    <param name="Local" value="internals.html#funge.program.Program">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="prompt() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.prompt">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="push() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.push">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.push">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.push">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="push_stack() (funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.push_stack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="push_string() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.push_string">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.push_string">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.push_string">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="push_vector() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.push_vector">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.push_vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.push_vector">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="pushmany() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.pushmany">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.pushmany">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack method)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.pushmany">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="put() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.put">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="putchar() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.putchar">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="putint() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.putint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="putspace() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.putspace">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="putstr() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.putstr">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="PYFUNGE_FPRINT_PATH">
+    <param name="Name" value="[0] invocation.html#index-0">
+    <param name="Local" value="invocation.html#index-0">
+    <param name="Name" value="[1] invocation.html#index-1">
+    <param name="Local" value="invocation.html#index-1">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="queuemode (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.queuemode">
+</OBJECT>
+<UL> <LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="(funge.stack.StackStack attribute)">
+    <param name="Local" value="internals.html#funge.stack.StackStack.queuemode">
+</OBJECT>
+</UL><LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rdiscard() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rdiscard">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="readfile() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.readfile">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="register() (funge.semantics.SemanticsBase static method)">
+    <param name="Local" value="internals.html#funge.semantics.SemanticsBase.register">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="remove_command() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.remove_command">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="remove_commands() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.remove_commands">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="remove_ip() (funge.program.Program method)">
+    <param name="Local" value="internals.html#funge.program.Program.remove_ip">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="replace() (funge.vector.Vector method)">
+    <param name="Local" value="internals.html#funge.vector.Vector.replace">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpop() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpop">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpop_string() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpop_string">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpop_vector() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpop_vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpopmany() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpopmany">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpush() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpush">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpush_string() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpush_string">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpush_vector() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpush_vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="rpushmany() (funge.stack.Stack method)">
+    <param name="Local" value="internals.html#funge.stack.Stack.rpushmany">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="scanuntil() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.scanuntil">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="scanwhile() (funge.space.Space method)">
+    <param name="Local" value="internals.html#funge.space.Space.scanwhile">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="search_module() (funge.fingerprint.FingerprintLookup method)">
+    <param name="Local" value="internals.html#funge.fingerprint.FingerprintLookup.search_module">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Semantics (class in funge.semantics)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="SemanticsBase (class in funge.semantics)">
+    <param name="Local" value="internals.html#funge.semantics.SemanticsBase">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="SemanticsOverlay (class in funge.semantics)">
+    <param name="Local" value="internals.html#funge.semantics.SemanticsOverlay">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="SOSS (in module funge.stack)">
+    <param name="Local" value="internals.html#funge.stack.SOSS">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Space (class in funge.space)">
+    <param name="Local" value="internals.html#funge.space.Space">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="space (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.space">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Stack (class in funge.stack)">
+    <param name="Local" value="internals.html#funge.stack.Stack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="stack (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.stack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="StackStack (class in funge.stack)">
+    <param name="Local" value="internals.html#funge.stack.StackStack">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="stringmode (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.stringmode">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="stringmode() (funge.semantics.Semantics method)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics.stringmode">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="system() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.system">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="team (funge.ip.IP attribute)">
+    <param name="Local" value="internals.html#funge.ip.IP.team">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="TOSS (in module funge.stack)">
+    <param name="Local" value="internals.html#funge.stack.TOSS">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Trefunge98 (class in funge.languages.funge98)">
+    <param name="Local" value="internals.html#funge.languages.funge98.Trefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="undefined() (funge.semantics.Semantics method)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics.undefined">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Unefunge93 (class in funge.languages.befunge93)">
+    <param name="Local" value="internals.html#funge.languages.befunge93.Unefunge93">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Unefunge98 (class in funge.languages.funge98)">
+    <param name="Local" value="internals.html#funge.languages.funge98.Unefunge98">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="ungetchar() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.ungetchar">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="unload_fingerprint() (funge.ip.IP method)">
+    <param name="Local" value="internals.html#funge.ip.IP.unload_fingerprint">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="Vector (class in funge.vector)">
+    <param name="Local" value="internals.html#funge.vector.Vector">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="walk() (funge.semantics.Semantics method)">
+    <param name="Local" value="internals.html#funge.semantics.Semantics.walk">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="warn() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.warn">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="writefile() (funge.platform.Platform method)">
+    <param name="Local" value="internals.html#funge.platform.Platform.writefile">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+    <param name="Keyword" value="zero() (funge.vector.Vector static method)">
+    <param name="Local" value="internals.html#funge.vector.Vector.zero">
+</OBJECT>
+</UL>

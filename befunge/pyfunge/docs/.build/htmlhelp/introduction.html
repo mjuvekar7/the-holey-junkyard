@@ -1,0 +1,113 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Introduction</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="next" title="Installation" href="install.html" />
+    <link rel="prev" title="PyFunge Documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="PyFunge Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>Introduction</h1>
+<p>PyFunge is an interpreter for Funge family of languages, written in Python (hence the name).</p>
+<p>If you are not familiar to these languages, see <a class="reference internal" href="#what-is-funge">What is Funge?</a> subsection. If you consider yourself a Funge expert, skip to <a class="reference internal" href="invocation.html#invocation"><em>Invocation</em></a> section.</p>
+<div class="section" id="what-is-funge">
+<h2>What is Funge?</h2>
+<p>Funge is a family of languages based on multi-dimensional grid. Sounds strange? Look this famous example:</p>
+<div class="highlight-python"><pre>                         v
+     v&quot;Hello, world!&quot;*250&lt;
+,_@#:&lt;</pre>
+</div>
+<p>This <em>program</em> prints &#8220;Hello, world!&#8221; to standard output. You should see a visible flow of execution, as every characters (even whitespaces, though they are practically ignored) in the code is significant. Let&#8217;s follow how this code is executed.</p>
+<p>Funge has a notion of instruction pointer (IP) and direction (delta). IP determines what character is to be executed, while delta determines what direction IP should be updated. Every Funge program starts at left-top corner, with IP moving right.</p>
+<p>The program encounters first non-space character at top-right corner, which is <tt class="docutils literal"><span class="pre">v</span></tt>. It makes IP move down next time, and it encounters another flow-controlling command, <tt class="docutils literal"><span class="pre">&lt;</span></tt>, which makes IP move left. Obviously there are more such commands, including <tt class="docutils literal"><span class="pre">&gt;</span></tt> for right and <tt class="docutils literal"><span class="pre">^</span></tt> for up.</p>
+<p>Next command, <tt class="docutils literal"><span class="pre">0</span></tt>, pushes zero to the stack. <em>What? There&#8217;s a stack?</em> Yeah, that&#8217;s right. Funge has the stack used for mostly everything, and here the program pushes the string to be printed. Next two command <tt class="docutils literal"><span class="pre">5</span></tt> and <tt class="docutils literal"><span class="pre">2</span></tt> also pushes that number to the stack, and <tt class="docutils literal"><span class="pre">*</span></tt> performs a multiplication: pops two numbers and pushes the product of them, in this case 10.</p>
+<p>Next series of commands, <tt class="docutils literal"><span class="pre">&quot;!dlrow</span> <span class="pre">,olleH&quot;</span></tt> (in the execution order), pushes the string to the stack. <tt class="docutils literal"><span class="pre">&quot;</span></tt> is special: it enables <em>stringmode</em> so commands except <tt class="docutils literal"><span class="pre">&quot;</span></tt> pushes a code of that exact character. Since the first pushed item is popped last, we have to push the string in reverse order. That&#8217;s why IP and delta is set to move left.</p>
+<p>When IP is at third line it loops over the string. <tt class="docutils literal"><span class="pre">:</span></tt> duplicates the top of stack, <tt class="docutils literal"><span class="pre">#</span></tt> skips next command, <tt class="docutils literal"><span class="pre">_</span></tt> pops one number and makes IP move left or right according to that number, <tt class="docutils literal"><span class="pre">,</span></tt> pops the number and prints one character with that code, and finally <tt class="docutils literal"><span class="pre">&#64;</span></tt> terminates the program. Well, of course this cannot explain this program.</p>
+<p>Since one character must be both checked if that&#8217;s end of string and printed, we have to duplicate the character for later use. <tt class="docutils literal"><span class="pre">_</span></tt> tests the duplicated character: IP moves left if it is nonzero, right if it is zero. Because IP has moved from right we have to separate two code flow, and we end up using <tt class="docutils literal"><span class="pre">#</span></tt> so normal loop won&#8217;t trigger <tt class="docutils literal"><span class="pre">&#64;</span></tt>.</p>
+<p>And when IP hits leftmost boundary of code it <em>warps</em> to rightmost boundary, so it will make the loop. Thus after printing &#8220;Hello, world!&#8221; and newline (code 10), the top of stack has zero and it finally terminates.</p>
+<p>This hopefully shows the feature of Funge, except that the program can modify itself via <tt class="docutils literal"><span class="pre">g</span></tt> and <tt class="docutils literal"><span class="pre">p</span></tt> command. It is, as you have seen, quite hard to follow the program and code in, as you have to think of direction every time; though it is an interesting concept it has few practical usage. There is even a word for such programming language: <a class="reference external" href="http://en.wikipedia.org/wiki/Esoteric_programming_language">esoteric programming language</a>. That&#8217;s mostly for fun and intellectual challenge.</p>
+</div>
+<div class="section" id="funge-family-of-languages">
+<h2>Funge <em>family</em> of languages</h2>
+<p>Funge is not a single language: it had several revisions, it doesn&#8217;t have to two-dimensional only, and so on.</p>
+<p>Above example is written in Befunge-93. It was the first <a class="footnote-reference" href="#id3" id="id2">[1]</a> language of Funge family (1993), and the space is confined within 80 columns and 25 lines. It makes the interpreter simple but also limits what Befunge-93 programs can do. Befunge-93 was followed by mostly forgotten extensions like Befunge-97, that was finally followed by Funge-98 (1998).</p>
+<p>Funge-98 is a feature-rich extension to Befunge-93, as it gives the program nearly-infinite multi-dimensional space, several stacks (called <em>stack stack</em>), interaction with external system, and extension mechanism. It makes full conformance quite challenging and there is even an extensive and very large test suite for Befunge-98, <a class="reference external" href="http://users.tkk.fi/~mniemenm/befunge/mycology.html">Mycology</a>.</p>
+<p>Funge-98 standard defines three languages: Unefunge-98 for one-dimensional space, Befunge-98 for two-dimensional space, Trefunge-98 for three-dimensional space. The standard also mentions a possibility for other kinds of code space, though it&#8217;s yet to be realized.</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Note that this was not the first multi-dimensional language: see <a class="reference external" href="http://esolangs.org/wiki/Biota">Biota</a> for example.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="what-s-pyfunge-then">
+<h2>What&#8217;s PyFunge then?</h2>
+<p>PyFunge started its life in 2004 as toy implementation of Funge languages, with certain degrees of abstraction so most things can be easily replaced with other concepts. While it has been forgotten for five years, I (Kang Seonghoon) revived the project in 2009 right after I saw aforementioned <a class="reference external" href="http://users.tkk.fi/~mniemenm/befunge/mycology.html">Mycology</a> test suite mentions it.</p>
+<p>Now its goal is a comprehensive implementation of Funge languages, not limited to just an interpreter, but a optimizing compiler (very hard!), graphical IDE and useful tools for Funge programmers.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="PyFunge Documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

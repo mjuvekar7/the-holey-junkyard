@@ -1,0 +1,134 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;SOCK&#34; TCP/IP socket extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;STRN&#34; String functions" href="STRN.html" />
+    <link rel="prev" title="&#34;SETS&#34; Set operations" href="SETS.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="STRN.html" title="&#34;STRN&#34; String functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="SETS.html" title="&#34;SETS&#34; Set operations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="sock-tcp-ip-socket-extension">
+<span id="sock"></span><h1><tt class="docutils literal"><span class="pre">&quot;SOCK&quot;</span></tt> TCP/IP socket extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x534f434b</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#SOCK">RC/Funge-98</a>, implements commands for the network socket, including but not limited to TCP and UDP (contraty to the name). It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> &#8212; <em>remoteport</em> <em>remoteaddr</em> <em>newhandle</em></span></dt>
+<dd>Accepts a connection from the socket specified by <em>handle</em>. (Same to <em class="manpage">accept(2)</em>.) On success, it pushes the remote address information and new socket handle for communicating to the other end.</dd>
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> <em>family</em> <em>port</em> <em>addr</em> &#8212;</span></dt>
+<dd><p class="first">Binds the socket specified by <em>handle</em> to listen from <em>addr</em> and <em>port</em>. (Same to <em class="manpage">bind(2)</em>.) It cannot be used after prior <tt class="docutils literal"><span class="pre">B</span></tt> or <tt class="docutils literal"><span class="pre">C</span></tt> commands.</p>
+<p class="last"><em>family</em> is checked for validity (see <tt class="docutils literal"><span class="pre">S</span></tt> command for possible values), but PyFunge doesn&#8217;t use that value.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> <em>family</em> <em>port</em> <em>addr</em> &#8212;</span></dt>
+<dd><p class="first">Connects the socket specified by <em>handle</em> to <em>addr</em> and <em>port</em>. (Same to <em class="manpage">connect(2)</em>.) It cannot be used after prior <tt class="docutils literal"><span class="pre">B</span></tt> or <tt class="docutils literal"><span class="pre">C</span></tt> commands.</p>
+<p class="last"><em>family</em> is checked for validity (see <tt class="docutils literal"><span class="pre">S</span></tt> command for possible values), but PyFunge doesn&#8217;t use that value.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>addr</em><sup>s</sup> &#8212; <em>addr</em></span></dt>
+<dd>Converts the IPv4 address representation to integer representation, suitable to use in the other commands. (Same to <em class="manpage">inet_aton(3)</em>.) Reflects if <em>addr</em> is in the invalid format.</dd>
+<dt><tt class="docutils literal"><span class="pre">K</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> &#8212;</span></dt>
+<dd>Shuts (or kills) down the socket specified by <em>handle</em>. (Same to <em class="manpage">shutdown(2)</em> and <em class="manpage">close(2)</em>.) Once killed socket cannot be used any more.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>backlog</em> <em>handle</em> &#8212;</span></dt>
+<dd>Listens from the socket specified by <em>handle</em>, with the given backlog size. (Same to <em class="manpage">listen(2)</em>.)</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> <em>option</em> <em>handle</em> &#8212;</span></dt>
+<dd><p class="first">Sets the option to the socket specified by <em>handle</em>. (Same to <em class="manpage">setsockopt(2)</em>.) <em>option</em> can be one of the following values:</p>
+<ul class="last simple">
+<li>If <em>option</em> is 1, it refers to <tt class="docutils literal"><span class="pre">SO_DEBUG</span></tt> option.</li>
+<li>If <em>option</em> is 2, it refers to <tt class="docutils literal"><span class="pre">SO_REUSEADDR</span></tt> option.</li>
+<li>If <em>option</em> is 3, it refers to <tt class="docutils literal"><span class="pre">SO_KEEPALIVE</span></tt> option.</li>
+<li>If <em>option</em> is 4, it refers to <tt class="docutils literal"><span class="pre">SO_DONTROUTE</span></tt> option.</li>
+<li>If <em>option</em> is 5, it refers to <tt class="docutils literal"><span class="pre">SO_BROADCAST</span></tt> option.</li>
+<li>If <em>option</em> is 6, it refers to <tt class="docutils literal"><span class="pre">SO_OOBINLINE</span></tt> option.</li>
+<li>Otherwise it reflects.</li>
+</ul>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>target</em> <em>size</em> <em>handle</em> &#8212; <em>nread</em></span></dt>
+<dd>Reads <em>size</em> bytes from the socket specified by <em>handle</em>. (Same to <em class="manpage">recv(2)</em>.) Read bytes are stored to the Funge space starting at <em>target</em> (relative to the storage offset) rightwards, and actual number of bytes read is pushed. Reflects if <em>size</em> is negative.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>family</em> <em>type</em> <em>protocol</em> &#8212; <em>handle</em></span></dt>
+<dd><p class="first">Creates the socket with given <em>protocol</em>, <em>type</em> and <em>family</em>. (Same to <em class="manpage">socket(2)</em>.) The arguments can be one of the following values:</p>
+<ul class="last simple">
+<li>If <em>family</em> is 1, it refers to the Unix socket (<tt class="docutils literal"><span class="pre">AF_UNIX</span></tt>). If <em>family</em> is 2, it refers to the IPv4 socket (<tt class="docutils literal"><span class="pre">AF_INET</span></tt>).</li>
+<li>If <em>type</em> is 1, it refers to the datagram socket (<tt class="docutils literal"><span class="pre">SOCK_DGRAM</span></tt>). If <em>type</em> is 2, it refers to the stream socket (<tt class="docutils literal"><span class="pre">SOCK_STREAM</span></tt>).</li>
+<li>If <em>protocol</em> is 1, it refers to TCP. If <em>protocol</em> is 2, it refers to UDP. This <em>protocol</em> value is different from actual value given to <em class="manpage">socket(2)</em>, as it uses <em class="manpage">getprotocobyname(3)</em> call.</li>
+<li>If one or more arguments are invalid, it reflects.</li>
+</ul>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>source</em> <em>size</em> <em>handle</em> &#8212; <em>nwritten</em></span></dt>
+<dd>Writes <em>size</em> bytes to the socket specified by <em>handle</em>. (Same to <em class="manpage">send(2)</em>.) Written bytes are read from the Funge space starting at <em>target</em> (relative to the storage offset) rightwards, and actual number of bytes written is pushed. Reflects if <em>size</em> is negative.</dd>
+</dl>
+<p>All commands reflect on failure.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="STRN.html" title="&#34;STRN&#34; String functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="SETS.html" title="&#34;SETS&#34; Set operations"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

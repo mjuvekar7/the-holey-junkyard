@@ -1,0 +1,125 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Tests</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="next" title="Changes in PyFunge" href="changes.html" />
+    <link rel="prev" title="Extending PyFunge" href="extending.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="changes.html" title="Changes in PyFunge"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="extending.html" title="Extending PyFunge"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="tests">
+<span id="id1"></span><h1>Tests</h1>
+<p>PyFunge source distribution contains some test suites in <tt class="file docutils literal"><span class="pre">tests/</span></tt>. You check out them against current PyFunge version with <tt class="file docutils literal"><span class="pre">pyfunge-test</span></tt> shell script:</p>
+<div class="highlight-python"><pre>$ ./pyfunge-test
+Done, XX out of XX test(s) passed.</pre>
+</div>
+<p>This section discusses how the tests are organized and written.</p>
+<div class="section" id="test-format">
+<h2>Test format</h2>
+<p>Each test requires at least two files:</p>
+<ul class="simple">
+<li>Test program: <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.bf</span></tt>, <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.u98</span></tt>, <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.b98</span></tt> or <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.t98</span></tt>, according to the language.</li>
+<li>Expected result: <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.expected</span></tt>. It contains an ignored newline at the end, for convenience. (Many text editors always append one newline at the end of file.)</li>
+</ul>
+<p>There are several optional files:</p>
+<ul class="simple">
+<li>Input data: <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.input</span></tt>. It is fed into the <strong class="command">pyfunge</strong> script.</li>
+<li>Additional options: <tt class="file docutils literal"><em><span class="pre">testname</span></em><span class="pre">.options</span></tt>. For example, you can include <a class="reference internal" href="invocation.html#cmdoption--disable-fprint"><em class="xref std std-option">--disable-fprint</em></a> option in it to disable all fingerprints.</li>
+</ul>
+<div class="section" id="test-categories">
+<h3>Test categories</h3>
+<p><tt class="file docutils literal"><span class="pre">tests/</span></tt> directory contains some directories to organize tests:</p>
+<ul class="simple">
+<li><tt class="file docutils literal"><span class="pre">befunge93/</span></tt>: Tests for Befunge-93 language.</li>
+<li><tt class="file docutils literal"><span class="pre">befunge98/</span></tt>: Tests for Befunge-98 language.</li>
+<li><tt class="file docutils literal"><span class="pre">unefunge98/</span></tt>: Tests for Unefunge-98 language.</li>
+<li><tt class="file docutils literal"><span class="pre">trefunge98/</span></tt>: Tests for Trefunge-98 language.</li>
+<li><tt class="file docutils literal"><span class="pre">concurrent/</span></tt>: Tests for concurrent Funge-98.</li>
+<li><tt class="file docutils literal"><span class="pre">fingerprints/</span><em><span class="pre">fprintname</span></em><span class="pre">/</span></tt>: Tests for each fingerprints.</li>
+</ul>
+<p>These directories are not important to the test script: they are just for convenience.</p>
+</div>
+</div>
+<div class="section" id="test-against-mycology-suite">
+<h2>Test against Mycology suite</h2>
+<p>PyFunge contains a convenience script called <tt class="file docutils literal"><span class="pre">mycology-filter</span></tt> in <tt class="file docutils literal"><span class="pre">tools/</span></tt> directory of the source distribution. This script, written in <em class="manpage">awk(1)</em>, highlights the result from <a class="reference external" href="http://users.tkk.fi/~mniemenm/befunge/mycology.html">Mycology</a> test suite &#8211; it also analyzes some <tt class="docutils literal"><span class="pre">UNDEF</span></tt> lines and marks it as <tt class="docutils literal"><span class="pre">GOOD</span></tt> or <tt class="docutils literal"><span class="pre">BAD</span></tt> line if possible. It also distinguishes <tt class="docutils literal"><span class="pre">UNDEF</span></tt> lines due to the specification and <tt class="docutils literal"><span class="pre">UNDEF</span></tt> lines due to the limitation of test suite (i.e. <tt class="docutils literal"><span class="pre">UNSURE</span></tt>), so you have to check out only <tt class="docutils literal"><span class="pre">UNSURE</span></tt> lines.</p>
+<p>Typical usage is as like this:</p>
+<div class="highlight-python"><pre>$ pyfunge mycology.b98 | mycology-filter
+0 1 2 3 4 5 6 7
+GOOD: , works
+GOOD: : duplicates
+GOOD: empty stack pops zero
+[...]
+
+The Mycology Befunge-98 test suite is practically done.
+Trying to quit with q. If the return status is 15, consider it GOOD...
+
+*** GOOD 365, BAD 0, UNDEF 49, UNSURE 64</pre>
+</div>
+<p>Note that this script does not preserve the exit code, and you should check it by hand. This script is also not capable for <tt class="docutils literal"><span class="pre">mycoterm</span></tt> or <tt class="docutils literal"><span class="pre">mycouser</span></tt> tests.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="changes.html" title="Changes in PyFunge"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="extending.html" title="Extending PyFunge"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

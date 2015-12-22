@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;PERL&#34; Generic Interface to the Perl Language</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;REFC&#34; Referenced Cells Extension" href="REFC.html" />
+    <link rel="prev" title="&#34;ORTH&#34; Orthogonal Easement Library" href="ORTH.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="REFC.html" title="&#34;REFC&#34; Referenced Cells Extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ORTH.html" title="&#34;ORTH&#34; Orthogonal Easement Library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="perl-generic-interface-to-the-perl-language">
+<span id="perl"></span><h1><tt class="docutils literal"><span class="pre">&quot;PERL&quot;</span></tt> Generic Interface to the Perl Language</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x5045524c</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://catseye.tc/projects/funge98/library/PERL.html">Cat&#8217;s Eye Technologies</a>, implements a basic interface to <a class="reference external" href="http://perl.org/">Perl programming language</a>. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>code</em><sup>s</sup> &#8212; <em>result</em><sup>s</sup></span></dt>
+<dd>Evaluates <em>code</em> (via Perl <tt class="docutils literal"><span class="pre">eval()</span></tt>) and returns its stringified result. Reflects on any failure.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>code</em><sup>s</sup> &#8212; <em>result</em></span></dt>
+<dd>Evaluates <em>code</em> (via Perl <tt class="docutils literal"><span class="pre">eval()</span></tt>) and returns its integer result. Reflects on any failure, or when the result is not a integer.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>shelled</em></span></dt>
+<dd>Pushes 1 if the Perl interpreter should be shelled. Since PyFunge is obviously not written in Perl, it pushes 0 always.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="REFC.html" title="&#34;REFC&#34; Referenced Cells Extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ORTH.html" title="&#34;ORTH&#34; Orthogonal Easement Library"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

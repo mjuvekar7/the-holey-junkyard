@@ -1,0 +1,79 @@
+[OPTIONS]
+Binary TOC=No
+Binary Index=No
+Compiled file=PyFungedoc.chm
+Contents file=PyFungedoc.hhc
+Default Window=PyFungedoc
+Default topic=index.html
+Display compile progress=No
+Full text search stop list file=PyFungedoc.stp
+Full-text search=Yes
+Index file=PyFungedoc.hhk
+Language=0x409
+Title=PyFunge 0.5-rc2 documentation
+
+[WINDOWS]
+PyFungedoc="PyFunge 0.5-rc2 documentation","PyFungedoc.hhc","PyFungedoc.hhk","index.html","index.html",,,,,0x63520,220,0x10384e,[0,0,1024,768],,,,,,,0
+
+[FILES]
+invocation.html
+install.html
+py-modindex.html
+changes.html
+introduction.html
+languages.html
+internals.html
+tests.html
+genindex.html
+index.html
+extending.html
+_static\comment.png
+_static\up-pressed.png
+_static\plus.png
+_static\default.css
+_static\pygments.css
+_static\ajax-loader.gif
+_static\minus.png
+_static\down-pressed.png
+_static\down.png
+_static\basic.css
+_static\comment-bright.png
+_static\comment-close.png
+_static\up.png
+_static\file.png
+fingerprint\REFC.html
+fingerprint\BOOL.html
+fingerprint\FRTH.html
+fingerprint\IMAP.html
+fingerprint\FILE.html
+fingerprint\FIXP.html
+fingerprint\IMTH.html
+fingerprint\NCRS.html
+fingerprint\3DSP.html
+fingerprint\MODU.html
+fingerprint\HRTI.html
+fingerprint\STRN.html
+fingerprint\JSTR.html
+fingerprint\SOCK.html
+fingerprint\FPRT.html
+fingerprint\SETS.html
+fingerprint\DATE.html
+fingerprint\TIME.html
+fingerprint\DIRF.html
+fingerprint\CPLI.html
+fingerprint\NULL.html
+fingerprint\LONG.html
+fingerprint\MODE.html
+fingerprint\ICAL.html
+fingerprint\BASE.html
+fingerprint\TERM.html
+fingerprint\ROMA.html
+fingerprint\INDV.html
+fingerprint\TOYS.html
+fingerprint\SCKE.html
+fingerprint\PERL.html
+fingerprint\ORTH.html
+fingerprint\SUBR.html
+fingerprint\IIPC.html
+fingerprint\EVAR.html
+fingerprint\FPxP.html

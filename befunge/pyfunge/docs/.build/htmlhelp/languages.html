@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Supported Languages</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="next" title="&#34;3DSP&#34; 3D space manipulation extension" href="fingerprint/3DSP.html" />
+    <link rel="prev" title="Invocation" href="invocation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fingerprint/3DSP.html" title="&#34;3DSP&#34; 3D space manipulation extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="invocation.html" title="Invocation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="supported-languages">
+<span id="languages"></span><h1>Supported Languages</h1>
+<p>PyFunge supports four distinct languages in the Funge family: Befunge-93, Unefunge-98, Befunge-98, Trefunge-98. All these languages operate in the Funge space (which is bounded to 25 rows and 80 columns in Befunge-93, or infinite in Funge-98) and the stack (which is extended to stack stacks in Funge-98).</p>
+<div class="section" id="befunge-93-semantics">
+<h2>Befunge-93 Semantics</h2>
+<p>PyFunge supports the full Befunge-93 language. It does not support Funge-98 commands in Befunge-93 mode at all, since it will make some legitimate Befunge-93 programs don&#8217;t work.</p>
+<div class="section" id="undefined-behaviors">
+<h3>Undefined behaviors</h3>
+<ul class="simple">
+<li>PyFunge uses an arbitrary precision Python integer for stack cells.</li>
+<li>Division by zero asks the user for alternative value. This was a behavior of original Befunge-93 reference interpreter. You can also select an alternative behavior by <a class="reference internal" href="invocation.html#cmdoption--division-by-zero"><em class="xref std std-option">--division-by-zero</em></a> option.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="funge-98-semantics">
+<h2>Funge-98 Semantics</h2>
+<p>PyFunge 0.5.0 and later is fully (if not almost) compliant to Funge-98 specification. This section describes its undefined behaviors with respect to the specification, and precise behaviors of supported fingerprints.</p>
+<div class="section" id="id1">
+<h3>Undefined behaviors</h3>
+<p>In regarding Funge virtual machine:</p>
+<ul class="simple">
+<li>PyFunge uses an arbitrary precision Python integer. This also means Funge space is truly infinite, because the coordinate uses the same type.</li>
+<li>PyFunge supports <tt class="docutils literal"><span class="pre">.b98</span></tt> extension for Befunge-98, as mentioned in the specification informally. It also supports <tt class="docutils literal"><span class="pre">.u98</span></tt> and <tt class="docutils literal"><span class="pre">.t98</span></tt> extensions for Unefunge-98 and Trefunge-98 respectively. (See <a class="reference internal" href="invocation.html#invocation"><em>Invocation</em></a> for overriding.)</li>
+<li>PyFunge assumes that Funge space is full of spaces, not the wrapped rectangle. For example, wrapping string pushes one (not zero) space on the edge.</li>
+</ul>
+<p>In regarding Funge-98 commands:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">/</span></tt> and <tt class="docutils literal"><span class="pre">%</span></tt> with negative divisor or dividend does same with Python: for positive divisor non-negative remainder is used, and for negative divisor <tt class="docutils literal"><span class="pre">(-x)/(-y)</span></tt> is same to <tt class="docutils literal"><span class="pre">x/y</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">k</span></tt> with a negative argument does nothing.</li>
+<li><tt class="docutils literal"><span class="pre">=</span></tt> invokes <em class="manpage">system(3)</em> call.</li>
+<li><tt class="docutils literal"><span class="pre">t</span></tt> does not copy the fingerprint list from parent IP.</li>
+<li><tt class="docutils literal"><span class="pre">(</span></tt> and <tt class="docutils literal"><span class="pre">)</span></tt> with negative count does same thing with zero count.</li>
+</ul>
+<p>In regarding system information command (<tt class="docutils literal"><span class="pre">y</span></tt>):</p>
+<ul class="simple">
+<li>PyFunge&#8217;s handprint is 0x50794698, i.e. <tt class="docutils literal"><span class="pre">'PyF\x98'</span></tt>.</li>
+<li>PyFunge pushes -1 for the number of bytes per cell. This matches the behavior of <a class="reference external" href="http://kuonet.org/~anmaster/efunge/">efunge</a>, only known other Funge-98 interpreter supports an arbitrary precision integer.</li>
+<li>Sizes of each stack stacks are pushed from BOSS (at bottom) to TOSS (at top).</li>
+<li>Current date and time uses local time. Use <tt class="docutils literal"><span class="pre">TIME</span></tt> fingerprint for explicit behavior.</li>
+<li>The order of environment variables is undefined: you cannot depend on this order, unless the environment variables didn&#8217;t change.</li>
+</ul>
+</div>
+<div class="section" id="supported-fingerprints">
+<span id="funge98-fingerprints"></span><h3>Supported fingerprints</h3>
+<p>PyFunge supports many fingerprints enabled by default. The following is an exhaustive list of them.</p>
+<p>Note that this is a description of PyFunge implementation, not the official specification. Unless the fingerprint is from PyFunge, do not consider this document is authoritative.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/3DSP.html"><tt class="docutils literal"><span class="pre">&quot;3DSP&quot;</span></tt> 3D space manipulation extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/BASE.html"><tt class="docutils literal"><span class="pre">&quot;BASE&quot;</span></tt> I/O for numbers in other bases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/BOOL.html"><tt class="docutils literal"><span class="pre">&quot;BOOL&quot;</span></tt> Logic functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/CPLI.html"><tt class="docutils literal"><span class="pre">&quot;CPLI&quot;</span></tt> Complex Integer extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/DATE.html"><tt class="docutils literal"><span class="pre">&quot;DATE&quot;</span></tt> Date Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/DIRF.html"><tt class="docutils literal"><span class="pre">&quot;DIRF&quot;</span></tt> Directory functions extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/EVAR.html"><tt class="docutils literal"><span class="pre">&quot;EVAR&quot;</span></tt> Environment variables extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/FILE.html"><tt class="docutils literal"><span class="pre">&quot;FILE&quot;</span></tt> File I/O functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/FIXP.html"><tt class="docutils literal"><span class="pre">&quot;FIXP&quot;</span></tt> Some useful fixed point math functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/FPRT.html"><tt class="docutils literal"><span class="pre">&quot;FPRT&quot;</span></tt> Formatted print</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/FPxP.html"><tt class="docutils literal"><span class="pre">&quot;FPDP&quot;</span></tt> Double precision floating point and <tt class="docutils literal"><span class="pre">&quot;FPSP&quot;</span></tt> Single precision floating point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/FRTH.html"><tt class="docutils literal"><span class="pre">&quot;FRTH&quot;</span></tt> Some common forth commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/HRTI.html"><tt class="docutils literal"><span class="pre">&quot;HRTI&quot;</span></tt> High-Resolution Timer Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/ICAL.html"><tt class="docutils literal"><span class="pre">&quot;ICAL&quot;</span></tt> Some Intercal-like functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/IIPC.html"><tt class="docutils literal"><span class="pre">&quot;IIPC&quot;</span></tt> Inter IP communication extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/IMAP.html"><tt class="docutils literal"><span class="pre">&quot;IMAP&quot;</span></tt> Instruction remap extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/IMTH.html"><tt class="docutils literal"><span class="pre">&quot;IMTH&quot;</span></tt> Some integer math functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/INDV.html"><tt class="docutils literal"><span class="pre">&quot;INDV&quot;</span></tt> Pointer functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/JSTR.html"><tt class="docutils literal"><span class="pre">&quot;JSTR&quot;</span></tt> Jesse van Herk&#8217;s extensions to string functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/LONG.html"><tt class="docutils literal"><span class="pre">&quot;LONG&quot;</span></tt> Long Integers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/MODE.html"><tt class="docutils literal"><span class="pre">&quot;MODE&quot;</span></tt> Funge-98 Standard Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/MODU.html"><tt class="docutils literal"><span class="pre">&quot;MODU&quot;</span></tt> Modulo Arithmetic Extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/NCRS.html"><tt class="docutils literal"><span class="pre">&quot;NCRS&quot;</span></tt> Ncurses extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/NULL.html"><tt class="docutils literal"><span class="pre">&quot;NULL&quot;</span></tt> Funge-98 Null Fingerprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/ORTH.html"><tt class="docutils literal"><span class="pre">&quot;ORTH&quot;</span></tt> Orthogonal Easement Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/PERL.html"><tt class="docutils literal"><span class="pre">&quot;PERL&quot;</span></tt> Generic Interface to the Perl Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/REFC.html"><tt class="docutils literal"><span class="pre">&quot;REFC&quot;</span></tt> Referenced Cells Extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/ROMA.html"><tt class="docutils literal"><span class="pre">&quot;ROMA&quot;</span></tt> Funge-98 Roman Numerals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/SCKE.html"><tt class="docutils literal"><span class="pre">&quot;SCKE&quot;</span></tt> GLFunge98&#8217;s extension to SOCK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/SETS.html"><tt class="docutils literal"><span class="pre">&quot;SETS&quot;</span></tt> Set operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/SOCK.html"><tt class="docutils literal"><span class="pre">&quot;SOCK&quot;</span></tt> TCP/IP socket extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/STRN.html"><tt class="docutils literal"><span class="pre">&quot;STRN&quot;</span></tt> String functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/SUBR.html"><tt class="docutils literal"><span class="pre">&quot;SUBR&quot;</span></tt> Subroutine extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/TERM.html"><tt class="docutils literal"><span class="pre">&quot;TERM&quot;</span></tt> Terminal extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/TIME.html"><tt class="docutils literal"><span class="pre">&quot;TIME&quot;</span></tt> Time and Date functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fingerprint/TOYS.html"><tt class="docutils literal"><span class="pre">&quot;TOYS&quot;</span></tt> Funge-98 Standard Toys</a></li>
+</ul>
+</div>
+<div class="topic">
+<p class="topic-title first">Notations for stack operation</p>
+<p>This section uses a notation to describe how the command changes the stack. It looks like this:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sub>1</sub><sup>fp</sup> ... <em>x</em><sub>n</sub><sup>fp</sup> <em>path</em><sup>s</sup> <em>delta</em><sup>v</sup> <em>start</em><sup>v</sup> n &#8212; <em>x</em><sub>n</sub> ... <em>x</em><sub>1</sub></span></dt>
+<dd>Dumps the <em>n</em> values from Funge space starting at <em>start</em> with given <em>delta</em>. <em>k</em>-th popped value is multiplied by scale factor <em>x</em><sub>k</sub>, and written to <em>path</em> as IEEE 754 double precision floating point format with unspecified endian. Reflects on failure. If succeed, it reverses the order of scale factors in the stack.</dd>
+</dl>
+</div></blockquote>
+<p>This fictional (and somewhat contrived) example shows the stack notation. The stack notation consists of &#8220;before&#8221; part and &#8220;after&#8221; part, each consists of the stack contents listed from the bottom to the top.</p>
+<p>A superscript after the variable denotes the type. If there is no superscript, it is a single (scalar) cell. The type notation is as follows:</p>
+<ul class="simple">
+<li>&#8220;v&#8221; denotes a vector, whose size is equal to the number of dimensions in Funge space.</li>
+<li>&#8220;v3&#8221; denotes a three-dimensional vector, whose elements are single precision floating point numbers used by <tt class="docutils literal"><span class="pre">FPSP</span></tt>.</li>
+<li>&#8220;s&#8221; denotes a null-terminated string (&#8220;0gnirts&#8221;).</li>
+<li>&#8220;fp&#8221; denotes a floating point number, which occupies one or two cells. Whether this is a single precision or double precision is up to the context. (See <tt class="docutils literal"><span class="pre">FPSP</span></tt> and <tt class="docutils literal"><span class="pre">FPDP</span></tt> for actual format.)</li>
+<li>&#8220;L&#8221; denotes a long integer, which occupies two cells. (See <tt class="docutils literal"><span class="pre">LONG</span></tt> for actual format.)</li>
+<li>&#8220;A&#8221; denotes an array with its size on the top of the stack. For example, <tt class="docutils literal"><span class="pre">abc3</span></tt> pushes an array with three elements, <tt class="docutils literal"><span class="pre">0</span></tt> pushes an empty array, and <tt class="docutils literal"><span class="pre">k$</span></tt> discards the array. The order of elements is up to semantics.</li>
+</ul>
+<p>If the stack has a fewer cells than the command requires, it assumes the stack has infinite zeroes under the bottom unless specified. In the other words, the command pops the required cells (possibly implicit zeroes) and pushes the generated cells. Even if the &#8220;before&#8221; and &#8220;after&#8221; part contains the same number of cells, it can result in changes in the size of stack if the stack underflows.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fingerprint/3DSP.html" title="&#34;3DSP&#34; 3D space manipulation extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="invocation.html" title="Invocation"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+repo: f1ae3ff48fd1e91585d961774c009fec55f7b310
+node: eba84bb2d0b8779564285e364a869b39c18f84b9
+branch: pyfunge-0.5
+tag: pyfunge-0.5-rc2

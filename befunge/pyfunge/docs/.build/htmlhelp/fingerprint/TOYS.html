@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;TOYS&#34; Funge-98 Standard Toys</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="Internals" href="../internals.html" />
+    <link rel="prev" title="&#34;TIME&#34; Time and Date functions" href="TIME.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../internals.html" title="Internals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="TIME.html" title="&#34;TIME&#34; Time and Date functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="toys-funge-98-standard-toys">
+<span id="toys"></span><h1><tt class="docutils literal"><span class="pre">&quot;TOYS&quot;</span></tt> Funge-98 Standard Toys</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x544f5953</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://catseye.tc/projects/funge98/library/TOYS.html">Cat&#8217;s Eye Technologies</a>, implements a lot of &#8220;toy&#8221; commands, sometimes useful for Funge programming. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> <em>n</em> &#8212; <em>value</em> ... <em>value</em></span></dt>
+<dd>Pushes <em>n</em> copies of <em>value</em>. If <em>n</em> is not positive it does nothing.</dd>
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>b</em> <em>a</em> &#8212; <em>(a+b)</em> <em>(a-b)</em></span></dt>
+<dd>Performs &#8220;butterfly&#8221; operation, originated from fast Fourier transform algorithms.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; <em>(a-1)</em></span></dt>
+<dd>Decrements the top of stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">... &#8212; <em>sum</em></span></dt>
+<dd>Pops all cells from the stack and pushes their sum.</dd>
+<dt><tt class="docutils literal"><span class="pre">H</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a shift b)</em></span></dt>
+<dd>Pushes <em>a</em> shifted by <em>b</em> bits. If <em>b</em> is positive it shifts left, or it shifts right. In PyFunge left shift doesn&#8217;t overflow since the integer is arbitrary precision.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; <em>(a+1)</em></span></dt>
+<dd>Increments the top of stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">J</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>offset</em> &#8212;</span></dt>
+<dd>Moves the current column (cells with same X coordinate) up (negative offset) or down (positive offset).</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>a</em></span></dt>
+<dd>Pushes the value of cell at the left of IP. Here &#8220;left&#8221; means the next command to be executed if current command is <tt class="docutils literal"><span class="pre">[</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; <em>-a</em></span></dt>
+<dd>Negates the top of stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>offset</em> &#8212;</span></dt>
+<dd>Moves the current row (cells with same Y coordinate) left (negative offset) or right (positive offset).</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">... &#8212; <em>product</em></span></dt>
+<dd>Pops all cells from the stack and pushes their product. Note that this ignores the implicit zeroes under the bottom of stack.</dd>
+<dt><tt class="docutils literal"><span class="pre">Q</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212;</span></dt>
+<dd>Sets the cell behind current IP to <em>a</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>a</em></span></dt>
+<dd>Pushes the value of cell at the right of IP. Here &#8220;right&#8221; means the next command to be executed if current command is <tt class="docutils literal"><span class="pre">]</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">T</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>dimension</em> &#8212;</span></dt>
+<dd>Changes delta to unit vector of given dimension if <em>a</em> is non-zero, or negate of unit vector if <em>a</em> is zero. In the other words <tt class="docutils literal"><span class="pre">0T</span></tt> acts like <tt class="docutils literal"><span class="pre">_</span></tt>, <tt class="docutils literal"><span class="pre">1T</span></tt> acts like <tt class="docutils literal"><span class="pre">|</span></tt> and <tt class="docutils literal"><span class="pre">2T</span></tt> acts like <tt class="docutils literal"><span class="pre">m</span></tt>. Reflects if the invalid dimension is given.</dd>
+<dt><tt class="docutils literal"><span class="pre">U</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Acts like <tt class="docutils literal"><span class="pre">?</span></tt> and transmutes itself to the command which sets delta to changed value.</dd>
+<dt><tt class="docutils literal"><span class="pre">W</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> <em>target</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops the target vector and value. Then executes itself indefinitely (i.e. consuming ticks), until the target cell at <em>target</em> is not less than given value. Reflects if the cell is greater than given value. This command is useful for synchronization in Concurrent Funges.</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Increments X coordinate of IP. Does not change the direction.</dd>
+<dt><tt class="docutils literal"><span class="pre">Y</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Increments Y coordinate of IP. Does not change the direction.</dd>
+<dt><tt class="docutils literal"><span class="pre">Z</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Increments Z coordinate of IP. Does not change the direction.</dd>
+</dl>
+<p>The following commands reflect in Unefunge and Trefunge mode. (These commands cannot be trivially extended to other dimensions.)</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>src</em><sup>v</sup> <em>size</em><sup>v</sup> <em>dest</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops three vectors and copies Funge space starting at <em>src</em> and which size is <em>size</em> into <em>dest</em>, in the coordinate-ascending order.</dd>
+<dt><tt class="docutils literal"><span class="pre">F</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sub>nm</sub> ... <em>a</em><sub>11</sub> <em>n</em> <em>m</em> <em>dest</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops one vector and two scalars. Then pops <em>n</em> by <em>m</em> cells and populates Funge space starting at <em>dest</em> with <em>n</em> rows and <em>m</em> columns, in the coordinate-ascending order.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> <em>m</em> <em>src</em><sup>v</sup> &#8212; <em>a</em><sub>nm</sub> ... <em>a</em><sub>11</sub></span></dt>
+<dd>Pops one vector and two scalars. Then pushes <em>n</em> by <em>m</em> cells from Funge space starting at <em>dest</em> with <em>n</em> rows and <em>m</em> columns, in the coordinate-ascending order.</dd>
+<dt><tt class="docutils literal"><span class="pre">K</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>src</em><sup>v</sup> <em>size</em><sup>v</sup> <em>dest</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops three vectors and copies Funge space starting at <em>src</em> and which size is <em>size</em> into <em>dest</em>, in the coordinate-descending order.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>src</em><sup>v</sup> <em>size</em><sup>v</sup> <em>dest</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops three vectors and moves (i.e. copies and sets the original to whitespace) Funge space starting at <em>src</em> and which size is <em>size</em> into <em>dest</em>, in the coordinate-ascending order.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>value</em> <em>size</em><sup>v</sup> <em>dest</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops two vectors and value, fills Funge space starting at <em>dest</em> and which size is <em>size</em> to <em>value</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">V</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>src</em><sup>v</sup> <em>size</em><sup>v</sup> <em>dest</em><sup>v</sup> &#8212;</span></dt>
+<dd>Pops three vectors and moves (i.e. copies and sets the original to whitespace) Funge space starting at <em>src</em> and which size is <em>size</em> into <em>dest</em>, in the coordinate-descending order.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../internals.html" title="Internals"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="TIME.html" title="&#34;TIME&#34; Time and Date functions"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

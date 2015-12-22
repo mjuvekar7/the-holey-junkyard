@@ -1,0 +1,99 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;BOOL&#34; Logic functions</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;CPLI&#34; Complex Integer extension" href="CPLI.html" />
+    <link rel="prev" title="&#34;BASE&#34; I/O for numbers in other bases" href="BASE.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="CPLI.html" title="&#34;CPLI&#34; Complex Integer extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BASE.html" title="&#34;BASE&#34; I/O for numbers in other bases"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="bool-logic-functions">
+<span id="bool"></span><h1><tt class="docutils literal"><span class="pre">&quot;BOOL&quot;</span></tt> Logic functions</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x424f4f4c</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#BOOL">RC/Funge-98</a>, implements bitwise operations over integer. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a AND b)</em></span></dt>
+<dd>Performs bitwise AND.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> &#8212; <em>(NOT a)</em></span></dt>
+<dd>Performs bitwise negation.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a OR b)</em></span></dt>
+<dd>Performs bitwise OR.</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a XOR b)</em></span></dt>
+<dd>Performs bitwise exclusive OR.</dd>
+</dl>
+<p>PyFunge assumes the arguments to be two&#8217;s complement representation. Thus <tt class="docutils literal"><span class="pre">N</span></tt> is actually same to <tt class="docutils literal"><span class="pre">0\-1-</span></tt>.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="CPLI.html" title="&#34;CPLI&#34; Complex Integer extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BASE.html" title="&#34;BASE&#34; I/O for numbers in other bases"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

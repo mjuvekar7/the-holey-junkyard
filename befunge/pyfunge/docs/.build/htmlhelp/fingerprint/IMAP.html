@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;IMAP&#34; Instruction remap extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;IMTH&#34; Some integer math functions" href="IMTH.html" />
+    <link rel="prev" title="&#34;IIPC&#34; Inter IP communication extension" href="IIPC.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="IMTH.html" title="&#34;IMTH&#34; Some integer math functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IIPC.html" title="&#34;IIPC&#34; Inter IP communication extension"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="imap-instruction-remap-extension">
+<span id="imap"></span><h1><tt class="docutils literal"><span class="pre">&quot;IMAP&quot;</span></tt> Instruction remap extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x494d4150</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#IMAP">RC/Funge-98</a>, implements the commands remapping other commands. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Clears all command mappings.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>newcmd</em> <em>oldcmd</em> &#8212;</span></dt>
+<dd>Makes the <em>oldcmd</em> does behave like the <em>newcmd</em>. <em>newcmd</em> itself is not affected.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>cmd</em> &#8212;</span></dt>
+<dd>Restores the command <em>cmd</em> to the original function.</dd>
+</dl>
+<p>There are many options regarding to this fingerprint, due to a freedom allowed by the specification. PyFunge uses the following rules:</p>
+<ul class="simple">
+<li>Any command can be remapped. For example, you can set next cell to be executed to -42 and remap command -42 to <tt class="docutils literal"><span class="pre">z</span></tt> so IP won&#8217;t reflect. Of course, even you remap some command to the space it will take one tick.</li>
+<li>PyFunge does not support chained remapping, so <tt class="docutils literal"><span class="pre">M</span></tt> command always look up <em>newcmd</em> from the original command list. In the other words, if you remap <tt class="docutils literal"><span class="pre">v</span></tt> as <tt class="docutils literal"><span class="pre">^</span></tt> and <tt class="docutils literal"><span class="pre">^</span></tt> as <tt class="docutils literal"><span class="pre">v</span></tt> it won&#8217;t cause an infinite loop and rather swaps two commands. Despite that PyFunge&#8217;s structure makes the chained remap easier than non-chained remap, PyFunge sticks to this behavior since it prohibits an infinite loop.</li>
+<li>There is a distinction between actual commands and remappings: if <tt class="docutils literal"><span class="pre">(</span></tt> and <tt class="docutils literal"><span class="pre">)</span></tt> changes command mapping, it will change actual commands and won&#8217;t touch remappings. But after they are executed the original remapping will be restored. For example assuming <tt class="docutils literal"><span class="pre">X</span></tt> is remapped to <tt class="docutils literal"><span class="pre">Y</span></tt>, <tt class="docutils literal"><span class="pre">X</span></tt> command in the new fingerprint won&#8217;t affect both <tt class="docutils literal"><span class="pre">X</span></tt> and <tt class="docutils literal"><span class="pre">Y</span></tt> mappings, and <tt class="docutils literal"><span class="pre">Y</span></tt> will affect both <tt class="docutils literal"><span class="pre">X</span></tt> and <tt class="docutils literal"><span class="pre">Y</span></tt>.</li>
+<li>Even after IMAP fingerprint is unloaded, the mapping will be retained and could be changed after IMAP fingerprint is reloaded then.</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="IMTH.html" title="&#34;IMTH&#34; Some integer math functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="IIPC.html" title="&#34;IIPC&#34; Inter IP communication extension"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

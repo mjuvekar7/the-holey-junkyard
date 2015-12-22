@@ -1,0 +1,125 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;NCRS&#34; Ncurses extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;NULL&#34; Funge-98 Null Fingerprint" href="NULL.html" />
+    <link rel="prev" title="&#34;MODU&#34; Modulo Arithmetic Extension" href="MODU.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="NULL.html" title="&#34;NULL&#34; Funge-98 Null Fingerprint"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="MODU.html" title="&#34;MODU&#34; Modulo Arithmetic Extension"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="ncrs-ncurses-extension">
+<span id="ncrs"></span><h1><tt class="docutils literal"><span class="pre">&quot;NCRS&quot;</span></tt> Ncurses extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x4e435253</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from Jesse van Herk&#8217;s version of RC/Funge-98, implements an interface to curses library. Contradictory to the name, this fingerprint doesn&#8217;t necessilarly require the GNU ncurses library. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Emits a short attention sound, if supported.</dd>
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>mode</em> &#8212;</span></dt>
+<dd><p class="first">Clears the part of window according to <em>mode</em>:</p>
+<ul class="simple">
+<li>Clears the entire window if <em>mode</em> is 0.</li>
+<li>Clears from cursor to the end of the line if <em>mode</em> is 1.</li>
+<li>Clears from cursor to the end of the window if <em>mode</em> is 2.</li>
+<li>Reflects otherwise.</li>
+</ul>
+<p class="last">It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>echo</em> &#8212;</span></dt>
+<dd>Turns on or off echo mode according to <em>echo</em>. In echo mode, each character input is printed to the screen back.</dd>
+<dt><tt class="docutils literal"><span class="pre">G</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212; <em>ch</em></span></dt>
+<dd>Gets a character, including function keys and keypad. It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>init</em> &#8212;</span></dt>
+<dd>Initializes the current window if <em>init</em> is non-zero, or finalizes it otherwise.</dd>
+<dt><tt class="docutils literal"><span class="pre">K</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>keypad</em> &#8212;</span></dt>
+<dd>Turn on or off the automatic parsing of special key sequences according to <em>keypad</em>. If this mode is turned off, you can get the funky escape sequence via <tt class="docutils literal"><span class="pre">G</span></tt>. It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>c</em> <em>r</em> &#8212;</span></dt>
+<dd>Moves the cursor to (<em>c</em>, <em>r</em>). It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>nocbreak</em> &#8212;</span></dt>
+<dd>Turns off or on cbreak mode according to <em>echo</em>. (Unlike <tt class="docutils literal"><span class="pre">E</span></tt> and <tt class="docutils literal"><span class="pre">K</span></tt>, it turns <em>off</em> if <em>echo</em> is non-zero.) In cbreak mode, the line buffering is disabled and characters are read one by one.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>ch</em> &#8212;</span></dt>
+<dd>Puts a character to current cursor position. It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">&#8212;</span></dt>
+<dd>Updates the display immediately. It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>str</em><sup>s</sup> &#8212;</span></dt>
+<dd>Puts a string to current cursor position. It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">U</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>ch</em> &#8212;</span></dt>
+<dd>Puts a character to the input buffer back, so next <tt class="docutils literal"><span class="pre">G</span></tt> command gets it. Only one <tt class="docutils literal"><span class="pre">U</span></tt> can be executed before next <tt class="docutils literal"><span class="pre">G</span></tt> command. It requires the current window, initialized by <tt class="docutils literal"><span class="pre">1I</span></tt>.</dd>
+</dl>
+<p>All commands reflect on failure, or when the current window is not initialized if needed.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="NULL.html" title="&#34;NULL&#34; Funge-98 Null Fingerprint"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="MODU.html" title="&#34;MODU&#34; Modulo Arithmetic Extension"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

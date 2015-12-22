@@ -1,0 +1,170 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>PyFunge Documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="#" />
+    <link rel="next" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="pyfunge-documentation">
+<h1>PyFunge Documentation</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Release:</th><td class="field-body">0.5-rc2</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">December 13, 2015</td>
+</tr>
+</tbody>
+</table>
+<p>This is PyFunge 0.5-rc2, the functional, conforming and optimizing Befunge-93 and Funge-98 implementation written in Python.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#what-is-funge">What is Funge?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#funge-family-of-languages">Funge <em>family</em> of languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#what-s-pyfunge-then">What&#8217;s PyFunge then?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#installing">Installing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#self-check">Self-check</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="invocation.html">Invocation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="invocation.html#pyfunge-1"><em class="manpage">pyfunge(1)</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="invocation.html#general-options">General options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="invocation.html#funge-options">Funge options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="invocation.html#befunge-93-options">Befunge-93 options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="invocation.html#funge-98-options">Funge-98 options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="invocation.html#environment-variables">Environment variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="languages.html">Supported Languages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="languages.html#befunge-93-semantics">Befunge-93 Semantics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="languages.html#undefined-behaviors">Undefined behaviors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="languages.html#funge-98-semantics">Funge-98 Semantics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="languages.html#id1">Undefined behaviors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="languages.html#supported-fingerprints">Supported fingerprints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.main"><tt class="docutils literal"><span class="pre">funge.main</span></tt> &#8211; PyFunge front-end</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.program"><tt class="docutils literal"><span class="pre">funge.program</span></tt> &#8211; Entry point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.vector"><tt class="docutils literal"><span class="pre">funge.vector</span></tt> &#8211; Vector classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.stack"><tt class="docutils literal"><span class="pre">funge.stack</span></tt> &#8211; Stack stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.space"><tt class="docutils literal"><span class="pre">funge.space</span></tt> &#8211; Funge space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.ip"><tt class="docutils literal"><span class="pre">funge.ip</span></tt> &#8211; Instruction pointer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.exception"><tt class="docutils literal"><span class="pre">funge.exception</span></tt> &#8211; Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.semantics"><tt class="docutils literal"><span class="pre">funge.semantics</span></tt> &#8211; Command semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.languages"><tt class="docutils literal"><span class="pre">funge.languages</span></tt> &#8211; Language implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals.html#module-funge.languages.befunge93"><tt class="docutils literal"><span class="pre">funge.languages.befunge93</span></tt> &#8211; Befunge-93 implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals.html#module-funge.languages.funge98"><tt class="docutils literal"><span class="pre">funge.languages.funge98</span></tt> &#8211; Core Funge-98 implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals.html#module-funge.languages.funge98opt"><tt class="docutils literal"><span class="pre">funge.languages.funge98opt</span></tt> &#8211; Concurrent and filesystem Funges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.platform"><tt class="docutils literal"><span class="pre">funge.platform</span></tt> &#8211; Platform abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.fingerprint"><tt class="docutils literal"><span class="pre">funge.fingerprint</span></tt> &#8211; Fingerprint management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-funge.fp"><tt class="docutils literal"><span class="pre">funge.fp</span></tt> &#8211; Fingerprints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Extending PyFunge</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extending.html#writing-fingerprint">Writing fingerprint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extending.html#fingerprint-class">Fingerprint class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extending.html#initialization-and-finalization">Initialization and finalization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extending.html#storing-additional-information">Storing additional information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#test-format">Test format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#test-categories">Test categories</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#test-against-mycology-suite">Test against Mycology suite</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changes in PyFunge</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#rc2-2009-04-24">0.5-rc2 (2009-04-24)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#rc1-2009-04-15">0.5-rc1 (2009-04-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#beta1-2004-06-11">0.2-beta1 (2004-06-11)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables</h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >next</a> |</li>
+        <li><a href="#">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

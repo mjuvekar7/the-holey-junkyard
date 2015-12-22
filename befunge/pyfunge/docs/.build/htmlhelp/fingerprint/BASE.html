@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;BASE&#34; I/O for numbers in other bases</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;BOOL&#34; Logic functions" href="BOOL.html" />
+    <link rel="prev" title="&#34;3DSP&#34; 3D space manipulation extension" href="3DSP.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BOOL.html" title="&#34;BOOL&#34; Logic functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="3DSP.html" title="&#34;3DSP&#34; 3D space manipulation extension"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="base-i-o-for-numbers-in-other-bases">
+<span id="base"></span><h1><tt class="docutils literal"><span class="pre">&quot;BASE&quot;</span></tt> I/O for numbers in other bases</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x42415345</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#BASE">RC/Funge-98</a>, implements input and output for numbers in the other bases. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> &#8212;</span></dt>
+<dd>Prints <em>n</em> in binary.</dd>
+<dt><tt class="docutils literal"><span class="pre">H</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> &#8212;</span></dt>
+<dd>Prints <em>n</em> in hexadecimal.</dd>
+<dt><tt class="docutils literal"><span class="pre">I</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>base</em> &#8212; <em>n</em></span></dt>
+<dd>Reads a number in the given base. For <em>base</em> larger than 10, additional digits are from <tt class="docutils literal"><span class="pre">A</span></tt> to <tt class="docutils literal"><span class="pre">Z</span></tt>. Reflects if <em>base</em> is not between 2 and 36, or at EOF.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> <em>base</em> &#8212;</span></dt>
+<dd>Prints <em>n</em> in the given base. For <em>base</em> larger than 10, additional digits are from <tt class="docutils literal"><span class="pre">A</span></tt> to <tt class="docutils literal"><span class="pre">Z</span></tt>. Reflects if <em>base</em> is not between 2 and 36.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>n</em> &#8212;</span></dt>
+<dd>Prints <em>n</em> in octal.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BOOL.html" title="&#34;BOOL&#34; Logic functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="3DSP.html" title="&#34;3DSP&#34; 3D space manipulation extension"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

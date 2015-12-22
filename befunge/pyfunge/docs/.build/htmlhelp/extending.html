@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Extending PyFunge</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="next" title="Tests" href="tests.html" />
+    <link rel="prev" title="Internals" href="internals.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tests.html" title="Tests"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="internals.html" title="Internals"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="extending-pyfunge">
+<span id="extending"></span><h1>Extending PyFunge</h1>
+<p>PyFunge can be extended with various means. In particular, since PyFunge comes as a library you can experiment with them. (See <a class="reference internal" href="internals.html#internals"><em>Internals</em></a> for extensive API documentation.)</p>
+<div class="section" id="writing-fingerprint">
+<span id="id1"></span><h2>Writing fingerprint</h2>
+<p>You can write your own Funge-98 fingerprints and use them in PyFunge. Thanks to Python&#8217;s dynamic nature, PyFunge can directly load your fingerprint; even fingerprints shipped with PyFunge are dynamically loaded.</p>
+<p>The typical Funge-98 fingerprint looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">funge.fingerprint</span> <span class="kn">import</span> <span class="n">Fingerprint</span>
+
+<span class="k">class</span> <span class="nc">HELO</span><span class="p">(</span><span class="n">Fingerprint</span><span class="p">):</span>
+    <span class="s">&#39;Prints &quot;Hello, world!&quot;&#39;</span>
+
+    <span class="n">API</span> <span class="o">=</span> <span class="s">&#39;PyFunge v2&#39;</span>
+    <span class="n">ID</span> <span class="o">=</span> <span class="mh">0x48454c4f</span>
+
+    <span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;P&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">print_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">putstr</span><span class="p">(</span><span class="s">&#39;Hello, world!</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;S&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">store_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">push_string</span><span class="p">(</span><span class="s">&#39;Hello, world!</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can save this Python code as <tt class="docutils literal"><span class="pre">fp_HELO.py</span></tt> and load it with <a class="reference internal" href="invocation.html#cmdoption-f"><em class="xref std std-option">-f</em></a>:</p>
+<div class="highlight-python"><pre>$ pyfunge -f HELO -v98 -
+&quot;OLEH&quot;4(PS&gt;:#,_@
+(EOF)
+Hello, world!
+Hello, world!</pre>
+</div>
+<p>The name of Python code is not important, so you can change it to anything like <tt class="docutils literal"><span class="pre">fp_abracadabra.py</span></tt> and use correct option (in this case <tt class="docutils literal"><span class="pre">-f</span> <span class="pre">abracdabra</span></tt>). Even one module can contain several fingerprints. But by convention it uses same name with the ASCII representation of fingerprint ID, and only contains one fingerprint.</p>
+<p>From now on this document assume that you are friendly in Python, or at least have written some programs in it.</p>
+<div class="section" id="fingerprint-class">
+<h3>Fingerprint class</h3>
+<p>Every fingerprint has a common base class: <a class="reference internal" href="internals.html#funge.fingerprint.Fingerprint" title="funge.fingerprint.Fingerprint"><tt class="xref py py-class docutils literal"><span class="pre">funge.fingerprint.Fingerprint</span></tt></a>. Actually this class provides nothing, besides from <tt class="docutils literal"><span class="pre">register</span></tt> decorator used to register new command. After the fingerprint module is imported PyFunge scans for a subclass of Fingerprint, and instantiates it when <tt class="docutils literal"><span class="pre">(</span></tt> is executed.</p>
+<p>Let&#8217;s analyze the HELO fingerprint above. It needs two attributes to function correctly.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">API</span></tt> attribute says this fingerprint class is written for the correct API version. It should be <tt class="docutils literal"><span class="pre">&quot;PyFunge</span> <span class="pre">v2&quot;</span></tt> for current version. If the later version changes fingerprint API, it will work hard to support earlier versions.</li>
+<li><tt class="docutils literal"><span class="pre">ID</span></tt> attribute says this fingerprint is mapped to the given ID. In this example, we use ID 0x48454c4f, or <tt class="docutils literal"><span class="pre">HELO</span></tt> in the ASCII representation.</li>
+</ul>
+<p>In addition you can give a docstring to describe this fingerprint shortly. Of course that is optional, and will only be seen with <a class="reference internal" href="invocation.html#cmdoption--list-fprints"><em class="xref std std-option">--list-fprints</em></a>.</p>
+<p>Then it registers two commands: <tt class="docutils literal"><span class="pre">P</span></tt> and <tt class="docutils literal"><span class="pre">S</span></tt>. This command callback receives one parameter (not counting for <em>self</em>), <em>ip</em>. This object, an instance of <a class="reference internal" href="internals.html#funge.ip.IP" title="funge.ip.IP"><tt class="xref py py-class docutils literal"><span class="pre">funge.ip.IP</span></tt></a> class, exposes many methods and attributes:</p>
+<ul class="simple">
+<li><a class="reference internal" href="internals.html#funge.ip.IP.dimension" title="funge.ip.IP.dimension"><tt class="xref py py-attr docutils literal"><span class="pre">dimension</span></tt></a> gives the number of dimension.</li>
+<li><a class="reference internal" href="internals.html#funge.ip.IP.position" title="funge.ip.IP.position"><tt class="xref py py-attr docutils literal"><span class="pre">position</span></tt></a> gives the current position of IP. You can also change it.</li>
+<li><a class="reference internal" href="internals.html#funge.ip.IP.delta" title="funge.ip.IP.delta"><tt class="xref py py-attr docutils literal"><span class="pre">delta</span></tt></a> gives the current direction (delta) of IP. You can also change it.</li>
+<li><a class="reference internal" href="internals.html#funge.ip.IP.space" title="funge.ip.IP.space"><tt class="xref py py-attr docutils literal"><span class="pre">space</span></tt></a> gives the attached Funge space. You can read from Funge space via <a class="reference internal" href="internals.html#funge.space.Space.get" title="funge.space.Space.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> or write to it via <a class="reference internal" href="internals.html#funge.space.Space.put" title="funge.space.Space.put"><tt class="xref py py-meth docutils literal"><span class="pre">put()</span></tt></a>.</li>
+<li><a class="reference internal" href="internals.html#funge.ip.IP.push" title="funge.ip.IP.push"><tt class="xref py py-meth docutils literal"><span class="pre">push()</span></tt></a> pushes one value to the stack. You can also use <a class="reference internal" href="internals.html#funge.ip.IP.push_string" title="funge.ip.IP.push_string"><tt class="xref py py-meth docutils literal"><span class="pre">push_string()</span></tt></a> or <a class="reference internal" href="internals.html#funge.ip.IP.push_vector" title="funge.ip.IP.push_vector"><tt class="xref py py-meth docutils literal"><span class="pre">push_vector()</span></tt></a> to push a null-terminated string or vector.</li>
+<li>Likewise, <a class="reference internal" href="internals.html#funge.ip.IP.pop" title="funge.ip.IP.pop"><tt class="xref py py-meth docutils literal"><span class="pre">pop()</span></tt></a>, <a class="reference internal" href="internals.html#funge.ip.IP.pop_string" title="funge.ip.IP.pop_string"><tt class="xref py py-meth docutils literal"><span class="pre">pop_string()</span></tt></a> and <a class="reference internal" href="internals.html#funge.ip.IP.pop_vector" title="funge.ip.IP.pop_vector"><tt class="xref py py-meth docutils literal"><span class="pre">pop_vector()</span></tt></a> pops one value, string or vector from the stack. It ignores the stack underflow and returns zeroes for your convenience.</li>
+<li><a class="reference internal" href="internals.html#funge.ip.IP.popmany" title="funge.ip.IP.popmany"><tt class="xref py py-meth docutils literal"><span class="pre">popmany()</span></tt></a> is handy; you can replace <tt class="docutils literal"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">ip.pop();</span> <span class="pre">b</span> <span class="pre">=</span> <span class="pre">ip.pop();</span> <span class="pre">a</span> <span class="pre">=</span> <span class="pre">ip.pop()</span></tt> with <tt class="docutils literal"><span class="pre">c,</span> <span class="pre">b,</span> <span class="pre">a</span> <span class="pre">=</span> <span class="pre">ip.popmany(3)</span></tt>.</li>
+</ul>
+<p>Command callbacks are ordinary methods in the fingerprint class; the decorator, i.e. <tt class="docutils literal"><span class="pre">&#64;Fingerprint.register(...)</span></tt>, does register those methods for later use. The command can be two or more characters, in that case it registers many same commands:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;0123456789&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">push_number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">position</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s">&#39;0&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Fingerprint class itself got many methods from the underlying semantics. For example, <tt class="docutils literal"><span class="pre">self.reflect(ip)</span></tt> will reflect the IP. (Actual method is in <a class="reference internal" href="internals.html#funge.languages.funge98.Unefunge98" title="funge.languages.funge98.Unefunge98"><tt class="xref py py-class docutils literal"><span class="pre">funge.languages.funge98.Unefunge98</span></tt></a> &#8212; check it!) Also you can walk to next instruction, using <tt class="docutils literal"><span class="pre">self.walk(ip)</span></tt>.</p>
+<p>One last thing to note is a <a class="reference internal" href="internals.html#funge.vector.Vector" title="funge.vector.Vector"><tt class="xref py py-class docutils literal"><span class="pre">Vector</span></tt></a> class, since every coordinates in PyFunge is a vector. For example you can change the delta of IP to non-cardinal one:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;K&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">knight_walk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">random</span>
+
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">y</span>
+
+    <span class="n">ip</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">zero</span><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_0</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">_1</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since we deal not only with Befunge but Trefunge, we should build a generic vector. This won&#8217;t work in Unefunge, but you can add some sanity check for it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;K&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">knight_walk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="c"># reflect in Unefunge.</span>
+    <span class="k">if</span> <span class="n">ip</span><span class="o">.</span><span class="n">dimension</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reflect</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c"># ...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initialization-and-finalization">
+<h3>Initialization and finalization</h3>
+<p>The fingerprint class can have two special methods: <tt class="xref py py-meth docutils literal"><span class="pre">init()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">final()</span></tt>. These methods also receives the IP parameter, and are executed right after <tt class="docutils literal"><span class="pre">(</span></tt> or <tt class="docutils literal"><span class="pre">)</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">USLS</span><span class="p">(</span><span class="n">Fingerprint</span><span class="p">):</span>
+    <span class="s">&#39;Some useless fingerprint without any command.&#39;</span>
+    <span class="n">API</span> <span class="o">=</span> <span class="s">&#39;PyFunge v2&#39;</span><span class="p">;</span> <span class="n">ID</span> <span class="o">=</span> <span class="mh">0x55534c53</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">putstr</span><span class="p">(</span><span class="s">&#39;Hey, you just loaded the useless fingerprint.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">final</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">putstr</span><span class="p">(</span><span class="s">&#39;Hey, you just unloaded the useless fingerprint.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default these methods register the commands to IP, so you may want to call the original methods in Fingerprint if you override them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="n">Fingerprint</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">putstr</span><span class="p">(</span><span class="s">&#39;Hey, you just loaded the useless fingerprint and &#39;</span>
+                         <span class="s">&#39;(possibly) some commands.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If these methods raise the exception the loading or unloading rolls back and <tt class="docutils literal"><span class="pre">(</span></tt> or <tt class="docutils literal"><span class="pre">)</span></tt> reflects. But you still have to roll back your own changes, if any:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="n">Fingerprint</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">some_check</span><span class="p">():</span>
+        <span class="c"># check failed: rolls back and raise the exception.</span>
+        <span class="n">Fingerprint</span><span class="o">.</span><span class="n">final</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span> <span class="c"># unregisters already registered commands</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;check failed!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Also note that these methods can be executed out of order, and it is possible that the command callback is called even after <tt class="xref py py-meth docutils literal"><span class="pre">final()</span></tt> method is called. So work can be done in <tt class="xref py py-meth docutils literal"><span class="pre">final()</span></tt> is in fact quite limited.</p>
+</div>
+<div class="section" id="storing-additional-information">
+<h3>Storing additional information</h3>
+<p>Sometimes your fingerprint needs to store some informations, like IP flags or call stack. Since Python is a dynamic language you are free to store them in any context, but you have to know where to store exactly.</p>
+<p>If the information is only stored between the load and unload, you can just store it in the fingerprint class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="n">Fingerprint</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">exoticflag</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">toggle_exotic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">exoticflag</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exoticflag</span>
+</pre></div>
+</div>
+<p>If the information is local to IP (but should be retained after unload), you can store it in the IP object. If the information is global you should store it in the <a class="reference internal" href="internals.html#funge.program.Program" title="funge.program.Program"><tt class="xref py py-class docutils literal"><span class="pre">Program</span></tt></a> object (<tt class="docutils literal"><span class="pre">ip.program</span></tt>). Since they are public objects, you have to use some unique prefix for the name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="n">Fingerprint</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+
+    <span class="c"># initialize default value if none.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="s">&#39;EXOT_exoticflag&#39;</span><span class="p">):</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">EXOT_exoticflag</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">program</span><span class="p">,</span> <span class="s">&#39;EXOT_globalflag&#39;</span><span class="p">):</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">EXOT_globalflag</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="nd">@Fingerprint.register</span><span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">toggle_exotic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ip</span><span class="o">.</span><span class="n">pop</span><span class="p">():</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">EXOT_globalflag</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">ip</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">EXOT_globalflag</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">EXOT_exoticflag</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">ip</span><span class="o">.</span><span class="n">EXOT_exoticflag</span>
+</pre></div>
+</div>
+<p>In the any case, do not use the global variable besides from constants. It won&#8217;t work correctly.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tests.html" title="Tests"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="internals.html" title="Internals"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

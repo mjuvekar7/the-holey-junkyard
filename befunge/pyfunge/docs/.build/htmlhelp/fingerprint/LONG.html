@@ -1,0 +1,117 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;LONG&#34; Long Integers</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;MODE&#34; Funge-98 Standard Modes" href="MODE.html" />
+    <link rel="prev" title="&#34;JSTR&#34; Jesse van Herk&#8217;s extensions to string functions" href="JSTR.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="MODE.html" title="&#34;MODE&#34; Funge-98 Standard Modes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="JSTR.html" title="&#34;JSTR&#34; Jesse van Herk&#8217;s extensions to string functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="long-long-integers">
+<span id="long"></span><h1><tt class="docutils literal"><span class="pre">&quot;LONG&quot;</span></tt> Long Integers</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x4c4f4e47</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#LONG">RC/Funge-98</a>, implements arithmetic operations of the long integers. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>b</em><sup>L</sup> &#8212; <em>(a+b)</em><sup>L</sup></span></dt>
+<dd>Adds two long integers.</dd>
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>L</sup> &#8212; <em>abs(x)</em><sup>L</sup></span></dt>
+<dd>Calculates the absolute value of <em>x</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>b</em><sup>L</sup> &#8212; <em>(a÷b)</em><sup>L</sup></span></dt>
+<dd>Divides two long integers. If the divisor is zero it pushes zero. PyFunge tries to emulate RC/Funge-98&#8217;s behavior as much as possible, so it uses C-like division (remainder&#8217;s sign is same to dividend&#8217;s one) instead of Python division.</dd>
+<dt><tt class="docutils literal"><span class="pre">E</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em> &#8212; <em>x</em><sup>L</sup></span></dt>
+<dd>Pushes a long integer from given integer.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>n</em> &#8212; <em>(a &lt;&lt; n)</em><sup>L</sup></span></dt>
+<dd>Shift <em>a</em> left by <em>n</em> bits. Reflects if <em>n</em> is negative.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>b</em><sup>L</sup> &#8212; <em>(a×b)</em><sup>L</sup></span></dt>
+<dd>Multiplies two long integers.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>L</sup> &#8212; <em>-x</em><sup>L</sup></span></dt>
+<dd>Negates the long integer.</dd>
+<dt><tt class="docutils literal"><span class="pre">O</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>b</em><sup>L</sup> &#8212; <em>(a mod b)</em><sup>L</sup></span></dt>
+<dd>Calculates the remainder of two long integers. If the divisor is zero it pushes zero. PyFunge tries to emulate RC/Funge-98&#8217;s behavior as much as possible, so it uses C-like division (remainder&#8217;s sign is same to dividend&#8217;s one) instead of Python division.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>x</em><sup>L</sup> &#8212;</span></dt>
+<dd>Prints the long integer.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>n</em> &#8212; <em>(a &gt;&gt; n)</em><sup>L</sup></span></dt>
+<dd>Shift <em>a</em> right by <em>n</em> bits. Reflects if <em>n</em> is negative.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>L</sup> <em>b</em><sup>L</sup> &#8212; <em>(a-b)</em><sup>L</sup></span></dt>
+<dd>Subtracts two long integers.</dd>
+<dt><tt class="docutils literal"><span class="pre">Z</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>str</em><sup>s</sup> &#8212; <em>x</em><sup>L</sup></span></dt>
+<dd>Tries to parse the string into the long integer. Reflects on failure.</dd>
+</dl>
+<p>Long integer is not that long in PyFunge, since it is restricted to 64 bits. It can be useful for implicitly wrapping integers (as in C and other languages) though. Long integer occupies two stack cells: the bottom one is the upper 32 bits, and the top one is the lower 32 bits. All bits over 32 bit boundary are ignored.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="MODE.html" title="&#34;MODE&#34; Funge-98 Standard Modes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="JSTR.html" title="&#34;JSTR&#34; Jesse van Herk&#8217;s extensions to string functions"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

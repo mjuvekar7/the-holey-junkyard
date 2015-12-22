@@ -1,0 +1,141 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>Changes in PyFunge</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="index.html" />
+    <link rel="prev" title="Tests" href="tests.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tests.html" title="Tests"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="changes-in-pyfunge">
+<span id="changes"></span><h1>Changes in PyFunge</h1>
+<div class="section" id="rc2-2009-04-24">
+<span id="version-0-5-rc2"></span><h2>0.5-rc2 (2009-04-24)</h2>
+<ul class="simple">
+<li>Bug fixes.<ul>
+<li>Befunge-93 space now treats the cell as 8-bit unsigned integer.</li>
+<li>New IPs cloned by <tt class="docutils literal"><span class="pre">t</span></tt> command are now guaranteed to be executed before parent IP.</li>
+<li><tt class="docutils literal"><span class="pre">u</span></tt> command does obey queuemode and invertmode from <a class="reference internal" href="fingerprint/MODE.html#mode"><em>MODE</em></a>.</li>
+<li><tt class="docutils literal"><span class="pre">F</span></tt> command of <a class="reference internal" href="fingerprint/TIME.html#time"><em>TIME</em></a> was off by one. (0 should mean the first day of year.)</li>
+</ul>
+</li>
+<li>Internal API changes. These changes don&#8217;t affect <tt class="docutils literal"><span class="pre">PyFunge</span> <span class="pre">v2</span></tt> fingerprint API, but does require some trivial changes.<ul>
+<li>The return value of command callback (previously used to be walk flag) is now unused. Fingerprint modules for 0.5-rc1 will work correctly, but I strongly recommends to return <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> (or don&#8217;t use <tt class="docutils literal"><span class="pre">return</span></tt> at all) always.</li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">funge.semantics.Semantics.execute()</span></tt> is gone, due to the prior change.</li>
+<li><a class="reference internal" href="internals.html#funge.semantics.Semantics.walk" title="funge.semantics.Semantics.walk"><tt class="xref py py-meth docutils literal"><span class="pre">funge.semantics.Semantics.walk()</span></tt></a> is now a part of public API.</li>
+<li>Individual access to <a class="reference internal" href="internals.html#funge.stack.Stack" title="funge.stack.Stack"><tt class="xref py py-meth docutils literal"><span class="pre">funge.stack.Stack()</span></tt></a> is strongly discouraged. You should use <a class="reference internal" href="internals.html#funge.ip.IP" title="funge.ip.IP"><tt class="xref py py-meth docutils literal"><span class="pre">funge.ip.IP()</span></tt></a>&#8216;s stack stack wrapper instead. (If your fingerprint works on the stack stack, your code can be affected.)</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">funge.ip.IP.th_id</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">th_team</span></tt> became <a class="reference internal" href="internals.html#funge.ip.IP.id" title="funge.ip.IP.id"><tt class="xref py py-attr docutils literal"><span class="pre">funge.ip.IP.id</span></tt></a> and <a class="reference internal" href="internals.html#funge.ip.IP.team" title="funge.ip.IP.team"><tt class="xref py py-attr docutils literal"><span class="pre">team</span></tt></a>. <a class="reference internal" href="internals.html#funge.ip.IP.parentid" title="funge.ip.IP.parentid"><tt class="xref py py-attr docutils literal"><span class="pre">funge.ip.IP.parentid</span></tt></a> is also available now.</li>
+<li><a class="reference internal" href="internals.html#funge.space.Space.put" title="funge.space.Space.put"><tt class="xref py py-meth docutils literal"><span class="pre">funge.space.Space.put()</span></tt></a> has an optional third argument to optimize bulk changes to Funge space. You can use <a class="reference internal" href="internals.html#funge.space.Space.notifyrect" title="funge.space.Space.notifyrect"><tt class="xref py py-meth docutils literal"><span class="pre">funge.space.Space.notifyrect()</span></tt></a> with it.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">funge.space.Space.rectmin</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">rectmax</span></tt> became <a class="reference internal" href="internals.html#funge.space.Space.boundmin" title="funge.space.Space.boundmin"><tt class="xref py py-attr docutils literal"><span class="pre">funge.space.Space.boundmin</span></tt></a> and <a class="reference internal" href="internals.html#funge.space.Space.boundmax" title="funge.space.Space.boundmax"><tt class="xref py py-attr docutils literal"><span class="pre">boundmax</span></tt></a>. If you want the exact bounds use <a class="reference internal" href="internals.html#funge.space.Space.getrect" title="funge.space.Space.getrect"><tt class="xref py py-meth docutils literal"><span class="pre">funge.space.Space.getrect()</span></tt></a> instead.</li>
+</ul>
+</li>
+<li>Extensive optimizations resulted in 10&#8211;30% overall speed-up.<ul>
+<li><a class="reference internal" href="internals.html#funge.space.Space.putspace" title="funge.space.Space.putspace"><tt class="xref py py-meth docutils literal"><span class="pre">funge.space.Space.putspace()</span></tt></a> is 3x faster for huge code (say, more than 10000 commands).</li>
+<li><a class="reference internal" href="internals.html#funge.space.Space.scanwhile" title="funge.space.Space.scanwhile"><tt class="xref py py-meth docutils literal"><span class="pre">funge.space.Space.scanwhile()</span></tt></a> and <a class="reference internal" href="internals.html#funge.space.Space.scanuntil" title="funge.space.Space.scanuntil"><tt class="xref py py-meth docutils literal"><span class="pre">scanuntil</span></tt></a> is 2x faster for general case. These methods were bottlenecks of entire Funge code execution.</li>
+<li>The stack API is revised to perform well even with or without invertmode and queuemode.</li>
+<li><a class="reference internal" href="internals.html#funge.program.Program.execute" title="funge.program.Program.execute"><tt class="xref py py-meth docutils literal"><span class="pre">funge.program.Program.execute()</span></tt></a> now special-cases single IP, and 2x faster for that case.</li>
+</ul>
+</li>
+<li>New Funge-98 fingerprints: <a class="reference internal" href="fingerprint/3DSP.html#dsp"><em>3DSP</em></a>, <a class="reference internal" href="fingerprint/ICAL.html#ical"><em>ICAL</em></a>, <a class="reference internal" href="fingerprint/IIPC.html#iipc"><em>IIPC</em></a>, <a class="reference internal" href="fingerprint/IMAP.html#imap"><em>IMAP</em></a>, <a class="reference internal" href="fingerprint/IMTH.html#imth"><em>IMTH</em></a>, <a class="reference internal" href="fingerprint/LONG.html#long"><em>LONG</em></a>, <a class="reference internal" href="fingerprint/NCRS.html#ncrs"><em>NCRS</em></a>, <a class="reference internal" href="fingerprint/PERL.html#perl"><em>PERL</em></a>, <a class="reference internal" href="fingerprint/SCKE.html#scke"><em>SCKE</em></a>, <a class="reference internal" href="fingerprint/SETS.html#sets"><em>SETS</em></a>, <a class="reference internal" href="fingerprint/SOCK.html#sock"><em>SOCK</em></a>, <a class="reference internal" href="fingerprint/SUBR.html#subr"><em>SUBR</em></a> and <a class="reference internal" href="fingerprint/TERM.html#term"><em>TERM</em></a>.</li>
+<li>Provides the complete documentation. Earlier version has some missing sections yet to be written.</li>
+<li>More regression tests in <tt class="docutils literal"><span class="pre">tests/</span></tt> directory.</li>
+</ul>
+</div>
+<div class="section" id="rc1-2009-04-15">
+<span id="version-0-5-rc1"></span><h2>0.5-rc1 (2009-04-15)</h2>
+<ul class="simple">
+<li>Full Befunge-98 compliance.<ul>
+<li>Rewrote problematic IP walking algorithm to get correct behavior of <tt class="docutils literal"><span class="pre">#</span></tt>, <tt class="docutils literal"><span class="pre">'</span></tt>, <tt class="docutils literal"><span class="pre">s</span></tt> and concurrency.</li>
+<li>Fixed <tt class="docutils literal"><span class="pre">[</span></tt> and <tt class="docutils literal"><span class="pre">]</span></tt> command which got swapped.</li>
+<li>Fixed <tt class="docutils literal"><span class="pre">/</span></tt> and <tt class="docutils literal"><span class="pre">%</span></tt> command so division by zero results in zero, not reflects.</li>
+<li>Corrected <tt class="docutils literal"><span class="pre">k</span></tt> command. (Meaning of it was quite dubious, but now clear)</li>
+<li>Fixed <tt class="docutils literal"><span class="pre">{</span></tt>, <tt class="docutils literal"><span class="pre">}</span></tt> and <tt class="docutils literal"><span class="pre">u</span></tt> command which had a number of bugs, including treating the argument with incorrect sign.</li>
+<li><tt class="docutils literal"><span class="pre">:</span></tt> always pushes two items, even if the stack has one or zero items.</li>
+<li>Fixed faulty treatment of Unefunge and Befunge source code.</li>
+<li>Almost complete change in internal API.</li>
+</ul>
+</li>
+<li>A lot of code restructuring and refactoring.<ul>
+<li>All packages are merged into <a class="reference internal" href="internals.html#module-funge" title="funge: PyFunge package."><tt class="xref py py-mod docutils literal"><span class="pre">funge</span></tt></a> package.</li>
+<li>Renamed internal classes.</li>
+<li><tt class="docutils literal"><span class="pre">funge.execute</span></tt> module splits into <a class="reference internal" href="internals.html#module-funge.languages" title="funge.languages: Provides language semantics."><tt class="xref py py-mod docutils literal"><span class="pre">funge.languages</span></tt></a> package.</li>
+<li>Introduced <a class="reference internal" href="internals.html#funge.vector.Vector" title="funge.vector.Vector"><tt class="xref py py-class docutils literal"><span class="pre">funge.vector.Vector</span></tt></a> class for convenience.</li>
+</ul>
+</li>
+<li>Big improvement in performance (10x-40x speed gain), including:<ul>
+<li>More efficient space-related algorithms; they are also used only when needed. (8x speed gain)</li>
+<li>Added dimension-dependent, caching Vector class. (2x speed gain)</li>
+<li>General code simplification. (1.5x-2x speed gain)</li>
+</ul>
+</li>
+<li>New command-line front-end, allowing the direct execution of all available languages.</li>
+<li>New fingerprint implementation, which API dubbed &#8220;PyFunge v2&#8221;. (See <a class="reference internal" href="extending.html#writing-fingerprint"><em>Writing fingerprint</em></a> for more information)</li>
+<li>Implemented more fingerprints. (See <a class="reference internal" href="languages.html#funge98-fingerprints"><em>Supported fingerprints</em></a> for more information)</li>
+<li>Added the regression test suite. (See <a class="reference internal" href="tests.html#tests"><em>Tests</em></a> for more information)</li>
+<li>Moved to <a class="reference external" href="http://www.selenic.com/mercurial/">Mercurial</a> repository.</li>
+</ul>
+</div>
+<div class="section" id="beta1-2004-06-11">
+<span id="version-0-2-beta1"></span><h2>0.2-beta1 (2004-06-11)</h2>
+<ul class="simple">
+<li>Initial release.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tests.html" title="Tests"
+             >previous</a> |</li>
+        <li><a href="index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

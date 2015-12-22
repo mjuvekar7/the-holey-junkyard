@@ -1,0 +1,97 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;MODU&#34; Modulo Arithmetic Extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;NCRS&#34; Ncurses extension" href="NCRS.html" />
+    <link rel="prev" title="&#34;MODE&#34; Funge-98 Standard Modes" href="MODE.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="NCRS.html" title="&#34;NCRS&#34; Ncurses extension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="MODE.html" title="&#34;MODE&#34; Funge-98 Standard Modes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="modu-modulo-arithmetic-extension">
+<span id="modu"></span><h1><tt class="docutils literal"><span class="pre">&quot;MODU&quot;</span></tt> Modulo Arithmetic Extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x4d4f4455</td>
+</tr>
+</tbody>
+</table>
+<p>This fingerprint, from <a class="reference external" href="http://catseye.tc/projects/funge98/library/MODU.html">Cat&#8217;s Eye Technologies</a>, implements various modulo behaviors with negative divisor or dividend. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a mod b)</em></span></dt>
+<dd>A remainder is defined as <tt class="docutils literal"><span class="pre">a</span> <span class="pre">-</span> <span class="pre">floor(a/b)</span></tt>. Same to <tt class="docutils literal"><span class="pre">%</span></tt> behavior of PyFunge.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a mod b)</em></span></dt>
+<dd>A remainder has same sign with dividend. A sign of divisor is ignored.</dd>
+<dt><tt class="docutils literal"><span class="pre">U</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em> <em>b</em> &#8212; <em>(a mod b)</em></span></dt>
+<dd>A remainder ignores a sign of divisor and dividend.</dd>
+</dl>
+<p>Every commands pushes 0 if divisor is zero.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="NCRS.html" title="&#34;NCRS&#34; Ncurses extension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="MODE.html" title="&#34;MODE&#34; Funge-98 Standard Modes"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

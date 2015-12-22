@@ -1,0 +1,96 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;SCKE&#34; GLFunge98&#8217;s extension to SOCK</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;SETS&#34; Set operations" href="SETS.html" />
+    <link rel="prev" title="&#34;ROMA&#34; Funge-98 Roman Numerals" href="ROMA.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="SETS.html" title="&#34;SETS&#34; Set operations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ROMA.html" title="&#34;ROMA&#34; Funge-98 Roman Numerals"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="scke-glfunge98-s-extension-to-sock">
+<span id="scke"></span><h1><tt class="docutils literal"><span class="pre">&quot;SCKE&quot;</span></tt> GLFunge98&#8217;s extension to SOCK</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x534f434b</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from GLfunge98, adds more commands to <a class="reference internal" href="SOCK.html#sock"><em>SOCK</em></a> fingerprint. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">H</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>host</em><sup>s</sup> &#8212; <em>addr</em></span></dt>
+<dd>Same to SOCK&#8217;s <tt class="docutils literal"><span class="pre">I</span></tt> command, but it could resolve the hostname via <em class="manpage">gethostbyname(3)</em>. Reflects on failure.</dd>
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>handle</em> &#8212; <em>status</em></span></dt>
+<dd>Checks read buffer of the socket specified by <em>handle</em>. It will then push 1 if the socket has some data to read now, or 0 if not. Reflects on failure.</dd>
+</dl>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="SETS.html" title="&#34;SETS&#34; Set operations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ROMA.html" title="&#34;ROMA&#34; Funge-98 Roman Numerals"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

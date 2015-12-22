@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso8859_1" />
+    
+    <title>&#34;3DSP&#34; 3D space manipulation extension</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="PyFunge 0.5-rc2 documentation" href="../index.html" />
+    <link rel="up" title="Supported Languages" href="../languages.html" />
+    <link rel="next" title="&#34;BASE&#34; I/O for numbers in other bases" href="BASE.html" />
+    <link rel="prev" title="Supported Languages" href="../languages.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BASE.html" title="&#34;BASE&#34; I/O for numbers in other bases"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../languages.html" title="Supported Languages"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" accesskey="U">Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="dsp-3d-space-manipulation-extension">
+<span id="dsp"></span><h1><tt class="docutils literal"><span class="pre">&quot;3DSP&quot;</span></tt> 3D space manipulation extension</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Fingerprint ID:</th><td class="field-body">0x33445350</td>
+</tr>
+</tbody>
+</table>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.5-rc2.</span></p>
+<p>This fingerprint, from <a class="reference external" href="http://www.rcfunge98.com/rcsfingers.html#3DSP">RC/Funge-98</a>, implements operations on three-dimensional vectors and 4 by 4 matrices. It provides the following commands:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">A</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>b</em><sup>v3</sup> &#8212; <em>(a+b)</em><sup>v3</sup></span></dt>
+<dd>Adds two three-dimensional vectors.</dd>
+<dt><tt class="docutils literal"><span class="pre">B</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>b</em><sup>v3</sup> &#8212; <em>(a-b)</em><sup>v3</sup></span></dt>
+<dd>Subtracts three-dimensional vector <em>b</em> from <em>a</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">C</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>b</em><sup>v3</sup> &#8212; <em>(a×b)</em><sup>v3</sup></span></dt>
+<dd>Calculates cross product of two three-dimensional vectors. <em>a</em> and <em>b</em> should be in the correct order, as cross product is not commutative.</dd>
+<dt><tt class="docutils literal"><span class="pre">D</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>b</em><sup>v3</sup> &#8212; <em>(a·b)</em></span></dt>
+<dd>Calculates dot product of two three-dimensional vectors.</dd>
+<dt><tt class="docutils literal"><span class="pre">L</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> &#8212; <em>sqrt(a·a)</em></span></dt>
+<dd>Calculates length of given three-dimensional vector, defined as a square root of dot product of <em>a</em> and <em>a</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">M</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>b</em><sup>v3</sup> &#8212; <em>(ab)</em><sup>v3</sup></span></dt>
+<dd>Multiplies two three-dimensional vectors.</dd>
+<dt><tt class="docutils literal"><span class="pre">N</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> &#8212; <em>a÷sqrt(a·a)</em><sup>v3</sup></span></dt>
+<dd>Normalizes the given three-dimensional vector, so its length is 1. If <em>a</em> is zero vector, pushes itself.</dd>
+<dt><tt class="docutils literal"><span class="pre">U</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> &#8212; <em>a</em><sup>v3</sup> <em>a</em><sup>v3</sup></span></dt>
+<dd>Duplicates the given three-dimensional vector.</dd>
+<dt><tt class="docutils literal"><span class="pre">V</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> &#8212; <em>x</em> <em>y</em></span></dt>
+<dd>Projects the given three-dimensional vector to 2D view. In the other words, a vector <em>a</em><strong>i</strong>+<em>b</em><strong>j</strong>+<em>c</em><strong>k</strong> projects to (<em>a</em>÷<em>c</em>)<strong>i</strong>+(<em>b</em>÷<em>c</em>)<strong>j</strong>. If <em>c</em> is zero it is assumed to be 1.</dd>
+<dt><tt class="docutils literal"><span class="pre">Z</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>n</em><sup>fp</sup> &#8212; <em>(na)</em><sup>v3</sup></span></dt>
+<dd>Multiplies the given three-dimensional vector by scalar.</dd>
+</dl>
+<p>The following commands reflect in Unefunge mode.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">P</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>dest</em><sup>v</sup> <em>src</em><sup>v</sup> &#8212;</span></dt>
+<dd>Copies the matrix starting at <em>src</em> to <em>dest</em>, in the Funge space.</dd>
+<dt><tt class="docutils literal"><span class="pre">R</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>dest</em><sup>v</sup> <em>axis</em> <em>angle</em><sup>fp</sup> &#8212;</span></dt>
+<dd>Puts the transformation matrix rotating <em>angle</em> degrees by <em>axis</em> to <em>dest</em> in the Funge space. <em>axis</em> is 1 for X axis, 2 for Y axis and 3 for Z axis. Reflects if <em>axis</em> is invalid.</dd>
+<dt><tt class="docutils literal"><span class="pre">S</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>dest</em><sup>v</sup> <em>scale</em><sup>v3</sup> &#8212;</span></dt>
+<dd>Puts the transformation matrix scaling by factor of <em>scale</em> for each axes.</dd>
+<dt><tt class="docutils literal"><span class="pre">T</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>dest</em><sup>v</sup> <em>offset</em><sup>v3</sup> &#8212;</span></dt>
+<dd>Puts the transformation matrix translating by <em>offset</em> for each axes.</dd>
+<dt><tt class="docutils literal"><span class="pre">X</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>a</em><sup>v3</sup> <em>source</em><sup>v</sup> &#8212; <em>(aM)</em><sup>v3</sup></span></dt>
+<dd>Multiplies the three-dimensional vector by the transformation matrix <em>M</em> given by <em>source</em>. Actually it multiplies in the reverse order: the result should be <em>a</em><em>M</em>.</dd>
+<dt><tt class="docutils literal"><span class="pre">Y</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier"><em>target</em><sup>v</sup> <em>sourcea</em><sup>v</sup> <em>sourceb</em><sup>v</sup> &#8212;</span></dt>
+<dd>Multiplies two matrices <em>A</em> and <em>B</em> given by <em>sourcea</em> and <em>sourceb</em>, and puts it to <em>target</em> in the Funge space. Actually it multiplies in the reverse order: the result should be <em>B</em><em>A</em>.</dd>
+</dl>
+<p>Three-dimensional vector consists of three single precision floating point number, as used by <a class="reference internal" href="FPxP.html#fpsp"><em>FPSP fingerprint</em></a>. 4 by 4 matrix in the Funge space occupies 4 by 4 cells, for example from (x,y,z) to (x+3,y+3,z) in Trefunge, and of course uses same floating point number.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BASE.html" title="&#34;BASE&#34; I/O for numbers in other bases"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../languages.html" title="Supported Languages"
+             >previous</a> |</li>
+        <li><a href="../index.html">PyFunge 0.5-rc2 documentation</a> &raquo;</li>
+          <li><a href="../languages.html" >Supported Languages</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2004, 2009, Kang Seonghoon.
+      Last updated on Dec 13, 2015.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
