@@ -34,6 +34,11 @@ befunge/
     This directory contains random programs and snippets in the 'befunge'
     language (a 2D esoteric language).
 
+women_and_child_safety/
+    This directory contains code written for a programming competition. The code
+    in this directory aims to help improve women and child safety. (TODO: rename
+    this directory to a better name)
+
 other/
     Oddball directory containing very random stuff. Includes misc. bash scripts,
     3D models, videos, songs, scribble files, etc.
