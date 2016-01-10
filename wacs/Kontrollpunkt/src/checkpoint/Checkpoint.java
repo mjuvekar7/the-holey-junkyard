@@ -5,7 +5,12 @@
  */
 package checkpoint;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +21,8 @@ public class Checkpoint extends javax.swing.JFrame {
 
     private static ArrayList<Integer> checkpoints = new ArrayList<>();
     private static int DEBUG_CONST = 1000;
-    
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form Checkpoint
      */
@@ -115,10 +121,123 @@ public class Checkpoint extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private static void commenceEmergencySequence49131 (int check) {
-        // TODO: play l.o.l sound here
+    /**
+     * Commences the emergency sequence.
+     *
+     * This method commences the emergency sequence, which consists of playing
+     * an alarm sound and may include other actions.
+     */
+    private void commenceEmergencySequence49131() {
+        preloadedPlay("alarm.wav");
     }
-    
+
+    /**
+     * Gets the duration of a .wav file.
+     * @param file the .wav audio file
+     * @return the duration of the audio file
+     */
+    static double getDurationWav(File file) {
+
+        //first get a stream of audio representing audio file
+        try (AudioInputStream stream = AudioSystem.getAudioInputStream(file)) {
+
+            //then, based on its technical specifications, calculate length
+            //this is the part where only .wav, .aiff, or. au files are supported
+            AudioFormat format = stream.getFormat();
+            return (file.length() / format.getSampleRate() / (format.getSampleSizeInBits() / 8.0) / format.getChannels()) * 1000;
+
+            //catch exceptions
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            System.err.printf("An exception occurred! %d", ex.toString());
+            return -1;
+        }
+    }
+
+    /**
+     * Loads and plays a .wav audio file.
+     * @param filePath the filepath of the .wav audio file
+     */
+    public static void preloadedPlay(final String filePath) {
+        Path path = Paths.get(filePath);
+        File file = path.toFile();
+
+        //if path is correct, file is audio, etc... (see the 'isFileSupported(file)'
+        //method)
+        Clip clip = null;
+        if (isFileSupported(file)) {
+            try {
+                //get a 'Clip' (a Clip is a type of output, where you first load
+                //the entire file and then play it)
+                clip = AudioSystem.getClip();
+
+                //feed the file into the clip
+                clip.open(AudioSystem.getAudioInputStream(file));
+
+                //add a 'listener' to 'listen' for the end of the file
+                clip.addLineListener(new LineListener() {
+                    @Override
+                    public void update(LineEvent event) {
+                        if (event.getType() == LineEvent.Type.STOP) {
+                            event.getLine().close();
+                        }
+                    }
+                });
+
+                //start playing sound
+                clip.start();
+
+                //wait for sound to end, and then return
+                Thread.sleep((long) getDurationWav(file));
+
+                //catch exceptions
+            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | InterruptedException ex) {
+                clip.stop();
+                clip.close();
+            } //end try-catch
+        } //end if
+    }
+
+    /**
+     * Checks if the audio file is supported.
+     * @param file the audio file
+     * @return whether the file is supported
+     */
+    static boolean isFileSupported(File file) {
+        try {
+            AudioFileFormat form = AudioSystem.getAudioFileFormat(file);
+            if ((form.getType() == AudioFileFormat.Type.WAVE) || (form.getType() == AudioFileFormat.Type.AU) || (form.getType() == AudioFileFormat.Type.AIFF)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            System.err.printf("An exception occurred! %d", ex.toString());
+            return false;
+        }
+    }
+
+    /**
+     * Starts a timeout thread.
+     *
+     * If timed out, the thread will commence emergency sequence 49131
+     * @see #commenceEmergencySequence49131()
+     * @return the timeout thread
+     */
+    private Thread startTimer() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5 * DEBUG_CONST);
+                    commenceEmergencySequence49131();
+                } catch (InterruptedException ex) {
+                }
+            }
+        });
+        t.start();
+        return t;
+    }
+
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         try {
             int mints = Integer.parseInt(addField.getText());
@@ -139,16 +258,23 @@ public class Checkpoint extends javax.swing.JFrame {
         this.setVisible(false);
         for (int i = 0; i < checkpoints.size(); i++) {
             try {
-                Thread.sleep(checkpoints.get(i)*DEBUG_CONST);
-                int opt = JOptionPane.showConfirmDialog(this, "Have you reached Checkpoint #" + (i + 1), "Confirm Checkpoint", JOptionPane.YES_NO_OPTION);
-                if (opt == 1) {
-                    commenceEmergencySequence49131(i);
-                    System.exit(1); 
+                Thread.sleep(checkpoints.get(i) * DEBUG_CONST);
+                Thread t = startTimer();
+                int opt = JOptionPane.showConfirmDialog(this, "Have you reached Checkpoint# " + (i + 1),
+                        "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                t.interrupt();
+                while (opt == 1) {
+                    Thread.sleep(3 * DEBUG_CONST);
+                    t = startTimer();
+                    opt = JOptionPane.showConfirmDialog(this, "Have you reached Checkpoint# " + (i + 1),
+                            "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    t.interrupt();
                 }
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException e) {
                 System.err.println("Interrupted!");
             }
         }
+        JOptionPane.showMessageDialog(this, "Congratulations on reaching safely!", "Congrats", JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
     }//GEN-LAST:event_startButtonActionPerformed
 
@@ -157,13 +283,14 @@ public class Checkpoint extends javax.swing.JFrame {
     }//GEN-LAST:event_addFieldActionPerformed
 
     /**
+     * The main method
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -185,12 +312,12 @@ public class Checkpoint extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Checkpoint().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextField addField;
