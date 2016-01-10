@@ -34,7 +34,7 @@ befunge/
     This directory contains random programs and snippets in the 'befunge'
     language (a 2D esoteric language).
 
-women_and_child_safety/
+wacs/
     This directory contains code written for a programming competition. The code
     in this directory aims to help improve women and child safety. (TODO: rename
     this directory to a better name)
