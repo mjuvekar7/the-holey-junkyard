@@ -1,16 +1,18 @@
-import pyaudio
+#!/usr/bin/python
+# listen.py: listen for claps
+# author Shardul C.
 
-chunk = 256
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-threshold = 3000
-max_value = 0
-p = pyaudio.PyAudio()
+import alsaaudio as aa
+import audioop
 
-def listen():
-    stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE,
-                    input=True, output=True, frames_per_buffer=chunk)
+if __name__ == '__main__':
+    inp = aa.PCM(aa.PCM_CAPTURE, device='plughw:1')
+    inp.setchannels(2)
+    inp.setrate(8000)
+    inp.setformat(aa.PCM_FORMAT_S16_LE)
+    inp.setperoidsize(160)
+
     while True:
-        if max(array('h', stream.read(chunk))) > threshold:
-            print('clap')
+        l, data = inp.read()
+        print(audioop.max(data, 2))
+
