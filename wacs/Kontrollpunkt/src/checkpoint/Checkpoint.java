@@ -5,10 +5,7 @@
  */
 package checkpoint;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
@@ -22,6 +19,7 @@ public class Checkpoint extends javax.swing.JFrame {
     private static ArrayList<Integer> checkpoints = new ArrayList<>();
     private static int DEBUG_CONST = 1000;
     private static final long serialVersionUID = 1L;
+    private static boolean stopped = false;
 
     /**
      * Creates new form Checkpoint
@@ -128,93 +126,56 @@ public class Checkpoint extends javax.swing.JFrame {
      * an alarm sound and may include other actions.
      */
     private void commenceEmergencySequence49131() {
-        preloadedPlay("alarm.wav");
+        bufferedPlay("/resources/alarm.wav");
     }
 
-    /**
-     * Gets the duration of a .wav file.
-     * @param file the .wav audio file
-     * @return the duration of the audio file
-     */
-    static double getDurationWav(File file) {
-
-        //first get a stream of audio representing audio file
-        try (AudioInputStream stream = AudioSystem.getAudioInputStream(file)) {
-
-            //then, based on its technical specifications, calculate length
-            //this is the part where only .wav, .aiff, or. au files are supported
-            AudioFormat format = stream.getFormat();
-            return (file.length() / format.getSampleRate() / (format.getSampleSizeInBits() / 8.0) / format.getChannels()) * 1000;
-
-            //catch exceptions
-        } catch (UnsupportedAudioFileException | IOException ex) {
-            System.err.printf("An exception occurred! %d", ex.toString());
-            return -1;
-        }
-    }
-
-    /**
-     * Loads and plays a .wav audio file.
-     * @param filePath the filepath of the .wav audio file
-     */
-    public static void preloadedPlay(final String filePath) {
-        Path path = Paths.get(filePath);
-        File file = path.toFile();
-
+    public static void bufferedPlay(final String filePath) {
         //if path is correct, file is audio, etc... (see the 'isFileSupported(file)'
         //method)
-        Clip clip = null;
-        if (isFileSupported(file)) {
             try {
-                //get a 'Clip' (a Clip is a type of output, where you first load
-                //the entire file and then play it)
-                clip = AudioSystem.getClip();
 
-                //feed the file into the clip
-                clip.open(AudioSystem.getAudioInputStream(file));
+                //get a stream of data which can load audio little by little
+                AudioInputStream ais = AudioSystem.getAudioInputStream(Checkpoint.class.getResource(filePath));
 
-                //add a 'listener' to 'listen' for the end of the file
-                clip.addLineListener(new LineListener() {
-                    @Override
-                    public void update(LineEvent event) {
-                        if (event.getType() == LineEvent.Type.STOP) {
-                            event.getLine().close();
+                //get info about an output which should have the capabilty to load
+                //data little by little
+                DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, ais.getFormat());
+
+                try (SourceDataLine srcLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo)) {
+                    final int EXTERNAL_BUFFER_SIZE = 32768;
+                    final byte[] ABDATA = new byte[EXTERNAL_BUFFER_SIZE];
+                    int nBytesRead = 0;
+
+                    //feed the file into the output
+                    srcLine.open(ais.getFormat());
+
+                    //prepare for start
+                    srcLine.start();
+
+                    //continuously write a EXTERNAL_BUFFER_SIZE number of bytes to
+                    //the output until the file is over
+                    while (nBytesRead != -1) {
+                        nBytesRead = ais.read(ABDATA, 0, ABDATA.length);
+                        if (nBytesRead >= 0) {
+                            srcLine.write(ABDATA, 0, nBytesRead);
+                        } //end if
+                        if (Thread.interrupted()) {
+                            break;
                         }
-                    }
-                });
+                    } //end while
 
-                //start playing sound
-                clip.start();
-
-                //wait for sound to end, and then return
-                Thread.sleep((long) getDurationWav(file));
+                    //drain the buffer of any remaining audio (this also ensures
+                    //the 'remaining' audio is played) and stop playback.
+                    srcLine.drain();
+                    srcLine.stop();
+                }
 
                 //catch exceptions
-            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException | InterruptedException ex) {
-                clip.stop();
-                clip.close();
-            } //end try-catch
-        } //end if
+            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+                System.err.printf("An exception occurred! " + ex.toString());
+            } //end try-with-resources-catch
     }
 
-    /**
-     * Checks if the audio file is supported.
-     * @param file the audio file
-     * @return whether the file is supported
-     */
-    static boolean isFileSupported(File file) {
-        try {
-            AudioFileFormat form = AudioSystem.getAudioFileFormat(file);
-            if ((form.getType() == AudioFileFormat.Type.WAVE) || (form.getType() == AudioFileFormat.Type.AU) || (form.getType() == AudioFileFormat.Type.AIFF)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (UnsupportedAudioFileException | IOException ex) {
-            System.err.printf("An exception occurred! %d", ex.toString());
-            return false;
-        }
-    }
 
     /**
      * Starts a timeout thread.
