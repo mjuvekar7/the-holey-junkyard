@@ -12,7 +12,10 @@ Eat.b98
 input.b98
     This file contains a befunge snippet that takes input from user and stores
     it reversed in the stack (so that the first character popped is the first
-    letter and so on).
+    letter and so on), and then prints it.
+
+quine.b98
+    This file contains a simple quine - a program that prints its source code.
 
 README
     This file.
