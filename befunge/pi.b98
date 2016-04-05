@@ -1,0 +1,64 @@
+comp:
+100,100p 101,100p
+100,101p 101,101p
+
+200,200p 201,200p
+200,201p 201,201p
+
+100,100g 200,200g * 101,100g 200,201g * + 300,300p
+100,100g 201,200g * 101,100g 201,201g * + 301,300p
+100,101g 200,200g * 101,101g 200,201g * + 300,301p
+100,101g 201,200g * 101,101g 201,201g * + 301,301p
+
+
+prod:
+1 0 -10*n 10
+comp()
+
+
+cons:
+100,100p 101,100p
+100,101p 101,101p
+next_nums()
+101,101g 100,101g
+101,100g 100,100g
+comp()
+
+
+next_nums: (initialize 0 150,150p at start)
+150,150g1+150,150p
+2 150,150g * 1 +
+0
+4 150,150g * 2 +
+150,150g
+
+
+nexte:
+100,100p 101,100p
+100,101p 101,101p
+102,102p (multiplier)
+100,100g 102,102g * 101,100g +
+100,101g 102,102g * 101,101g + /
+
+
+safe:
+3 z nexte() : 4 z nexte()
+if equal, : print 3 z nexte() and z prod
+else z cons()
+
+forever:
+  y = nexte(z)
+  if safe(z, y):
+    print(y)
+    z = prod(z, y)
+  z = cons(z, next_nums)
+
+nexte(z) = (z.q*3 + z.r) / (z.s*3 + z.t)
+safe(z, y) = y == (z.q*4 + z.r) / (z.s*4 + z.t)
+prod(z, n) = comp((10, -10*n, 0, 1), z)
+comp = matrix multiplication
+
+next_nums:
+  k = 1
+  return k, 4k+2, 0, 2k+1
+  increment k
