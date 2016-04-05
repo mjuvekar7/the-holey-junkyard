@@ -1,0 +1,117 @@
+package platformer;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.*;
+
+public class PLATFORMER extends JPanel implements KeyListener {
+
+    static int x, y = 400;
+    static int i = 20;
+    static boolean yo = true;
+    static boolean ho = true;
+    static Rectangle mariodude = new Rectangle(300, 400, 100, 100);
+    static Rectangle m = new Rectangle(2000 - x, 300, 90, 200);
+
+    public static void main(String[] args) throws InterruptedException {
+        final PLATFORMER game = new PLATFORMER();
+        JFrame frame = new JFrame("JUMP");
+        frame.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        frame.add(game);
+        frame.addKeyListener(game);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        while (true) {
+            if (i == 14 && y == 256) {
+                yo = false;
+                ho = true;
+            }
+            game.haha();
+        }
+    }
+
+    void haha() throws InterruptedException {
+
+        while (ho) {
+
+            if (yo) {
+                i--;
+            } else {
+                i++;
+            }
+            y = i * i;
+            if (i == 20) {
+                yo = true;
+            }
+            if (i == 0) {
+                yo = false;
+            }
+            if (mariodude.intersects(m)) {
+                System.out.println(y);
+                ho = false;
+                y = 256;
+                i = 14;
+                yo = true;
+                repaint();
+
+            }
+            if (y == 400) {
+                ho = false;
+            }
+
+            Thread.sleep(50);
+            mariodude.setBounds(300, y, 100, 100);
+            repaint();
+        }
+
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.setColor(Color.BLACK);
+        g.fillRect(300, y, 100, 100);
+        g.setColor(Color.RED);
+        g.fillRect(320, y + 20, 60, 60);
+        g.fillRect(0, 500, 10000, 1000);
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 500, 10000, 10);
+        g.fillRect(2000 - x, 356, 90, 144);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (2000 - x != 400) {
+                x += 10;
+            }
+            if (2000 - x == 400 && y < 196) {
+                x += 10;
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (2000 - x != 210) {
+                x -= 10;
+            }
+            if (2000 - x == 210 && y < 196) {
+                x -= 10;
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            ho = true;
+        }
+
+        repaint();
+        m.setBounds(2000 - x, 256, 90, 300);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+}
