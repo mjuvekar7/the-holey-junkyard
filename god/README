@@ -1,0 +1,3 @@
+description.texi is a rough Texinfo file for the documentation of the Game of
+Death. It is not meant to be used as the actual documentation; the complete
+specifications will be created as a LaTeX file.

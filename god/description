@@ -1,0 +1,75 @@
+Definitions --
+ square = single grid square
+ shape = connected active squares
+ unit = group of shapes
+ army = all the units
+ grid = game area of blank squares
+
+Attributes of a shape --
+ 0. speed: ceil(blocks/3) turns per move
+ 1. health: 2*blocks
+ 2. damage given: multiplier * average thickness at firing side
+ 3. damage taken: multiplier * average thickness at contact point(s)
+
+Note that shapes can move in the four orthogonal directions. Shapes are
+destroyed when their health goes lower than 0; health is incremented by 1 every
+2 turns.
+
+A shape must define the following methods --
+ 0. update: rules for determining the next condition of the shape, including
+    whether to fire or not.
+ 1. die: what to do when health goes below 0; note that the shape does not move,
+    attack, or die anymore, but the body remains and can sustain 10*health
+    damage before disappearing forever.
+
+A shape may define the following methods --
+ 0. self-destruct: in times of grave danger, the shape may die of its own
+    accord or split into a dead body and a live shape (of any size) with the
+    original rules.
+ 1. merge: a shape can merge with another friendly shape, giving the new shape
+    the rules of the bigger shape; a merge takes as many turns as it takes the
+    bigger shape in the merge to move twice.
+
+A shape may use the following methods --
+ 0. move: start moving in a direction, actual movement depends on speed
+ 1. turn: start turning in a direction (counts as a move), actual turning
+    depends on speed
+ 2. broadcast: send a message to everyone within a 200-square radius
+ 3. receive: do something on receiving a broadcast
+ 4. fire: fire a pulse in a direction, with damage given etc. There will be a
+    recharge period before the shape can fire again.
+
+The broadcast and receive methods do not differentiate between friends and
+enemies. The receive method is executed (if present) by all cells within the
+specified radius of a broadcast only in the next turn after the broadcast. The
+receive method is allowed to influence the update method.
+
+Orientation is, by default, facing forwards. Shapes know their position and
+orientation relative to anything they can see/hear.
+
+Each shape can 'hear' broadcasts within the 200-block radius and can 'see'
+other shapes in a 100-block radius. 'Vision' is implemented by allowing each
+shape access to a particular portion of the grid.
+
+Before actual gameplay, the grid is initialized by specifying units that should
+repeat themselves until the allowed shapes are exhausted. One army is allowed
+500 blocks, all behind the 100-block line on each player's side. The units of
+the army do not actually exist but are called as such to make initialization
+easier. Gameplay is a simulation where both armies start executing their rules
+without any human intervention.
+
+After a simulation is over, if an army has actively destroyed more than 50% of
+the population of a particular shape, then the complete rules specification for
+that shape is made available to the player. Active destruction is destruction by
+attacking and pushing health below 0, not by surrendering or self-destruction.
+
+A suggested size for the grid is 200x300. A view of the grid could be given to
+each human player, showing a portion of the grid selectable by coordinates or by
+shapes. Without any live view, simulation can go on at a higher speed.
+
+Before gameplay, players are allowed to design new shapes, give them new rules
+and new strategies, etc. Players are also provided with a testing environment
+into which shapes can be introduced and tested. Manual intervention is allowed
+in the testing stage.
+
+I call it the Game of Death.
