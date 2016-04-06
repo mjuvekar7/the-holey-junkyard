@@ -10,6 +10,11 @@ fib.py
     Fibonacci numbers, all Fibonacci numbers less than n, and next/previous
     Fibonacci numbers.
 
+pi.py
+    A Python utility to generate digits of the irrational constant 'pi'. The
+    final goal is to eventually port this utility to the befunge programming
+    language.
+
 prime.py
     A Python utility for prime numbers, which can give you the first n
     prime numbers, all prime numbers less than n, and next/previous
