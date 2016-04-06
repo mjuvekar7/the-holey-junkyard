@@ -11,7 +11,9 @@ fib.py
     Fibonacci numbers.
 
 pi.py
-    A Python utility to generate digits of the irrational constant 'pi'.
+    A Python utility to generate digits of the irrational constant 'pi'. The
+    final goal is to eventually port this utility to the befunge programming
+    language.
 
 prime.py
     A Python utility for prime numbers, which can give you the first n
