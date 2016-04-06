@@ -17,6 +17,11 @@ input.b98
 quine.b98
     This file contains a simple quine - a program that prints its source code.
 
+pi.b98
+    This file contains code to generate digits of pi. The code is based on the
+    algorithm implemented in the '/python/pi.py' file. Note that this file is
+    still under development.
+
 README
     This file.
 
