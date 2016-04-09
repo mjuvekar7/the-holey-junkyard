@@ -1,1 +1,9 @@
 *.pyc
+/wacs/Kontrollpunkt/build
+*.class
+__pycache__
+*.aux
+*.out
+*.fdb_latexmk
+*.fls
+*.toc
