@@ -16,16 +16,16 @@
 \addtolength{\topmargin}{-.75in}
 \addtolength{\textheight}{1.4in}
 
-\newcommand*{\titleM}{\begingroup% Misericords, T&H p 153
+\newcommand*{\titleM}{\begingroup
 \drop = 0.08\textheight
 \centering
 \vspace*{\drop}
 {\Huge\bfseries The Game of Death}\\[\baselineskip]
 {\scshape Manual and Documentation}\\[1.5\baselineskip]
-{\scshape by}\\[0.8\baselineskip]
-{\large\scshape Shardul C.}\par
+{\scshape by}\\[0.6\baselineskip]
+{\large\scshape Shardul C.\small\quad and\quad \large Mandar J.}\par
 \vfill
-{\scshape Version 0.2 (unstable)}\par
+{\scshape Version 0.3 (unstable)}\par
 \vspace*{\drop}
 \endgroup}
 
@@ -40,13 +40,13 @@
 \vfill
 
 \noindent
-The author of this document is Shardul C. Comments, requests, questions, errata, and any other correspondence regarding this document should be addressed to: \\
+The authors of this document are Shardul~C.\ and Mandar~J. Comments, requests, questions, errata, and any other correspondence regarding this document should be addressed to: \\
 \texttt{shardul (DOT) chiplunkar (AT) gmail.com}.
 
 \vspace{8pt}
 \noindent
-This manual is for the Game of Death, version 0.2. \\
-Copyright \textcopyright\ 2014, 2016 Shardul C. \\
+This manual is for the Game of Death, version 0.3 (unstable). \\
+Copyright \textcopyright\ 2014, 2016 Shardul C., Mandar J. \\
 Copying and distribution of this file, with or without modification, are permitted in any medium without royalty provided the copyright notice and this notice are preserved.
 
 \newpage
@@ -56,24 +56,21 @@ Copying and distribution of this file, with or without modification, are permitt
 \newpage
 \section{Introduction}
 
-The Game of Death is a grid-based game, modelled somewhat after Conways' popular `Game of Life', in which shapes on the grid follow ever-changing programmable rules to win battles versus opponent armies. It also incorporates some aspects of the game `Cature the Flag' in the actual battle gameplay. The motivation behind the game is discussed in \hyperref[sec:moti]{\autoref*{sec:moti}} and a high-level overview of the gameplay, in \hyperref[sec:play]{\autoref*{sec:play}}.
+The Game of Death is a multi-player grid-based strategy game which is easy to understand, but near-impossible to master. It is modelled somewhat after Conway's popular `Game of Life', in which shapes on the grid follow evolving programmable rules to win battles against opponent armies. Just like the Game of Life, the battlefield for the Game of Death is a large grid where lit cells represent parts of living `shapes', whereas unlit cells represent empty space. The aim of the game is to design shapes which will then try to defeat the opponent?s shapes in a battle. The battle is simply a game of `Capture the Flag', where each army has a `home' which contains a flag. The goal of either army is to capture the flag of an opponent and bring it back to its own home
 
-\subsection{Motivation} \label{sec:moti}
+A game consists of two main phases --- a `design' phase, and a `battle' phase. The design phase is an extensive phase (the exact time period is for the players to decide). In the design phase, the players simultaneously design `shapes' --- groups of lit cells which act like one living `troop' of the player's army. To design a shape, a player must first define what the shape looks like, and then specify rules which will control how the shape behaves in battle. Players may also test their shapes in mock-battles during the design phase and tweak the rules to make their shapes perform better.
 
-The motivation for the Game of Death was to create a game that would be extremely difficult for computers to play, if not altogether impossible or out of reach of computing technology. To play the Game of Death, creativity is required as much as intelligence is; it is an Art as well as a Science, resembling pure mathematics in the manner of skill, ingenuity, and thougtful reasoning required.
+In the battle stage, the armies of two or more players are distributed around the game grid at an [initially] safe distance from each other. Each player has a `home' on the grid which is an immobile shape containing a `flag'. The aim of each player is to capture the opponent's flag and bring it back to their own `home'. Once the battle starts, the shapes can move and attack other shapes (actions are specified in \hyperref[sec:act]{\autoref*{sec:act}}) and try to steal opponent flags if they are within reach. When an opponent flag is brought back to the `home', the game ends.
+
+Many variations on the basic gameplay are possible, including tournament battles with many players, very long design stages, rules for `capturing' opponent shapes along with the set of rules that they are governed by, and more. The endgame condition can also be modified with respect to the number of shapes killed or time taken to win. However, the basic structure of the game should remain mostly unchanged. 
+
+\subsection{Motivation}
+
+The motivation for the Game of Death was to create a game that would be extremely difficult for computers to play, if not altogether impossible or out of reach of computing technology. To play the Game of Death, creativity is required as much as intelligence is; it is an Art as well as a Science, resembling pure mathematics in the manner of skill, ingenuity, and thoughtful reasoning required.
 
 However, the Game of Death is meant to be very easy to understand and play. Even without reading this document, beginners can be explained the basic concepts of the Game of Death and can start designing their own shapes for battles.
 
 The Game of Death can also be considered an experiment by the authors in game designing. Along with creative thinking and simplicity, the Game of Death tries to be a very competitive game which encourages players to improve as humans, rather than `upgrading' or `modding' the `characters' of the game. The game objects also evolve as a consequence, leading to a general evolution of the `intelligence' of the entities in the game which is quite interesting to observe (and even more so to be a part of!).
-
-\subsection{Gameplay} \label{sec:play}
-
-Gameplay consists of two stages: design and battle. In the design stage, players design shapes which will move around on the grid and experiment with rules for the shapes, simulating battles against themselves or against other non-human agents. Shapes are `programmed' in a sense to coordinate their actions and act as a single unit: the `army'.
-
-In the battle stage, the armies of two or more players are distributed around the game grid at an [initially] safe distance from each other. Each player has a `home' on the grid which is an immobile shape containing a metaphorical `flag'. The aim of each player is to capture the opponent's flag and bring it back to the `home'. Once the battle starts, the shapes can move and attack other shapes (actions are specified in \hyperref[sec:act]{\autoref*{sec:act}}) and try to steal opponent flags if they are within reach. When an opponent flag is brought back to the `home', the game ends. This is not a very easy goal, and to achieve success, shapes on the grid have to communicate efficiently and work together as a team, using evolving strategies and techniques to win.
-
-Many variations on the basic gameplay are possible, including battles with many players, very long design stages, rules for `capturing' opponent shapes along with the set of rules that they are governed by, and more. The endgame condition can also be modified with respect to the number of shapes killed or time taken to win. However, the basic structure of the game should remain mostly unchanged.
-
 
 \newpage
 \section{Complete Specifications}
@@ -86,7 +83,7 @@ We will define the following terms:
 \begin{description}
 \addtolength{\itemsep}{-4pt}
     \item[game grid] The game grid is the ground for gameplay. It is composed of lit cells and dark cells arranged in a rectangular grid, where lit cells represent occupied space and dark cells represent free space.
-    \item[shape] A shape is a collection of lit cells on the grid which act as a sinlge entity. All the component lit cells must have at least one common edge with another component lit cell.
+    \item[shape] A shape is a collection of lit cells on the grid which act as a single entity. All the component lit cells must have at least one common edge with another component lit cell.
     \item[army] An army is all the shapes belonging to a player in the game.
 \end{description}
 
@@ -130,7 +127,7 @@ A shape may use the following actions in its methods:
 \begin{description}
 \addtolength{\itemsep}{-4pt}
     \item[rest] The `rest' action does nothing for one turn.
-    \item[move(direction)] The `move' action initiates a move in the given direction (forward, backward, left, or right). The move may not occur immediately after the action is performed; the number of turns taken to move is defined as the \textsf{speed} of the shape. A move, once initiated, may be cancelled before it is actually performed by intiating a move in a different direction or by `resting'.
+    \item[move(direction)] The `move' action initiates a move in the given direction (forward, backward, left, or right). The move may not occur immediately after the action is performed; the number of turns taken to move is defined as the \textsf{speed} of the shape. A move, once initiated, may be cancelled before it is actually performed by initiating a move in a different direction or by `resting'.
     \item[turn(direction)] The `turn' action initiates a move in the given direction (clockwise or counterclockwise). Like the `move' action, this is dependent on the \textsf{speed} of the shape.
     \item[broadcast(message)] The `broadcast' action instantaneously broadcasts the given message to all shapes within a predefined radius\footnote{A radius of 200 cells is recommended.}. However, the broadcast will be receivable by the shapes only in the next turn.
     \item[receive] The `receive' action returns a list of new messages received. Once a message has been received, it will be cleared from this list.
@@ -152,7 +149,7 @@ Players may watch the battle simulation at a slower pace, or may allow it to pro
 
 A shape is allowed to `see' all cells of the game grid within a 50-cell radius. The shape can know the lit/dark state of these cells, and also whether a lit cell is friendly or hostile. However, the shape itself has no concept of `shapes' and cannot perceive groups of lit cells as such. The 50-cell radius parameter can also be changed if all players agree to the change.
 
-It is recommended that when a player's army actively kills more than a given percentage\footnote{80\% is a recommended value.} of any particular type of enemy shape, then the rules for that shape are made available to the player. This encourages evolving strategies and introduces new variations of existing strategies, making gameplay richer and more intersting.
+It is recommended that when a player's army actively kills more than a given percentage\footnote{80\% is a recommended value.} of any particular type of enemy shape, then the rules for that shape are made available to the player. This encourages evolving strategies and introduces new variations of existing strategies, making gameplay richer and more interesting.
 
 
 \newpage
@@ -162,7 +159,7 @@ Note: These tips are not to be considered a `cheat-sheet' but rather as pointers
 
 The shape of the shapes should be made structurally sound to keep the average thickness of each side high enough to withstand damage and provide strong attacks. Because of the average thickness parameter, strong shapes are usually solid or contain internal supports (such as spokes in a wheel). The health of a shape also affects its damage resistance and attack strength.
 
-Dead shapes can be used tactically as cover from enemy shapes and as places for shapes to safely regroup. Maneouvering around dead shapes may also present an unforeseen challenge for attackers if a shape strategically chooses to commit suicide, blocking an attacker's path.
+Dead shapes can be used tactically as cover from enemy shapes and as places for shapes to safely regroup. Maneuvering around dead shapes may also present an unforeseen challenge for attackers if a shape strategically chooses to commit suicide, blocking an attacker's path.
 
 Shapes should act together as an army, or at least as units of an army. This increases the capabilities of individual shapes multifold and promotes complex, `intelligent' behavior. Also, if the enemy uses group tactics, then the individualist would be at a severe disadvantage!
 
