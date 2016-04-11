@@ -1,0 +1,389 @@
+\input texinfo
+@c %**start of header
+@setfilename game.info
+@settitle The Game of Death
+@c %**end of header
+
+@firstparagraphindent insert
+
+@copying
+This manual is for the Game of Death, version 0.1.
+
+Copyright @copyright{} 2014, 2016 Shardul C.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+@end copying
+
+@setchapternewpage on
+
+@titlepage
+@title The Game of Death
+@subtitle Version 0.1
+@author Shardul C.
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@ifplaintext
+@insertcopying
+@end ifplaintext
+
+@contents
+
+@ifnottex
+@node Top
+@top The Game of Death
+
+@insertcopying
+
+This is a high-level summary of the Game of Death.
+@end ifnottex
+
+@menu
+* Introduction:: What is the Game of Death?
+* Complete Specification:: The complete game specification for the
+  Game of Death
+* Usage Manual:: How to use the Game of Death designer and multiplayer
+  simulator
+* Tips:: Tips for playing and enjoying the Game of Death
+@end menu
+
+
+@node Introduction
+@chapter Introduction
+
+Is it possible for a collection of shapes moving around on a grid, on
+their own, to be `smart'? In a battle, can they take autonomous
+decisions? Can they communicate efficiently? Coordinate their
+movements? And can they @emph{keep getting better?}
+
+The Game of Death is a simulation where shapes do move around on a
+grid, and it's very simple to play. Each player designs shapes for his
+own army and give them rules for their movement, with the aim of
+killing the shapes of the opponent(s); the shapes follow them in the
+simulation. After the simulation, back to the design board: improve
+your old shapes and make new ones. If you kill enough of your
+opponent's shapes, you also get the @emph{full design} for them and
+can use them as a part of your own army!
+
+Aside from being immensely fun (and intellectually challenging) to
+play, the shapes keep `evolving' through multiple runs of the game and
+you never know where a simple design might take you. It takes a lot of
+work to efficiently organize a large collection of shapes with only
+simple rules to do something productive on the whole, and that is what
+the game is based on.
+
+The name, ``Game of Death'', was inspired by the popular ``Game of
+Life'' simulation. The idea, too, came from the same source, by
+imagining the possibilities if shapes were not bound by static rules
+but the rules themselves were allowed to evolve. The game tries to
+retain the simplicity of Conway's ``Game of Life'', mimicing the
+two-dimensional grid and placing a reasonable bound on the number of
+things a shape can do.
+
+Another aim of the designers was to create a game that a computer
+could never play better than a human. This was achieved by making the
+game require loads of creativity, making the choices at a given moment
+practically infinite. There is no design which is absolutely `better'
+than some other in this game; it all pivots around how the players
+invent new ways to achieve great things with small means.
+
+
+@node Complete Specification
+@chapter Complete Specification
+
+@menu
+* Definitions:: Basic definitions
+* Shape Attributes:: Basic attributes of a shape
+* Actions:: What can a shape do?
+* Gameplay Details:: Details of actual gameplay
+@end menu
+
+This is the complete specification for the ``Game of Death''
+
+@node Definitions
+@section Definitions
+@noindent
+We will start with a few basic definitions:
+@itemize @bullet
+@item grid: The grid is the `ground' made up of unit squares that can
+be `on' (lit) representing an object, or `off' (dark) representing empty space.
+@item square: A square is a single unit square on the game grid.
+@item shape: A shape is a collection of connected blocks acting as a single
+object. By `connected', we mean that two blocks share a common side (a vertex is
+not sufficient).
+@item army: An army is all the shapes belonging to a player in the game.
+@end itemize
+
+The game will depict `lit' and `dark' squares using different colors, different
+brightnesses, or in any other manner that clearly distinguishes them.
+
+Throughout the rest of this document, we will use the words `gameplay' and
+`simulation' interchangeably to mean the actual battle between the shapes, while
+`game' will mean the design and battle stages.
+
+@node Shape Attributes
+@section Shape Attributes
+@noindent
+We will also define the following attributes of a shape:
+
+@iftex
+@itemize @bullet
+@item speed: @math{\lceil} @code{squares} @math{\div 3 \rceil} turns per move
+@item health: @math{2 \cdot} @code{squares} points; this is the maximum health.
+The current health is given by `health-now'.
+@item damage given: @math{\text{average thickness} \cdot \sqrt{\text{health-now}
+\div \text{health}}} health points
+@item defense: @math{\text{average thickness} \cdot \text{health-now} \div
+\text{health}} health points
+@end itemize
+@end iftex
+
+@ifnottex
+@itemize @bullet
+@item speed: @code{[squares / 3]} turns per move
+@item health: @code{2*squares} points; this is the maximum health. The current
+health is given by `health-now'.
+@item damage given: @code{average thickness*sqrt(health-now/health)} health
+points
+@item defense: @code{average thickness*health-now/health} health points
+@end itemize
+@end ifnottex
+
+The parameter `squares' represents the number of squares the shape is made of.
+This parameter is meant to roughly correspond to both the size and mass of the
+shape, if it had those attributes. The parameter `health-now' is the current
+health of the shape (the maximum health is given by the `health' attribute).
+`thick-att' is the average thickness of the shape with respect to the side
+attacking or receiving an attack, calculated as the average number of squares in
+the shape until free space on the other side of the shape.
+
+The speed of a shape is the number of turns it takes to make a move. A move
+counts as either one block forward, backward, left, or right, or a one-fourth
+rotation (90@textdegree{}) to the left or to the right. Note that the
+orientation of any shape is `forward' at the beginning of the simulation, where
+`forward' means `facing the enemy'.
+
+A shape has the maximum health points it can have at the beginning of gameplay.
+Whenever it is attacked by another shape, it's current health is revised by
+subtracting the difference between the damage given by the attacker and the
+defense of the attacked. A shape can attack another only if the attacked shape
+is directly in the line of fire of the firing side of the attacker.
+
+Current health is incremented by 1 point every 2 turns, if the shape is not
+attacked, until it reaches the maximum value.
+
+The `damage' and `defense' attributes are designed to account for structural
+strengths and weaknesses in a shape (@pxref{Tips} for more about this) and so
+may be subject to change after testing.
+
+@node Actions
+@section Actions
+@noindent
+A shape @emph{must} define the following actions:
+@itemize @bullet
+@item update: what to do when it is the shape's turn to move (or
+rather, when it is the player's army's turn to move). This includes
+movement, attacking, sensing, and other actions as described later in
+this document.
+
+@item die: what to do when current health goes below 0; note that the
+shape cannot move, attack, or die anymore, but the body remains, can
+sustain (10 @math{\times} `health') damage before disappearing, and
+can be moved by a friendly attack. To move a dead body with friendly
+attacks, a `speed' number of attacks are required to move the body one
+block where `speed' is the previously alive shape's attribute with the
+same name.
+@end itemize
+
+@noindent
+A shape may define the following actions:
+@itemize @bullet
+@item self-destruct: in times of grave danger, the shape may die of
+its own accord, split into many live shapes consisting of one block
+each and the most basic rules (explained in the next paragraph), or
+split into a dead body and a live shape (of any size) with the
+original rules.
+
+@item merge: a shape can merge with another friendly shape(s) in any
+orientation determined by the current orientations of the shapes,
+giving the new shape the rules of the bigger shape; a merge takes as
+many turns as it takes the bigger shape in the merge to move twice.
+
+@item receive: what to do when a broadcasted message is received (a
+broadcast is defined in the next list). This is a special action
+because if a shape broadcasts something in a turn, it is received by
+other shapes in the next turn, and they receive it before they are
+`updated' as per the `update' action. Thus, this action can influence
+the further movement of the shape.
+@end itemize
+@noindent
+The `basic rules' mentioned above are the following: keep moving
+forward until an enemy shape is seen, and then move towards the enemy
+shape. Attack the enemy shape until it dies (the usual `or die trying'
+is implicit here).
+
+These actions will be performed in the context of the simulation, and
+it is thus possible for the simulation environment itself to provide
+some pre-defined fundamental actions for the shapes to use if
+required. These actions are:
+@itemize @bullet
+@item move: move a block in a specified direction. The move may not
+happen instantly, depending on the speed of the shape, so it is
+necessary to keep using the move action repeatedly until the move is
+performed.
+
+@item turn: turn one-fourth of a rotation in a specified direction.
+Like the `move' action, this may not happen instantly and it is
+necessay to use the action repeatedly.
+
+@item broadcast: broadcast a specified message to all shapes within a
+500-block radius. There is no distinctin made between friends and
+enemies by the broadcast action.
+
+@item surrender: become part of the enemy army, turn around, and use
+original rules against the [new] enemy army.
+@end itemize
+@noindent
+Note that broadcasting is implemented by the simulation while
+receiving a broadcast is [optionally] implemented by each shape; this
+allows for independant shapes that proceed with their own business and
+do not hamper (and are not hampered by) the communication of shapes
+around them.
+
+@node Gameplay Details
+@section Gameplay Details
+Before the simulation begins, players choose shapes and arrange them
+as wished on the grid. One arrangement is called a unit, and a player
+can ask for units to be repeated all across the player's side of the
+grid, to make deployment easier. Multiple different units can be
+created.
+
+The official recommendation for a two-player grid size is @math{5000
+\times 5000}, with an initial deployment area of @math{3000 \times
+1000} for each player on opposite sides of the grid. For more players,
+a roughly circular grid is recommended with players having deployment
+areas at equal intervals around the grid. All of these parameters are
+configurable at the time of gameplay.
+
+It is also recommended to let shapes `see' shapes around them in a
+25-block radius. This is implemented by allowing each shape access to
+a small portion of the grid around them. As mentioned earlier,
+broadcasts travel 500 blocks in all directions. Vision is configurable
+at the time of gameplay; the radius of broadcasts cannot be changed.
+
+Each player is allocated a certain maximum number of blocks (blocks,
+not shapes) that can be deployed in the simulation. The official
+recommendation is 30000 blocks per player. This number is configurable
+at the time of gameplay, and can optionally be different for each of
+the players if they mutually agree that one has more skill than the
+other.
+
+At no point in the simulation does a shape know its position relative
+to the grid. It precisely knows its position with respect to other
+visible shapes and to broadcasts.
+
+A single simulation can end depending on many conditions, configurable
+at the time of gameplay. These conditions are a limitation on the
+number of times the shapes are updated (usually a large number), a
+limitation on the number of shapes killed, or a combination of both.
+Note that in any case, if 10% or more of the population of a single
+type of shape is actively destroyed by the army of another player,
+then that player obtains the @emph{complete design} for the destroyed
+shape, including all defined actions. Active destruction means
+destruction by reducing `health-now' below 0, not because of
+self-destruction or surrendering. This rule cannot be changed.
+
+When the simulation is going on, players can watch the grid and can
+choose to `track' certain shapes around the grid to observe tactics in
+play. If there are no players watching the grid, simulation can go on
+at a high speed, but if players are watching, the shapes are updated
+thrice a second.
+
+If desired, `points' can be counted for each of the players, based on
+various factors mutually agreed upon by them, but this system is not
+implemented in the game. It is assumed that the thrill of new
+challenges is reward enough.
+
+This is the end of the complete specification for the Game of Death.
+
+
+@node Usage Manual
+@chapter Usage Manual
+
+
+@node Tips
+@chapter Tips
+
+@menu
+* Game Format:: Recommended playing style
+* Shape Design:: Shape design advice
+@end menu
+
+@node Game Format
+@section Game Format
+To fully enjoy the game, it requires a lot of thinking and planning,
+and it is advised to play the game in a format allowing for extended
+periods of designing. For a two-player game, both players design and
+improve shapes for a week, and then at the end of the week, a few
+simulations are held which both can watch. This continues
+indefinitely.
+
+For a multiplayer game, the game can be played in a tournament format
+where the simulations don't involve all the players at once but in
+batches according to skill level. A `rank' can be maintained for each
+player, depending on past successes in simulations and elegance of
+design. By having different players play each other at different
+times, everybody automatically gets more time to design and can watch
+the games of more skilled players and learn from them.
+
+A large-scale, continuous online tournament is being thought of, but
+has been postponed as a later project.
+
+@node Shape Design
+@section Shape Design
+As mentioned previously, the damage and defense attributes are
+slightly complex to allow for structural strengths and weaknesses in
+shapes. They also account for the `power' with which a shape can
+attack another, its health while doing so, and such issues.
+
+To make a shape structurally strong, an attack on any side of the
+shape must be @emph{distributed} as far as is possible all across the
+shape. A weak shape takes all the force on only a small section of its
+body. For example, a `wall' shape is strong if attacked from the small
+end, but very weak if attacked in the middle --- from an end, the load
+can be transmitted across the @emph{entire wall} till the other end,
+but from the side, only a small, thin portion of the wall actually
+bears the damage. In these terms, a `window' shape is structurally
+very strong, because the bars inside it balance the force very
+effectively in all directions.
+
+To make a shape a strong attacker, looking at the specification, we
+can say that it must be big (implying momentum), healthy (implying
+strength), and the attacking area must be small. If a lot of force is
+distributed over a large area, it is ineffective, but a small force
+over a small area is more effective (think of cutting an apple with a
+sharp knife (small area) versus with the flat side of a spatula (large
+area)).
+
+It is difficult for a shape to be both structurally sound and a strong
+attacker. However, it is best to experiment with different designs and
+analyze them yourself: you will always have the advantage over your
+opponent if you have tried many things.
+
+Also, try to make strategies that involve many different shapes with
+different abilities working together rather than making single
+immensely strong (and immensely slow) shapes which work alone.
+Together, even small shapes can achieve what big shapes could never do
+on their own. Use broadcasts liberally (be sure to use codes so that
+the enemy cannot intercept your broadcasts!) and try to lead organized
+attacks instead of a `kill as you see' strategy.
+
+Have fun!
+
+
+@bye
