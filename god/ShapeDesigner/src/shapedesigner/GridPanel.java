@@ -13,8 +13,8 @@ import javax.swing.border.Border;
 class GridPanel extends JPanel {
 
     public boolean[][] lits;
-    public static int ROWS = 20;
-    public static int COLS = 20;
+    public static int ROWS = 14;
+    public static int COLS = 14;
     private static final long serialVersionUID = 1L;
 
     private static Color offColor = new Color(240, 240, 240);
@@ -46,7 +46,7 @@ class GridPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(600, 600);
+        return new Dimension(454, 454);
     }
 
     private void addGridCells() {
