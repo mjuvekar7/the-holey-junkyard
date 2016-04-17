@@ -15,14 +15,14 @@ public class NumTree {
         long total = 0, max = 0, start, end, diff;
         for (int i = 0; i < RUNS; i++) {
             rand = r.nextInt(12500) + 1;
-//            System.out.print(rand + ": ");
+            System.out.print(rand + ": ");
 
             start = System.nanoTime();
             Node n = getKth(rand);
             end = System.nanoTime();
             diff = end - start;
 
-//            System.out.println(n);
+            System.out.println(n);
             if (i > IGNORES) {
                 if (diff > max) {
                     max = diff;
