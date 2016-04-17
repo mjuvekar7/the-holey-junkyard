@@ -1,5 +1,6 @@
 *.pyc
 /wacs/Kontrollpunkt/build
+/other/NumTree/build
 *.class
 __pycache__
 *.aux
