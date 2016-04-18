@@ -1,13 +1,12 @@
 package numtree;
 
-import java.math.BigInteger;
 import java.util.*;
 
 public class NumTree {
 
-    private static HashMap<Threeple, Node> existing = new HashMap<>(100);
+    private static final HashMap<Threeple, Node> existing = new HashMap<>(100);
     private static final int RUNS = 50;
-    private static final int IGNORES = 10;
+    private static final int IGNORES = 5;
 
     public static void main(String[] args) {
         Random r = new Random();
@@ -61,7 +60,7 @@ public class NumTree {
             });
 
             Optional<Node> min = tries.stream().min((Node m, Node n) -> {
-                return m.t.getValue().compareTo(n.t.getValue());
+                return Double.compare(m.t.getLogValue(), n.t.getLogValue());
             });
             curmin = min.get();
             opens.add(curmin);
@@ -84,14 +83,14 @@ public class NumTree {
 
     static class Threeple {
 
-        private BigInteger value;
+        private double logValue;
         private final int hash;
         private final int a;
         private final int b;
         private final int c;
-        private static final BigInteger TWO = new BigInteger("2");
-        private static final BigInteger THREE = new BigInteger("3");
-        private static final BigInteger FIVE = new BigInteger("5");
+        private static final double TWO = Math.log(2);
+        private static final double THREE = Math.log(3);
+        private static final double FIVE = Math.log(5);
 
         Threeple(int x, int y, int z, boolean calc) {
             a = x;
@@ -104,7 +103,7 @@ public class NumTree {
         }
 
         public void calcValue() {
-            value = TWO.pow(a).multiply(THREE.pow(b)).multiply(FIVE.pow(c));
+            logValue = a*TWO + b*THREE + c*FIVE;
         }
 
         public int getA() {
@@ -119,8 +118,8 @@ public class NumTree {
             return c;
         }
 
-        public BigInteger getValue() {
-            return value;
+        public double getLogValue() {
+            return logValue;
         }
 
         @Override
@@ -165,10 +164,6 @@ public class NumTree {
 
         public Threeple t;
         public boolean two, three;
-
-        private Node(int a, int b, int c) {
-            t = new Threeple(a, b, c, true);
-        }
 
         private Node(Threeple s) {
             t = s;
