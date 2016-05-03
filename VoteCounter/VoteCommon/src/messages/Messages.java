@@ -1,6 +1,6 @@
-/*
+/**
  * Messages.java: common vote-counting messages
- * Copyright (C) 2014 Shardul C.
+ * Copyright (C) 2014, 2016 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -31,7 +31,8 @@ package messages;
  * @author Shardul C.
  */
 public enum Messages {
-    GET_GROUP ("get_group"),
+    GET_GROUP ("get group"),
+    NO_GROUP ("no group"),
     VOTE ("vote"),
     GOODBYE ("goodbye"),
     // not a message but used anyway

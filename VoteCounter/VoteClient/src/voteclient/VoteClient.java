@@ -1,6 +1,6 @@
-/*
+/**
  * VoteClient.java: voting client
- * Copyright (C) 2012 - 2014 Shardul C.
+ * Copyright (C) 2012 - 2016 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -22,9 +22,10 @@
 package voteclient;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
 import messages.Messages;
 
@@ -91,16 +92,20 @@ public class VoteClient extends javax.swing.JFrame {
             // wait for message
             in.readObject();
             // select group
-            group = (String) JOptionPane.showInputDialog(this, "Voter #" + (voterNum + 1) + ": Choose your house:",
-                    "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
-            // voter hit cancel
-            if (group == null) {
-                exitActionPerformed(null);
+            if (groups.size() > 0) {
+                group = (String) JOptionPane.showInputDialog(this, "Voter #" + (voterNum + 1) + ": Choose your house:",
+                        "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
+                // voter hit cancel
+                if (group == null) {
+                    exitActionPerformed(null);
+                }
+                out.writeObject(group);
+            } else {
+                out.writeObject(Messages.NO_GROUP.toString());
             }
             voterNum++;
             // if-else to test msg cut out because
             // server only sends one message anyway
-            out.writeObject(group);
             opts = (List<List<String>>) in.readObject();
             // start individual voting process
             voterStart();
@@ -130,6 +135,53 @@ public class VoteClient extends javax.swing.JFrame {
         opt1.setText(opts.get(step).get(1));
         opt2.setText(opts.get(step).get(2));
         opt3.setText(opts.get(step).get(3));
+    }
+
+    public static void bufferedPlay(final String filePath) {
+        //if path is correct, file is audio, etc... (see the 'isFileSupported(file)'
+        //method)
+            try {
+
+                //get a stream of data which can load audio little by little
+                AudioInputStream ais = AudioSystem.getAudioInputStream(VoteClient.class.getResource(filePath));
+
+                //get info about an output which should have the capabilty to load
+                //data little by little
+                DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, ais.getFormat());
+
+                try (SourceDataLine srcLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo)) {
+                    final int EXTERNAL_BUFFER_SIZE = 32768;
+                    final byte[] ABDATA = new byte[EXTERNAL_BUFFER_SIZE];
+                    int nBytesRead = 0;
+
+                    //feed the file into the output
+                    srcLine.open(ais.getFormat());
+
+                    //prepare for start
+                    srcLine.start();
+
+                    //continuously write a EXTERNAL_BUFFER_SIZE number of bytes to
+                    //the output until the file is over
+                    while (nBytesRead != -1) {
+                        nBytesRead = ais.read(ABDATA, 0, ABDATA.length);
+                        if (nBytesRead >= 0) {
+                            srcLine.write(ABDATA, 0, nBytesRead);
+                        } //end if
+                        if (Thread.interrupted()) {
+                            break;
+                        }
+                    } //end while
+
+                    //drain the buffer of any remaining audio (this also ensures
+                    //the 'remaining' audio is played) and stop playback.
+                    srcLine.drain();
+                    srcLine.stop();
+                }
+
+                //catch exceptions
+            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+                System.err.printf("An exception occurred! " + ex.toString());
+            } //end try-with-resources-catch
     }
 
     /**
@@ -298,9 +350,21 @@ public class VoteClient extends javax.swing.JFrame {
         if (step == genericPosts.size() + nonGenericPosts.size()) {
             // reset
             step = 0;
-            JOptionPane.showMessageDialog(this, "Thank You! Your votes have been recorded.", "Exit", JOptionPane.INFORMATION_MESSAGE);
-            // start again
-            chooseGroup();
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    bufferedPlay("/resources/buzzer.wav");
+                }
+            });
+//            JOptionPane.showMessageDialog(this, "Thank You! Your votes have been recorded.", "Next Voter", JOptionPane.INFORMATION_MESSAGE);
+            int opt = JOptionPane.showConfirmDialog(this, "Thank You! Your votes have been recorded. Next voter!", "Next Voter",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (opt == JOptionPane.OK_OPTION) {
+                // start again
+                chooseGroup();
+            } else {
+                exitActionPerformed(evt);
+            }
         } else {
             // new options
             voterStart();
@@ -311,7 +375,7 @@ public class VoteClient extends javax.swing.JFrame {
         // confirm, send goodbye, and exit
         if (JOptionPane.showConfirmDialog(this, "Exit application?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
             try {
-                out.writeObject(Messages.GOODBYE);
+                out.writeObject(Messages.GOODBYE.toString());
                 in.close();
                 out.close();
             } catch (IOException ex) {
@@ -349,7 +413,7 @@ public class VoteClient extends javax.swing.JFrame {
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
         // thank you, thank you! <bow to audience>
         javax.swing.JDialog aboutDialog = new javax.swing.JDialog(this, "About VoteCounter");
-        String msg = "<html><center>VoteCounter: Java vote counting application<br />Copyright (C) 2012 - 2014 Shardul C.<br /><br />"
+        String msg = "<html><center>VoteCounter: Java vote counting application<br />Copyright (C) 2012 - 2016 Shardul C.<br /><br />"
         + "Bugs, tips, suggestions, requests to<br />&lt;shardul.chiplunkar@gmail.com&gt.</center></html>";
         javax.swing.JLabel lbl = new javax.swing.JLabel(msg);
         lbl.setIcon(new javax.swing.ImageIcon(VoteClient.class.getResource("/resources/gpl-v3-logo.png")));
@@ -370,7 +434,7 @@ public class VoteClient extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     public static void main(String args[]) {
-        System.out.println("VoteCounter Copyright (C) 2012 - 2014 Shardul C.");
+        System.out.println("VoteCounter Copyright (C) 2012 - 2016 Shardul C.");
         System.out.println("This program comes with ABSOLUTELY NO WARRANTY. " +
                 "This is free software, and you are welcome to redistribute " +
                 "it under certain conditions; click 'License' under the " +

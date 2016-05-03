@@ -1,6 +1,6 @@
-/*
+/**
  * VoteServer.java: vote-counting server
- * Copyright (C) 2012 - 2014 Shardul C.
+ * Copyright (C) 2012 - 2016 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -67,7 +67,7 @@ public class VoteServer {
      * @param args the command-line arguments: <input.xml> and <output.txt>
      */
     public static void main(String args[]) {
-        System.out.println("VoteCounter Copyright (C) 2012 - 2014 Shardul C.");
+        System.out.println("VoteCounter Copyright (C) 2012 - 2016 Shardul C.");
         System.out.println("This program comes with ABSOLUTELY NO WARRANTY. " +
                 "This is free software, and you are welcome to redistribute " +
                 "it under certain conditions; see the COPYING file for more " +
@@ -131,26 +131,28 @@ public class VoteServer {
                 }
                 bw.newLine();
             }
-            bw.newLine();
-            bw.newLine();
-            bw.write("Non-generic posts:");
-            bw.newLine();
-            for (int i = genericPosts.size(); i < genericPosts.size() + nonGenericPosts.size(); i++) {
-                for (int j = 0; j < groups.size(); j++) {
-                    bw.write(groups.get(j) + " " + nonGenericPosts.get(i - genericPosts.size()) + ":");
-                    bw.newLine();
-                    for (int k = 0; k < NOMINEES; k++) {
-                        bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k));
-                        for(int l = 0; l < (WIDTH - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
-                            bw.write(" ");
+            if (groups.size() > 0 || nonGenericPosts.size() > 0) {
+                bw.newLine();
+                bw.newLine();
+                bw.write("Non-generic posts:");
+                bw.newLine();
+                for (int i = genericPosts.size(); i < genericPosts.size() + nonGenericPosts.size(); i++) {
+                    for (int j = 0; j < groups.size(); j++) {
+                        bw.write(groups.get(j) + " " + nonGenericPosts.get(i - genericPosts.size()) + ":");
+                        bw.newLine();
+                        for (int k = 0; k < NOMINEES; k++) {
+                            bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k));
+                            for (int l = 0; l < (WIDTH - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
+                                bw.write(" ");
+                            }
+                            bw.write(Integer.toString(votes[i + j * VoteServer.nonGenericPosts.size()][k]));
+                            bw.newLine();
                         }
-                        bw.write(Integer.toString(votes[i + j * VoteServer.nonGenericPosts.size()][k]));
                         bw.newLine();
                     }
-                    bw.newLine();
                 }
+                bw.newLine();
             }
-            bw.newLine();
         } catch (java.io.IOException ex) {
             System.err.println("Caught IOExcpetion (important!): " + ex.getLocalizedMessage());
         }

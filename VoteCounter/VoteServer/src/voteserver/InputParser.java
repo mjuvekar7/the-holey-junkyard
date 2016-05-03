@@ -1,6 +1,6 @@
 /**
  * InputParser.java: parses XML input
- * Copyright (C) 2012 - 2014 Shardul C.
+ * Copyright (C) 2012 - 2014, 2016 Shardul C.
  *
  * This file is part of VoteCounter.
  *
@@ -24,8 +24,9 @@ package voteserver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom2.*;
-import org.jdom2.input.*;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * XML input parser for VoteCounter.
@@ -68,34 +69,42 @@ public class InputParser {
     public void parse(java.io.InputStream is) throws JDOMException, IOException {
         Element root = ((new SAXBuilder()).build(is)).getRootElement();
 
-        List<Element> groupList = root.getChild("groups").getChildren();
-        for (int i = 0; i < groupList.size(); i++) {
-            groups.add(groupList.get(i).getText());
+        Element child = root.getChild("groups");
+        if (child != null) {
+            List<Element> groupList = child.getChildren();
+            for (int i = 0; i < groupList.size(); i++) {
+                groups.add(groupList.get(i).getText());
+            }
         }
 
-        List<Element> genericPostElements = root.getChild("posts").getChild("generic").getChildren();
-        for (int i = 0; i < genericPostElements.size(); i++) {
-            genericPosts.add(genericPostElements.get(i).getAttributeValue("name"));
-            genericNominees.add(new ArrayList<String>());
-            List<Element> currentNominees = genericPostElements.get(i).getChildren();
-            for (int j = 0; j < currentNominees.size(); j++) {
-                genericNominees.get(i).add(currentNominees.get(j).getText());
+        child = root.getChild("posts").getChild("generic");
+        if (child != null) {
+            List<Element> genericPostElements = child.getChildren();
+            for (int i = 0; i < genericPostElements.size(); i++) {
+                genericPosts.add(genericPostElements.get(i).getAttributeValue("name"));
+                genericNominees.add(new ArrayList<String>());
+                List<Element> currentNominees = genericPostElements.get(i).getChildren();
+                for (int j = 0; j < currentNominees.size(); j++) {
+                    genericNominees.get(i).add(currentNominees.get(j).getText());
+                }
             }
         }
 
         // you better document this stuff NOW
         // or else it'll work, but no-one will know HOW
-
-        List<Element> nonGenericPostElements = root.getChild("posts").getChild("nongeneric").getChildren();
-        for (int i = 0; i < nonGenericPostElements.size(); i++) {
-            nonGenericPosts.add(nonGenericPostElements.get(i).getAttributeValue("name"));
-            nonGenericNominees.add(new ArrayList<List<String>>());
-            List<Element> currentGroups = nonGenericPostElements.get(i).getChildren();
-            for (int j = 0; j < currentGroups.size(); j++) {
-                nonGenericNominees.get(i).add(new ArrayList<String>());
-                List<Element> currentNominees = currentGroups.get(j).getChildren();
-                for (int k = 0; k < currentNominees.size(); k++) {
-                    nonGenericNominees.get(i).get(j).add(currentNominees.get(k).getText());
+        child = root.getChild("posts").getChild("nongeneric");
+        if (child != null) {
+            List<Element> nonGenericPostElements = child.getChildren();
+            for (int i = 0; i < nonGenericPostElements.size(); i++) {
+                nonGenericPosts.add(nonGenericPostElements.get(i).getAttributeValue("name"));
+                nonGenericNominees.add(new ArrayList<List<String>>());
+                List<Element> currentGroups = nonGenericPostElements.get(i).getChildren();
+                for (int j = 0; j < currentGroups.size(); j++) {
+                    nonGenericNominees.get(i).add(new ArrayList<String>());
+                    List<Element> currentNominees = currentGroups.get(j).getChildren();
+                    for (int k = 0; k < currentNominees.size(); k++) {
+                        nonGenericNominees.get(i).get(j).add(currentNominees.get(k).getText());
+                    }
                 }
             }
         }
