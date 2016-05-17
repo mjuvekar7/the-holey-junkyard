@@ -21,7 +21,6 @@
  */
 package voteserver;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom2.Element;
@@ -32,20 +31,62 @@ import org.jdom2.input.SAXBuilder;
  * XML input parser for VoteCounter.
  *
  * This class provides methods for parsing an XML input file and converting the
- * data into a format usable by the vote counting application. Currently, all
- * data is being entered by hand (hard-coded): the program would be more
- * flexible and useful for many others if the data could be in a predefined
- * format, such as XML. We are working towards making XML files the primary mode
- * of input to the program.
+ * data into a format usable by VoteCounter.
+ *
+ * The format of the XML file should be:
+ * <pre>
+ * {@code
+<input>
+     <groups>
+         <groupname>Blues</groupname>
+         <groupname>Greens</groupname>
+     </groups>
+     <posts>
+         <generic>
+             <post name="Treasurer">
+                 <nominee>Blorb</nominee>
+                 <nominee>Cagfrigii</nominee>
+                 <nominee>Eowx</nominee>
+             </post>
+         </generic>
+         <nongeneric>
+             <post name="Captain">
+                 <group name="Blues">
+                     <nominee>Plaahy</nominee>
+                     <nominee>Nbog</nominee>
+                     <nominee>Zkurta</nominee>
+                     <nominee>Aqatoto</nominee>
+                     <nominee>Xeeml</nominee>
+                 </group>
+                 <group name="Greens">
+                     <nominee>Ynivuj</nominee>
+                     <nominee>Fendirwi</nominee>
+                     <nominee>Kaalei</nominee>
+                     <nominee>Pimklri</nominee>
+                 </group>
+             </post>
+         </nongeneric>
+     </posts>
+ </input>
+ * }
+ * </pre>
+ *
+ * Of course, there can be no groups (or equivalently, a missing {@code
+ * <groups>} tag) in which case there cannot be any nongeneric posts. There can
+ * be as many groups and posts as desired, with any number of nominees
+ * contesting each post; however, it is assumed that all groups independently
+ * contest all nongeneric posts.
  *
  * @author shardul
  */
 public class InputParser {
-    private List<String> groups = new ArrayList<>();
-    private List<String> genericPosts = new ArrayList<>();
-    private List<List<String>> genericNominees = new ArrayList<>();
-    private List<String> nonGenericPosts = new ArrayList<>();
-    private List<List<List<String>>> nonGenericNominees = new ArrayList<>();
+
+    // data to be parsed
+    private final List<String> groups = new ArrayList<>();
+    private final List<String> genericPosts = new ArrayList<>();
+    private final List<List<String>> genericNominees = new ArrayList<>();
+    private final List<String> nonGenericPosts = new ArrayList<>();
+    private final List<List<List<String>>> nonGenericNominees = new ArrayList<>();
 
     /**
      * Parse the XML input file and get groups, posts, and nominees.
@@ -60,13 +101,13 @@ public class InputParser {
      * The behavior of the {@code parse} method is unspecified if the XML file
      * is not structured as it expects it to be. This can happen even if the
      * syntax is all right, because of mispelings or order elements of incorrect
-     * the. A format specifier file is coming soon.
+     * the.
      *
      * @param is an {@link java.io.InputStream} for the XML input file
      * @throws JDOMException if XML structure/syntax is incorrect
-     * @throws IOException if error accessing file
+     * @throws java.io.IOException if error accessing file
      */
-    public void parse(java.io.InputStream is) throws JDOMException, IOException {
+    public void parse(java.io.InputStream is) throws JDOMException, java.io.IOException {
         Element root = ((new SAXBuilder()).build(is)).getRootElement();
 
         Element child = root.getChild("groups");
@@ -90,8 +131,6 @@ public class InputParser {
             }
         }
 
-        // you better document this stuff NOW
-        // or else it'll work, but no-one will know HOW
         child = root.getChild("posts").getChild("nongeneric");
         if (child != null) {
             List<Element> nonGenericPostElements = child.getChildren();

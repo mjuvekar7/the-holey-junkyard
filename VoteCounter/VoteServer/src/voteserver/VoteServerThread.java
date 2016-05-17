@@ -21,46 +21,41 @@
  */
 package voteserver;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Server thread to handle a single client.
  *
  * {@code VoteServerThread} is created and started by {@link VoteServer} when it
  * accepts a client connection. {@code VoteServerThread} then creates I/O
- * streams, sends required data, and begins receiving votes from the client
- * until the client terminates. Votes are updated and written on a regular basis
- * so that they are not lost in case of an application crash.
+ * streams, sends required data, and begins receiving and recording votes from
+ * the client until the client terminates.
  *
  * @author Shardul C.
  */
 public class VoteServerThread extends Thread {
-    // input and output to/from client
-    private ObjectInputStream in;
-    private ObjectOutputStream out;
+
+    // client communication streams
+    private java.io.ObjectInputStream in;
+    private java.io.ObjectOutputStream out;
 
     /**
-     * Construct a new {@code VoteServerThread} connected to the client.
+     * Constructs a new {@code VoteServerThread} connected to the client.
      *
      * The client's connection has already been accepted and a corresponding
-     * {@code Socket} is passed to the thread. The I/O streams function through
-     * this {@code Socket}.
+     * {@link java.net.Socket} is passed to the thread. The I/O streams function
+     * through this {@link java.net.Socket}. The required data -- post and
+     * nominee information -- is sent to the client, and the method loops,
+     * receiving and recording votes from the client.
      *
-     * @param sock a {@code Socket} to the client
+     * @param sock a {@link java.net.Socket} to the client
      */
-    public VoteServerThread(Socket sock) {
+    public VoteServerThread(java.net.Socket sock) {
         super("VoteServerThread");
         try {
             // create i/o streams
-            this.out = new ObjectOutputStream(sock.getOutputStream());
-            out.flush();
-            this.in = new ObjectInputStream(sock.getInputStream());
-        } catch (IOException ex) {
+            this.out = new java.io.ObjectOutputStream(sock.getOutputStream());
+            out.flush(); // required, otherwise client and server wait for each other
+            this.in = new java.io.ObjectInputStream(sock.getInputStream());
+        } catch (java.io.IOException ex) {
             System.err.println("Caught IOException: " + ex.getLocalizedMessage());
             System.exit(-2);
         }
@@ -72,22 +67,14 @@ public class VoteServerThread extends Thread {
             // send data
             out.writeObject(VoteServer.groups);
             out.writeObject(VoteServer.genericPosts);
+            out.writeObject(VoteServer.genericNominees);
             out.writeObject(VoteServer.nonGenericPosts);
-            int genSize = VoteServer.genericPosts.size();
+            out.writeObject(VoteServer.nonGenericNominees);
             int nonGenSize = VoteServer.nonGenericPosts.size();
 
-            // parts after splitting input from client
-            String parts[];
-            // current voter's group
-            String group;
-            // current voter's options
-            List<List<String>> options = new ArrayList<>();
-            boolean done = false;
-
-            // initialize the non-changing part of the voter's options (the generic parts)
-            for (int i = 0; i < genSize; i++) {
-                options.add(VoteServer.genericNominees.get(i));
-            }
+            String parts[]; // parts after splitting input from client
+            String group; // current voter's group
+            boolean done = false; // loop exit
 
             while (true) {
                 out.reset();
@@ -107,24 +94,19 @@ public class VoteServerThread extends Thread {
                 if (!group.equals(messages.Messages.NO_GROUP.toString())) {
                     groupIndex = VoteServer.groups.indexOf(group);
                     VoteServer.voters[groupIndex + 1]++;
-                    // copy the correct section of the non-generic posts/nominees
-                    for (int i = 0; i < nonGenSize; i++) {
-                        options.add(VoteServer.nonGenericNominees.get(i).get(groupIndex));
-                    }
                 }
-                // send options
-                out.writeObject(options);
 
                 // get votes
-                for (int step = 0; step < options.size(); step++) {
+                for (int step = 0; step < VoteServer.genericPosts.size() + nonGenSize; step++) {
                     String rec = (String) in.readObject();
+                    // client terminated
                     if (rec.equals(messages.Messages.GOODBYE.toString())) {
                         System.out.println("client terminated");
                         done = true;
                         break;
                     }
-                    parts = rec.split(" ");
-                    if (step < genSize) {
+                    parts = rec.split(" "); // the message consists of Messages.VOTE followed by the nominee number
+                    if (step < VoteServer.genericPosts.size()) {
                         VoteServer.incVotes(step, Integer.parseInt(parts[1]));
                     } else {
                         if (!group.equals(messages.Messages.NO_GROUP.toString())) {
@@ -133,18 +115,14 @@ public class VoteServerThread extends Thread {
                     }
                 }
                 VoteServer.writeVotes();
-                for (int i = genSize + nonGenSize - 1; i > genSize - 1; i--) {
-                    options.remove(i);
-                }
 
                 if (done) {
                     break;
                 }
             }
-            VoteServer.writeVotes();
             in.close();
             out.close();
-        } catch (IOException ex) {
+        } catch (java.io.IOException ex) {
             System.err.println("Caught IOException: " + ex.getLocalizedMessage());
             System.exit(-2);
         } catch (ClassNotFoundException ex) {

@@ -21,76 +21,90 @@
  */
 package voteserver;
 
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.*;
 
 /**
  * Server for vote-counting application.
  *
  * {@code VoteServer} is a forking server which can handle multiple clients and
- * record all votes in a thread-safe manner. The actual data (some of which is
+ * record votes in a thread-safe manner. The actual data (some of which is
  * passed to the client) is read and parsed from an input XML file by
  * {@link InputParser}.
  *
  * @author Shardul C.
  */
 public class VoteServer {
-    // only bound is: there have to be *four* nominees per post
-    // TODO: fix this!
-    static int NOMINEES = 4;
-    // spacing width in results file
-    static int WIDTH = 20;
 
-    // information about groups, posts, nominees, etc.
+    private static int votes[][]; // stores number of votes as votes[post][nominee]
+    private static String inPath; // input XML file
+    private static String outPath = ""; // output results file
+
+    static int voters[]; // stores number of voters as {total, group 1, group 2, ...}
+    static final int ROW_WIDTH = 25; // spacing width in results file
+
+    // information about groups, posts, and nominees
     static List<String> groups;
     static List<String> genericPosts;
     static List<List<String>> genericNominees;
     static List<String> nonGenericPosts;
     static List<List<List<String>>> nonGenericNominees;
 
-    // stores number of votes as votes[post][nominee]
-    static int votes[][];
-    // stores number of voters as voters[total and separate groups]
-    static int voters[];
-    static String path;
-
     /**
-     * The main executing method.
+     * The main method.
      *
-     * Check arguments and print appropriate usage message. Then, if arguments
-     * are all right, try to establish connection and send data. Lastly, go into
-     * a never-ending loop to listen for and accept client connections and spawn
-     * threads to handle them.
+     * This method gets the input and output paths from {@link
+     * #getInOutPaths(java.lang.String[])} and reads the input file with {@link
+     * voteserver.InputParser}.
      *
-     * @param args the command-line arguments: <input.xml> and <output.txt>
+     * Following that, this method enters a never-ending loop to listen for
+     * client connections. If no arguments were given, a 'Running...' dialog is
+     * also shown.
+     *
+     * @param args the command-line arguments: <input.xml> and <output.txt>, or
+     *             none at all
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.out.println("VoteCounter Copyright (C) 2012 - 2016 Shardul C.");
         System.out.println("This program comes with ABSOLUTELY NO WARRANTY. " +
                 "This is free software, and you are welcome to redistribute " +
                 "it under certain conditions; see the COPYING file for more " +
                 "details.");
 
-        if (args.length != 2) {
-            System.err.println("Usage is java votecounter.VoteServer <input.xml> <output.txt>");
-            System.exit(-1);
-        }
+        getInOutPaths(args);
 
-        path = args[1];
         try (java.net.ServerSocket sock = new java.net.ServerSocket(Integer.parseInt(messages.Messages.PORT.msg))) {
             voteserver.InputParser parser = new voteserver.InputParser();
-            parser.parse(new java.io.FileInputStream(args[0]));
+            parser.parse(new java.io.FileInputStream(inPath));
             groups = Collections.synchronizedList(parser.getGroups());
             genericPosts = Collections.synchronizedList(parser.getGenericPosts());
             genericNominees = Collections.synchronizedList(parser.getGenericNominees());
             nonGenericPosts = Collections.synchronizedList(parser.getNonGenericPosts());
             nonGenericNominees = Collections.synchronizedList(parser.getNonGenericNominees());
-            votes = new int[genericPosts.size() + nonGenericPosts.size()*groups.size()][NOMINEES];
-            voters = new int[groups.size() + 1];
+            initVoteArrays();
+
+            if (args.length == 0) {
+                //<editor-fold defaultstate="collapsed" desc="Set 'Nimbus L&F (optional)">
+                /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+                 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+                 */
+                try {
+                    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                        if ("Nimbus".equals(info.getName())) {
+                            javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        }
+                    }
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                    System.err.println("Caught exception in 'look and feel' code: " + ex.getLocalizedMessage());
+                }
+                //</editor-fold>
+                showDialog();
+            }
+            System.out.println("server started");
             while (true) {
-                new voteserver.VoteServerThread(sock.accept()).start();
+                new voteserver.VoteServerThread(sock.accept()).start(); // blocking accept call
                 System.out.println("client started");
             }
         } catch (java.io.IOException ex) {
@@ -103,12 +117,110 @@ public class VoteServer {
     }
 
     /**
-     * Write votes to output file.
+     * Gets input and output paths.
+     *
+     * This method checks whether any arguments are provided and if they are in
+     * the correct format. If they are valid, then the thereby given input and
+     * output files are used; if they are not valid, a usage message is printed
+     * and the server exits. If no arguments are given then a graphical file
+     * selector and input box is provided for the input file and output file,
+     * respectively.
+     *
+     * @param args the command-line arguments
+     */
+    private static void getInOutPaths(String[] args) {
+        if (args.length == 0) {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("XML files", "xml"));
+            int opt = jfc.showOpenDialog(null);
+            if (opt == JFileChooser.CANCEL_OPTION) {
+                JOptionPane.showMessageDialog(null, "No input file chosen, exiting application.",
+                        "No Input File Chosen", JOptionPane.WARNING_MESSAGE);
+                System.exit(-1);
+            } else if (opt == JFileChooser.ERROR_OPTION) {
+                System.err.println("Error in JFileChooser!");
+                System.exit(-1);
+            }
+            inPath = jfc.getSelectedFile().getPath();
+
+            outPath = JOptionPane.showInputDialog("Enter the output file name:", "results.txt");
+            if (outPath.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No output file chosen, exiting application.",
+                        "No Output File Chosen", JOptionPane.WARNING_MESSAGE);
+                System.exit(-1);
+            }
+        } else if (args.length == 2) {
+            if (!((new java.io.File(args[0])).exists() && args[0].endsWith("xml"))) {
+                System.err.println("Usage is VoteServer <input.xml> <output.txt>, or without any arguments.");
+                System.exit(0);
+            }
+            inPath = args[0];
+            outPath = args[1];
+        } else {
+            System.err.println("Usage is VoteServer <input.xml> <output.txt>, or without any arguments.");
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Initializes arrays {@code votes} and {@code voters}.
+     */
+    private static void initVoteArrays() {
+        votes = new int[genericPosts.size() + nonGenericPosts.size() * groups.size()][];
+        for (int i = 0; i < genericPosts.size(); i++) {
+            votes[i] = new int[genericNominees.get(i).size()];
+        }
+        for (int i = 0; i < nonGenericPosts.size(); i++) {
+            for (int j = 0; j < groups.size(); j++) {
+                votes[genericPosts.size() + i * groups.size() + j] = new int[nonGenericNominees.get(i).get(j).size()];
+            }
+        }
+        voters = new int[groups.size() + 1];
+    }
+
+    /**
+     * Shows a 'Server running...' dialog.
+     *
+     * The dialog also has a 'Stop server' button which confirms the action and
+     * immediately stops the server and the voting process.
+     */
+    private static void showDialog() {
+        final JFrame serverFrame = new JFrame("Server Running");
+        serverFrame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        JPanel serverPanel = new JPanel(new java.awt.BorderLayout(5, 5));
+        serverPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        serverPanel.add(new JLabel("Server running...", SwingConstants.CENTER), java.awt.BorderLayout.CENTER);
+        JButton stop = new JButton("Stop server");
+        stop.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (JOptionPane.showConfirmDialog(serverFrame, "Are you sure you want to stop the server? The voting process will be stopped.",
+                        "Stop Server", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    System.out.println("server terminated");
+                    writeVotes();
+                    System.exit(0);
+                }
+            }
+        });
+        serverPanel.add(stop, java.awt.BorderLayout.SOUTH);
+        serverPanel.setPreferredSize(new java.awt.Dimension(280, 70));
+
+        serverFrame.add(serverPanel);
+        serverFrame.pack();
+        serverFrame.setVisible(true);
+    }
+
+    /**
+     * Writes votes to output file.
      *
      * This method is synchronized so it can be called in a thread-safe manner.
      */
     synchronized static void writeVotes() {
-        try (java.io.BufferedWriter bw = java.nio.file.Files.newBufferedWriter(Paths.get(path), java.nio.charset.StandardCharsets.UTF_8, StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+        // TODO: messy code
+        try (java.io.BufferedWriter bw = java.nio.file.Files.newBufferedWriter(java.nio.file.Paths.get(outPath),
+                java.nio.charset.StandardCharsets.UTF_8, java.nio.file.StandardOpenOption.WRITE,
+                java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING)) {
             bw.write("Number of total voters: " + voters[0]);
             bw.newLine();
             for (int i = 0; i < groups.size(); i++) {
@@ -121,9 +233,9 @@ public class VoteServer {
             for (int i = 0; i < genericPosts.size(); i++) {
                 bw.write(genericPosts.get(i) + " --");
                 bw.newLine();
-                for (int j = 0; j < NOMINEES; j++) {
+                for (int j = 0; j < genericNominees.get(i).size(); j++) {
                     bw.write(genericNominees.get(i).get(j));
-                    for(int k = 0; k < (WIDTH - genericNominees.get(i).get(j).length()); k++) {
+                    for(int k = 0; k < (ROW_WIDTH - genericNominees.get(i).get(j).length()); k++) {
                         bw.write(" ");
                     }
                     bw.write(Integer.toString(votes[i][j]));
@@ -140,12 +252,12 @@ public class VoteServer {
                     for (int j = 0; j < groups.size(); j++) {
                         bw.write(groups.get(j) + " " + nonGenericPosts.get(i - genericPosts.size()) + ":");
                         bw.newLine();
-                        for (int k = 0; k < NOMINEES; k++) {
+                        for (int k = 0; k < nonGenericNominees.get(i - genericPosts.size()).get(j).size(); k++) {
                             bw.write(nonGenericNominees.get(i - genericPosts.size()).get(j).get(k));
-                            for (int l = 0; l < (WIDTH - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
+                            for (int l = 0; l < (ROW_WIDTH - nonGenericNominees.get(i - genericPosts.size()).get(j).get(k).length()); l++) {
                                 bw.write(" ");
                             }
-                            bw.write(Integer.toString(votes[i + j * VoteServer.nonGenericPosts.size()][k]));
+                            bw.write(Integer.toString(votes[i + j*nonGenericPosts.size()][k]));
                             bw.newLine();
                         }
                         bw.newLine();
@@ -154,12 +266,12 @@ public class VoteServer {
                 bw.newLine();
             }
         } catch (java.io.IOException ex) {
-            System.err.println("Caught IOExcpetion (important!): " + ex.getLocalizedMessage());
+            System.err.println("Caught IOException (important!): " + ex.getLocalizedMessage());
         }
     }
 
     /**
-     * Increment specified vote category.
+     * Increments specified vote category.
      *
      * This method is synchronized so it can be called in a thread-safe manner.
      *

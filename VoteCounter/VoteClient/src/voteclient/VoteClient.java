@@ -21,361 +21,346 @@
  */
 package voteclient;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import javax.sound.sampled.*;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import messages.Messages;
 
 /**
- * Client end for vote counting application.
+ * Client end for vote-counting application.
  *
- * {@code VoteClient} is the independent client end of VoteCounter. It has a Swing GUI,
- * but that is almost all it has -- all the vote counting and recording is done
- * at the server.
- * When an instance of the client is started, it tries to
- * connect to a server at the given address/hostname. Once this connection is
- * successfully established, it reads in the data required (information about
- * the groups, posts, nominees, etc.) and starts the voting. All votes are sent
- * to the server where they are recorded. The client itself does not know
- * anything about the results, or about the next set of options.
+ * {@code VoteClient} is the independent client end of VoteCounter. @{code
+ * VoteClient} has a Swing GUI which dynamically updates to display buttons for
+ * each nominee in the given voting categories. It connects to a running @{code
+ * VoteServer} where the votes are recorded.
  *
  * @author Shardul C.
  */
-public class VoteClient extends javax.swing.JFrame {
-    // only bound is: there have to be *four* nominees per post
-    // TODO: fix this!
-    static int NOMINEES = 4;
-    // options for each voter
-    private List<List<String>> opts = new ArrayList<>();
-    // voter number
-    private static int voterNum = 0;
-    // serial version UID for serialization
+public class VoteClient extends JFrame {
+
+    // GUI-related variables that need to be visible to the rest of the class
+    private JPanel buttonPanel;
+    private JLabel voterNumLabel;
+    private JLabel categoryLabel;
+    private GridBagConstraints c;
+
+    // information received from the server
+    private List<String> groups;
+    private List<String> genericPosts;
+    private List<List<String>> genericNominees;
+    private List<String> nonGenericPosts;
+    private List<List<List<String>>> nonGenericNominees;
+
+    // current state information
+    private String group;
+    private int voterNum;
+    private final List<List<String>> opts = new java.util.ArrayList<>();
+    private int step;
+
+    // server communication streams
+    private java.io.ObjectInputStream in;
+    private java.io.ObjectOutputStream out;
+
     private static final long serialVersionUID = 1L;
-
-    // data from server
-    static List<String> groups;
-    static List<String> genericPosts;
-    static List<String> nonGenericPosts;
-
-    // current chosen group
-    static String group;
-    // current position in voting sequence
-    static int step;
-
-    // input and output to/from server
-    private static java.io.ObjectInputStream in;
-    private static java.io.ObjectOutputStream out;
 
     /**
      * Creates new form VoteClient and starts voting process.
+     *
+     * The GUI elements are initialized, a connection is made with the server to
+     * read in the post and nominee information and send votes, and the voting
+     * process is started.
      */
     public VoteClient() {
         initComponents();
-        chooseGroup();
+        getData();
+        initGroupAndOptions();
     }
 
     /**
-     * Allows the voter to choose a group, and gets corresponding options from
-     * server.
+     * Initializes GUI components.
      *
-     * The method increments both the client and server side voter numbers. If
-     * the voter does not choose a group, the program terminates. The group
-     * chooser dialog is not shown until the server is ready to accept a new
-     * voter.
+     * {@code VoteClient} uses a {@link GridBagLayout} as its top-level layout
+     * manager to adjust the vertical space allotted to the header and the
+     * buttons properly. The panel containing the buttons also uses a {@code
+     * GridBagLayout} for the same reason.
+     */
+    private void initComponents() {
+        // the header panel contains the voter number label and the category label
+        JPanel headerPanel = new JPanel(new BorderLayout(5, 5));
+        voterNumLabel = new JLabel("Voter #", javax.swing.SwingConstants.TRAILING);
+        voterNumLabel.setFont(new Font("SansSerif", Font.ITALIC, 15));
+        categoryLabel = new JLabel("Category", javax.swing.SwingConstants.CENTER);
+        categoryLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        headerPanel.add(voterNumLabel, BorderLayout.NORTH);
+        headerPanel.add(categoryLabel, BorderLayout.CENTER);
+
+        buttonPanel = new JPanel(new GridBagLayout());
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem exit = new JMenuItem("Exit");
+        JMenuItem license = new JMenuItem("License");
+        JMenuItem about = new JMenuItem("About");
+
+        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                exit();
+            }
+        });
+        license.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                showLicense();
+            }
+        });
+        about.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                showCredits();
+            }
+        });
+
+        fileMenu.add(exit);
+        fileMenu.add(new JPopupMenu.Separator());
+        fileMenu.add(license);
+        fileMenu.add(about);
+        menuBar.add(fileMenu);
+        setJMenuBar(menuBar);
+
+        this.setLayout(new GridBagLayout());
+
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(10, 10, 10, 10);
+        c.weightx = 1;
+        c.weighty = 0.2; // header panel gets 20% of available vertical space
+        this.add(headerPanel, c);
+
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(10, 10, 10, 10);
+        c.weightx = 1;
+        c.weighty = 0.8; // button panel gets 80% of available vertical space
+        this.add(buttonPanel, c);
+
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // close only throuhg file menu or accelerator
+        this.setMinimumSize(new Dimension(750, 400));
+        this.setLocationByPlatform(true);
+        this.setTitle("VoteCounter");
+
+        this.pack();
+    }
+
+    /**
+     * Gets required data from server.
+     *
+     * The method also initializes the unchanging portion of the options
+     * available to each voter.
      */
     @SuppressWarnings("unchecked")
-    private void chooseGroup() {
+    private void getData() {
+        try {
+            // connect to server and create i/o streams
+            java.net.Socket sock = new java.net.Socket(JOptionPane.showInputDialog("Enter server IP address:"),
+                    Integer.parseInt(messages.Messages.PORT.msg));
+            out = new java.io.ObjectOutputStream(sock.getOutputStream());
+            out.flush();
+            in = new java.io.ObjectInputStream(sock.getInputStream());
+
+            // get required data
+            groups = (List<String>) in.readObject();
+            genericPosts = (List<String>) in.readObject();
+            genericNominees = (List<List<String>>) in.readObject();
+            nonGenericPosts = (List<String>) in.readObject();
+            nonGenericNominees = (List<List<List<String>>>) in.readObject();
+
+            // the generic part of the options never changes
+            for (int i = 0; i < genericNominees.size(); i++) {
+                opts.add(genericNominees.get(i));
+            }
+        } catch (IOException ex) {
+            System.err.println("Caught IOException: " + ex.getLocalizedMessage());
+            System.exit(-2);
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Caught ClassNotFoundException: " + ex.getLocalizedMessage());
+            System.exit(-3);
+        }
+    }
+
+    /**
+     * Initializes current group and options.
+     *
+     * Called at the start of each voter's voting process, the method also keeps
+     * track of the voter number and calls {@link #nextOptions()} to create the
+     * initial buttons in the button panel.
+     */
+    private void initGroupAndOptions() {
+        // suggest GC because each voter creates many anonymous buttons, layout
+        // contraints, icons, etc.
+        System.gc();
         try {
             // wait for message
             in.readObject();
-            // select group
+            voterNum++;
+            voterNumLabel.setText("Voter #" + voterNum);
+
             if (groups.size() > 0) {
-                group = (String) JOptionPane.showInputDialog(this, "Voter #" + (voterNum + 1) + ": Choose your house:",
-                        "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
-                // voter hit cancel
-                if (group == null) {
-                    exitActionPerformed(null);
+                group = null;
+                while (group == null) {
+                    group = (String) JOptionPane.showInputDialog(this, "Voter #" + voterNum + ": Choose your house:",
+                            "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
+                    // voter hit cancel
+                    // TODO: fix this
+                    if (group == null) {
+                        exit();
+                    }
                 }
                 out.writeObject(group);
             } else {
                 out.writeObject(Messages.NO_GROUP.toString());
             }
-            voterNum++;
-            // if-else to test msg cut out because
-            // server only sends one message anyway
-            opts = (List<List<String>>) in.readObject();
-            // start individual voting process
-            voterStart();
+
+            int groupIndex = groups.indexOf(group);
+            for (int i = 0; i < nonGenericNominees.size(); i++) {
+                opts.add(nonGenericNominees.get(i).get(groupIndex));
+            }
+
+            nextOptions();
         } catch (IOException ex) {
             System.err.println("Caught IOException: " + ex.getLocalizedMessage());
+            System.exit(-2);
         } catch (ClassNotFoundException ex) {
             System.err.println("Caught ClassNotFoundException: " + ex.getLocalizedMessage());
+            System.exit(-3);
         }
     }
 
     /**
-     * Sets the displayed options.
-     *
-     * This method displays the options according to the current progress in the
-     * voting sequence.
+     * Sets category and buttons according to current step.
      */
-    private void voterStart() {
-        // set the proper heading
-        num.setText("Voter #" + voterNum);
+    private void nextOptions() {
         if (step < genericPosts.size()) {
-            category.setText(genericPosts.get(step));
+            categoryLabel.setText(genericPosts.get(step));
         } else {
-            category.setText(group + " " + nonGenericPosts.get(step - genericPosts.size()));
-        }
-        // set the proper options
-        opt0.setText(opts.get(step).get(0));
-        opt1.setText(opts.get(step).get(1));
-        opt2.setText(opts.get(step).get(2));
-        opt3.setText(opts.get(step).get(3));
-    }
-
-    public static void bufferedPlay(final String filePath) {
-        //if path is correct, file is audio, etc... (see the 'isFileSupported(file)'
-        //method)
-            try {
-
-                //get a stream of data which can load audio little by little
-                AudioInputStream ais = AudioSystem.getAudioInputStream(VoteClient.class.getResource(filePath));
-
-                //get info about an output which should have the capabilty to load
-                //data little by little
-                DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, ais.getFormat());
-
-                try (SourceDataLine srcLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo)) {
-                    final int EXTERNAL_BUFFER_SIZE = 32768;
-                    final byte[] ABDATA = new byte[EXTERNAL_BUFFER_SIZE];
-                    int nBytesRead = 0;
-
-                    //feed the file into the output
-                    srcLine.open(ais.getFormat());
-
-                    //prepare for start
-                    srcLine.start();
-
-                    //continuously write a EXTERNAL_BUFFER_SIZE number of bytes to
-                    //the output until the file is over
-                    while (nBytesRead != -1) {
-                        nBytesRead = ais.read(ABDATA, 0, ABDATA.length);
-                        if (nBytesRead >= 0) {
-                            srcLine.write(ABDATA, 0, nBytesRead);
-                        } //end if
-                        if (Thread.interrupted()) {
-                            break;
-                        }
-                    } //end while
-
-                    //drain the buffer of any remaining audio (this also ensures
-                    //the 'remaining' audio is played) and stop playback.
-                    srcLine.drain();
-                    srcLine.stop();
-                }
-
-                //catch exceptions
-            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
-                System.err.printf("An exception occurred! " + ex.toString());
-            } //end try-with-resources-catch
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        category = new javax.swing.JLabel();
-        opt0 = new javax.swing.JButton();
-        opt1 = new javax.swing.JButton();
-        opt2 = new javax.swing.JButton();
-        opt3 = new javax.swing.JButton();
-        num = new javax.swing.JLabel();
-        menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        exit = new javax.swing.JMenuItem();
-        sep = new javax.swing.JPopupMenu.Separator();
-        license = new javax.swing.JMenuItem();
-        about = new javax.swing.JMenuItem();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("VoteCounter");
-        setBounds(new java.awt.Rectangle(600, 300, 0, 0));
-
-        category.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        category.setText("Category");
-        category.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        opt0.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        opt0.setText("One");
-        opt0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vote(evt);
-            }
-        });
-
-        opt1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        opt1.setText("Two");
-        opt1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vote(evt);
-            }
-        });
-
-        opt2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        opt2.setText("Three");
-        opt2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vote(evt);
-            }
-        });
-
-        opt3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        opt3.setText("Four");
-        opt3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vote(evt);
-            }
-        });
-
-        num.setText("Voter #1");
-
-        fileMenu.setText("File");
-
-        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        exit.setText("Exit");
-        exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitActionPerformed(evt);
-            }
-        });
-        fileMenu.add(exit);
-        fileMenu.add(sep);
-
-        license.setText("License");
-        license.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                licenseActionPerformed(evt);
-            }
-        });
-        fileMenu.add(license);
-
-        about.setText("About");
-        about.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aboutActionPerformed(evt);
-            }
-        });
-        fileMenu.add(about);
-
-        menuBar.add(fileMenu);
-
-        setJMenuBar(menuBar);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(opt0)
-                    .addComponent(opt2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(opt3)
-                    .addComponent(opt1))
-                .addGap(57, 57, 57))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(237, Short.MAX_VALUE)
-                .addComponent(category, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
-                .addComponent(num)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(num)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(category, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opt0)
-                    .addComponent(opt1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opt2)
-                    .addComponent(opt3))
-                .addContainerGap())
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void vote(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vote
-        // get source of event (which button?)
-        int choice = 0;
-        if (evt.getSource() == opt0) {
-            choice = 0;
-        } else if (evt.getSource() == opt1) {
-            choice = 1;
-        } else if (evt.getSource() == opt2) {
-            choice = 2;
-        } else if (evt.getSource() == opt3) {
-            choice = 3;
-        }
-        try {
-            // send vote to server
-            out.writeObject(Messages.VOTE + " " + choice);
-        } catch (IOException ex) {
-            System.err.println("Caught IOException: " + ex.getLocalizedMessage());
+            categoryLabel.setText(group + " " + nonGenericPosts.get(step - genericPosts.size()));
         }
 
-        // increment current position in voting sequence
-        step++;
-        // if end of voting sequence
-        if (step == genericPosts.size() + nonGenericPosts.size()) {
-            // reset
-            step = 0;
-            java.awt.EventQueue.invokeLater(new Runnable() {
+        buttonPanel.removeAll();
+        List<String> curOpts = opts.get(step);
+        int curSize = curOpts.size();
+
+        for (int i = 0; i < curSize; i++) {
+            String curNom = curOpts.get(i);
+            // nominee symbols must be in the 'symbols' directory
+            // if the nominee is John Doe, then the file should be named johndoe.png or johndoe.jpg
+            String imgName = "";
+            for (String s: curNom.split(" ")) {
+                imgName += s.toLowerCase();
+            }
+            String curImg = "symbols/" + imgName;
+
+            JButton jb = new NomineeButton(curNom, i);
+            jb.setFocusPainted(false); // don't highlight last voter's choice!
+            if ((new java.io.File(curImg + ".jpg")).exists()) {
+                jb.setIcon(getScaledIcon(new ImageIcon(curImg + ".jpg").getImage(), 35, 35));
+            } else if ((new java.io.File(curImg + ".png")).exists()) {
+                jb.setIcon(getScaledIcon(new ImageIcon(curImg + ".png").getImage(), 35, 35));
+            } else if ((new java.io.File(curImg + ".gif")).exists()) {
+                jb.setIcon(getScaledIcon(new ImageIcon(curImg + ".gif").getImage(), 35, 35));
+            }
+            jb.setFont(new Font("SansSerif", Font.PLAIN, 20));
+
+            jb.addActionListener(new ActionListener() {
                 @Override
-                public void run() {
-                    bufferedPlay("/resources/buzzer.wav");
+                public void actionPerformed(ActionEvent e) {
+                    vote(e);
                 }
             });
-//            JOptionPane.showMessageDialog(this, "Thank You! Your votes have been recorded.", "Next Voter", JOptionPane.INFORMATION_MESSAGE);
-            int opt = JOptionPane.showConfirmDialog(this, "Thank You! Your votes have been recorded. Next voter!", "Next Voter",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (opt == JOptionPane.OK_OPTION) {
-                // start again
-                chooseGroup();
-            } else {
-                exitActionPerformed(evt);
-            }
-        } else {
-            // new options
-            voterStart();
-        }
-    }//GEN-LAST:event_vote
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        // confirm, send goodbye, and exit
-        if (JOptionPane.showConfirmDialog(this, "Exit application?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+            c = new GridBagConstraints();
+            c.gridx = i % 2 + 1; // left side or right side? (+1 for glue space)
+            c.gridy = i / 2; // row number
+            // last button occupies entire row if odd number of nominees
+            c.gridwidth = ((i == curSize - 1) && (curSize % 2 == 1))? 2: 1;
+            c.gridheight = 1;
+            c.fill = GridBagConstraints.NONE;
+            if ((i == curSize - 1) && (curSize % 2 == 1)) {
+                c.anchor = GridBagConstraints.CENTER; // last button if odd number
+            } else if (i % 2 == 0) {
+                c.anchor = GridBagConstraints.LINE_START;
+            } else {
+                c.anchor = GridBagConstraints.LINE_END;
+            }
+            c.insets = new Insets(2, 2, 2, 2);
+            c.weightx = 0.15; // each button gets 15% of available horizontal space (see initFillers)
+            c.weighty = 1.0;
+            buttonPanel.add(jb, c);
+        }
+
+        initFillers(curSize);
+        this.repaint();
+        this.pack();
+    }
+
+    /**
+     * Initializes fillers for the button panel.
+     *
+     * There is horizontal glue in the first and last columns (on both sides of
+     * the buttons) and vertical glue in the last row (below the buttons).
+     *
+     * @param curSize number of nominees for the current step
+     */
+    private void initFillers(int curSize) {
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.gridheight = (curSize + 1)/2;
+        c.weightx = 0.35; // glue gets 35% of available horizontal space
+        c.weighty = 1.0;
+        buttonPanel.add(Box.createHorizontalGlue(), c);
+
+        c = new GridBagConstraints();
+        c.gridx = 3;
+        c.gridy = 0;
+        c.gridwidth = 1;
+        c.gridheight = (curSize + 1)/2;
+        c.weightx = 0.35; // glue gets 35% of available horizontal space
+        c.weighty = 1.0;
+        buttonPanel.add(Box.createHorizontalGlue(), c);
+
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = (curSize + 1)/2;
+        c.gridwidth = 4;
+        c.gridheight = 1;
+        c.weightx = 1.0;
+        c.weighty = 1.6; // glue gets a vertical weight of 1.6 (compare to each button's 1.0)
+        buttonPanel.add(Box.createVerticalGlue(), c);
+    }
+
+    /**
+     * Confirms and exits the client.
+     */
+    private void exit() {
+        if (JOptionPane.showConfirmDialog(this, "Exit application?", "Exit",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
             try {
-                out.writeObject(Messages.GOODBYE.toString());
+                out.writeObject(Messages.GOODBYE.toString()); // send goodbye to server
                 in.close();
                 out.close();
             } catch (IOException ex) {
@@ -383,13 +368,62 @@ public class VoteClient extends javax.swing.JFrame {
             }
             System.exit(0);
         }
-    }//GEN-LAST:event_exitActionPerformed
+    }
 
-    private void licenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licenseActionPerformed
-        // display the license
-        StringBuilder txt = new StringBuilder();
+    /**
+     * Registers votes on button clicks.
+     *
+     * This method handles button clicks and conveys the corresponding vote to
+     * the server. It also keeps track of the current step in each voter's
+     * voting process and calls {@link #nextOptions()} and {@link
+     * #initGroupAndOptions()} as needed.
+     *
+     * @param evt the {@link ActionEvent} that triggered the method call; is
+     *            known to be a {@link NomineeButton}
+     */
+    private void vote(ActionEvent evt) {
+        int choice = ((NomineeButton) evt.getSource()).getNum(); // which button?
+
         try {
-            java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(VoteClient.class.getResourceAsStream("/resources/COPYING")));
+            out.writeObject(Messages.VOTE + " " + choice); // send vote to server
+        } catch (IOException ex) {
+            System.err.println("Caught IOException: " + ex.getLocalizedMessage());
+        }
+
+        step++;
+        // if end of voting sequence, reset; else next set of options
+        if (step == genericPosts.size() + nonGenericPosts.size()) {
+            step = 0;
+            for (int i = genericPosts.size() + nonGenericPosts.size() - 1; i > genericPosts.size() - 1; i--) {
+                opts.remove(i);
+            }
+
+            // buzzer
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    bufferedPlay("/resources/buzzer.wav");
+                }
+            });
+            int opt = JOptionPane.showConfirmDialog(this, "Thank You! Your votes have been recorded. Next voter!",
+                    "Next Voter", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (opt == JOptionPane.OK_OPTION) {
+                initGroupAndOptions();
+            } else {
+                // TODO: fix this
+                exit();
+            }
+        } else {
+            nextOptions();
+        }
+    }
+
+    /**
+     * Shows the license.
+     */
+    private void showLicense() {
+        StringBuilder txt = new StringBuilder();
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(VoteClient.class.getResourceAsStream("/resources/COPYING")))) {
             String line = br.readLine();
             while (line != null) {
                 txt.append(line);
@@ -399,68 +433,45 @@ public class VoteClient extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.err.println(ex.getLocalizedMessage());
         }
-        javax.swing.JTextArea lic = new javax.swing.JTextArea(txt.toString());
-        javax.swing.JScrollPane scroller = new javax.swing.JScrollPane(lic, javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        JTextArea lic = new JTextArea(txt.toString());
+        JScrollPane scroller = new JScrollPane(lic, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         lic.setVisible(true);
         lic.setEditable(false);
         scroller.setVisible(true);
-        javax.swing.JDialog licenseDialog = new javax.swing.JDialog(this, "VoteCounter License");
+        JDialog licenseDialog = new JDialog(this, "VoteCounter License");
         licenseDialog.add(scroller);
         licenseDialog.setSize(600, 500);
         licenseDialog.setVisible(true);
-    }//GEN-LAST:event_licenseActionPerformed
+    }
 
-    private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
+    /**
+     * Shows credits.
+     */
+    private void showCredits() {
         // thank you, thank you! <bow to audience>
-        javax.swing.JDialog aboutDialog = new javax.swing.JDialog(this, "About VoteCounter");
+        JDialog aboutDialog = new JDialog(this, "About VoteCounter");
         String msg = "<html><center>VoteCounter: Java vote counting application<br />Copyright (C) 2012 - 2016 Shardul C.<br /><br />"
         + "Bugs, tips, suggestions, requests to<br />&lt;shardul.chiplunkar@gmail.com&gt.</center></html>";
-        javax.swing.JLabel lbl = new javax.swing.JLabel(msg);
-        lbl.setIcon(new javax.swing.ImageIcon(VoteClient.class.getResource("/resources/gpl-v3-logo.png")));
+        JLabel lbl = new JLabel(msg);
+        lbl.setIcon(new ImageIcon(VoteClient.class.getResource("/resources/gpl-v3-logo.png")));
         lbl.setVisible(true);
         aboutDialog.add(lbl);
         aboutDialog.setSize(400, 150);
         aboutDialog.setVisible(true);
-    }//GEN-LAST:event_aboutActionPerformed
+    }
 
     /**
-     * The main executing method.
+     * The main method.
      *
-     * Check arguments and print appropriate usage message. Then, if arguments
-     * are all right, try to establish connection and receive data. Lastly,
-     * create form.
+     * This method sets the 'Nimbus' look and feel if possible, and creates a
+     * new {@code VoteClient} form and makes it visible.
      *
-     * @param args the command-line arguments: the server address/hostname
+     * @param args the command-line arguments (none needed)
      */
-    @SuppressWarnings("unchecked")
-    public static void main(String args[]) {
-        System.out.println("VoteCounter Copyright (C) 2012 - 2016 Shardul C.");
-        System.out.println("This program comes with ABSOLUTELY NO WARRANTY. " +
-                "This is free software, and you are welcome to redistribute " +
-                "it under certain conditions; click 'License' under the " +
-                "'File' menu for more details.");
-
-        try {
-            // connect to server and create i/o streams
-            Socket sock = new Socket(JOptionPane.showInputDialog("Enter server IP address:"), Integer.parseInt(messages.Messages.PORT.msg));
-            out = new java.io.ObjectOutputStream(sock.getOutputStream());
-            out.flush();
-            in = new java.io.ObjectInputStream(sock.getInputStream());
-
-            // get required data
-            groups = (List<String>) in.readObject();
-            genericPosts = (List<String>) in.readObject();
-            nonGenericPosts = (List<String>) in.readObject();
-        } catch (IOException ex) {
-            System.err.println("Caught IOException: " + ex.getLocalizedMessage());
-            System.exit(-2);
-        } catch (ClassNotFoundException ex) {
-            System.err.println("Caught ClassNotFoundException: " + ex.getLocalizedMessage());
-            System.exit(-3);
-        }
-
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    public static void main(String[] args) {
+        //<editor-fold defaultstate="collapsed" desc="Set 'Nimbus' L&F (optional)">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
@@ -476,26 +487,102 @@ public class VoteClient extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new VoteClient().setVisible(true);
             }
         });
     }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem about;
-    private javax.swing.JLabel category;
-    private javax.swing.JMenuItem exit;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuItem license;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JLabel num;
-    private javax.swing.JButton opt0;
-    private javax.swing.JButton opt1;
-    private javax.swing.JButton opt2;
-    private javax.swing.JButton opt3;
-    private javax.swing.JPopupMenu.Separator sep;
-    // End of variables declaration//GEN-END:variables
+
+    /**
+     * Plays a sound file.
+     * @param filePath the sound file to be played
+     */
+    private static void bufferedPlay(final String filePath) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(VoteClient.class.getResource(filePath)); // get audio data stream
+            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, ais.getFormat()); // get output line
+
+            try (SourceDataLine srcLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo)) {
+                final int EXTERNAL_BUFFER_SIZE = 32768;
+                final byte[] ABDATA = new byte[EXTERNAL_BUFFER_SIZE];
+                int nBytesRead = 0;
+
+                // initialize output line
+                srcLine.open(ais.getFormat());
+                srcLine.start();
+
+                //continuously write a EXTERNAL_BUFFER_SIZE number of bytes to
+                //the output until the file is over
+                while (nBytesRead != -1) {
+                    nBytesRead = ais.read(ABDATA, 0, ABDATA.length);
+                    if (nBytesRead >= 0) {
+                        srcLine.write(ABDATA, 0, nBytesRead);
+                    }
+                    if (Thread.interrupted()) {
+                        break;
+                    }
+                }
+
+                srcLine.drain();
+                srcLine.stop();
+            }
+
+            //catch exceptions
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+            System.err.printf("An exception occurred! " + ex.toString());
+        } //end try-with-resources-catch
+    }
+
+    /**
+     * Scales given image to given width and height.
+     *
+     * The code for this method is taken from {@link
+     * http://stackoverflow.com/a/6714381/1846915}, written by Suken Shah.
+     *
+     * @param srcImg the {@link Image} to be scaled
+     * @param w the new width
+     * @param h the new height
+     * @return the scaled {@link ImageIcon}
+     */
+    private static ImageIcon getScaledIcon(Image srcImg, int w, int h) {
+        java.awt.image.BufferedImage resizedImg = new java.awt.image.BufferedImage(w, h, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return (new ImageIcon(resizedImg));
+    }
+
+    /**
+     * A custom subclass of {@link JButton} to represent nominees.
+     *
+     * The only special functionality implemented is the assignment of a
+     * 'nominee number' to each button.
+     */
+    private static class NomineeButton extends JButton {
+        private final int num;
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Constructs a {@code NomineeButton}.
+         * @param name the name/label of the button
+         * @param i the number assigned to the button
+         */
+        public NomineeButton(String name, int i) {
+            super(name);
+            num = i;
+        }
+
+        /**
+         * Gets the number.
+         * @return the number associated with this button
+         */
+        public int getNum() {
+            return num;
+        }
+    }
 }

@@ -2,9 +2,10 @@
 /wacs/Kontrollpunkt/build
 /other/NumTree/build
 *.class
-__pycache__
+*/__pycache__
 *.aux
 *.out
 *.fdb_latexmk
 *.fls
 *.toc
+*/build
