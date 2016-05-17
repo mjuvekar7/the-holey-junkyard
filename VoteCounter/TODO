@@ -1,0 +1,18 @@
+Things to be done:
+
+1. Hitting 'Cancel' on client dialog boxes prompts for exiting the application,
+but if the user cancels the exit, ...? This should be handled properly. Also,
+the voter should not be able to exit midway through the voting process.
+
+2. Security is a major concern. The best option is to use an encrypted
+connection to the server and building more guards into the server-side variables
+and methods.
+
+3. Safety of votes: server crashes should be handled gracefully. Incrementing
+the votes on the server should be an atomic operation; i.e. the votes from all
+steps of the voting process should be incremented together.
+
+4. Multi-tiered servers (long-term goal)
+
+5. Customizability of application title, header line (users probably want the
+name and logo of their organizations there), etc.
