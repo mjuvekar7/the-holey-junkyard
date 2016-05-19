@@ -9,7 +9,8 @@ import javax.swing.JLabel;
 public class GridCell extends JLabel {
     public int x;
     public int y;
-    
+    private static final long serialVersionUID = 1L;
+
     public GridCell(int x, int y) {
         super("");
         this.x = x;

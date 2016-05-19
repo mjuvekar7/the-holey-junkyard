@@ -12,35 +12,41 @@ import javax.swing.border.Border;
 
 class GridPanel extends JPanel {
 
+    public boolean[][] lits;
+    public static int ROWS = 14;
+    public static int COLS = 14;
     private static final long serialVersionUID = 1L;
-    public static int ROWS = 20;
-    public static int COLS = 20;
 
     private static Color offColor = new Color(240, 240, 240);
     private static Color onColor = new Color(255, 250, 30);
-    
-    public boolean lits[][];
 
     public GridPanel() {
         setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
         GridLayout gl = new GridLayout(ROWS, COLS);
         setLayout(gl);
-        
+
         this.lits = new boolean[ROWS][COLS];
         addGridCells();
 
         setVisible(true);
     }
-    
-    public GridPanel (boolean[][] lit) {
+
+    public GridPanel(boolean[][] lit, int rows, int cols) {
         setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
+        ROWS = rows;
+        COLS = cols;
         GridLayout gl = new GridLayout(ROWS, COLS);
         setLayout(gl);
-        
+
         this.lits = lit;
         addGridCells();
 
         setVisible(true);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(454, 454);
     }
 
     private void addGridCells() {
@@ -62,13 +68,12 @@ class GridPanel extends JPanel {
                     } else {
                         border = BorderFactory.createMatteBorder(1, 1, 0, 1, Color.LIGHT_GRAY);
                     }
+                } else if (j < COLS - 1) {
+                    border = BorderFactory.createMatteBorder(1, 1, 1, 0, Color.LIGHT_GRAY);
                 } else {
-                    if (j < COLS - 1) {
-                        border = BorderFactory.createMatteBorder(1, 1, 1, 0, Color.LIGHT_GRAY);
-                    } else {
-                        border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
-                    }
+                    border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
                 }
+
                 jl.setBorder(border);
                 jl.addMouseListener(new MouseAdapter() {
                     @Override
@@ -79,11 +84,6 @@ class GridPanel extends JPanel {
                 add(jl);
             }
         }
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(600, 600);
     }
 
     private void cellClicked(MouseEvent evt) {
