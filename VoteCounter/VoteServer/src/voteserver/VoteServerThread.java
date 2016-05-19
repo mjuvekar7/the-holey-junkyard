@@ -124,10 +124,8 @@ public class VoteServerThread extends Thread {
             out.close();
         } catch (java.io.IOException ex) {
             System.err.println("Caught IOException: " + ex.getLocalizedMessage());
-            System.exit(-2);
         } catch (ClassNotFoundException ex) {
             System.err.println("Caught ClassNotFoundException: " + ex.getLocalizedMessage());
-            System.exit(-3);
         }
     }
 }

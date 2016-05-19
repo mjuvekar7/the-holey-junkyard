@@ -72,11 +72,28 @@ public class VoteClient extends JFrame {
      *
      * The GUI elements are initialized, a connection is made with the server to
      * read in the post and nominee information and send votes, and the voting
-     * process is started.
+     * process is started. If a local server is running, the client connects to
+     * it by default (see {@link #VoteClient(boolean)}).
      */
     public VoteClient() {
         initComponents();
-        getData();
+        getData(true);
+        initGroupAndOptions();
+    }
+
+    /**
+     * Creates new form VoteClient and starts voting process.
+     *
+     * The GUI elements are initialized, a connection is made with the server to
+     * read in the post and nominee information and send votes, and the voting
+     * process is started. The parameter {@code checkLocal} specifies whether to
+     * check for a locally-running server by default.
+     *
+     * @param checkLocal whether to check for a local server
+     */
+    public VoteClient(boolean checkLocal) {
+        initComponents();
+        getData(checkLocal);
         initGroupAndOptions();
     }
 
@@ -168,17 +185,39 @@ public class VoteClient extends JFrame {
     /**
      * Gets required data from server.
      *
+     * If the {@code checkLocal} parameter is set, the method tries to connect
+     * to a locally-running server. If this fails, then the user is prompted for
+     * the server's IP address, which is also the behavior of the method if the
+     * {@code checkLocal} parameter is not set.
+     *
      * The method also initializes the unchanging portion of the options
      * available to each voter.
+     *
+     * @param checkLocal whether to check for a local server
      */
     @SuppressWarnings("unchecked")
-    private void getData() {
+    private void getData(boolean checkLocal) {
         try {
-            // connect to server and create i/o streams
-            java.net.Socket sock = new java.net.Socket(JOptionPane.showInputDialog("Enter server IP address:"),
-                    Integer.parseInt(messages.Messages.PORT.msg));
+            java.net.Socket sock = null;
+            // connect to local server if possible and required
+            if (checkLocal) {
+                try {
+                    sock = new java.net.Socket((String) null,
+                            Integer.parseInt(messages.Messages.PORT.msg));
+                } catch (IOException ex) {
+                    // connection refused, no local server
+                }
+            }
+
+            // no local server
+            if (sock == null) {
+                sock = new java.net.Socket(JOptionPane.showInputDialog("Enter server IP address:"),
+                        Integer.parseInt(messages.Messages.PORT.msg));
+            }
+
+            // create i/o streams
             out = new java.io.ObjectOutputStream(sock.getOutputStream());
-            out.flush();
+            out.flush(); // required, otherwise client and server wait for each other
             in = new java.io.ObjectInputStream(sock.getInputStream());
 
             // get required data
@@ -220,13 +259,13 @@ public class VoteClient extends JFrame {
 
             if (groups.size() > 0) {
                 group = null;
-                while (group == null) {
+                while (true) {
                     group = (String) JOptionPane.showInputDialog(this, "Voter #" + voterNum + ": Choose your house:",
                             "Choose House", JOptionPane.PLAIN_MESSAGE, null, groups.toArray(), "");
-                    // voter hit cancel
-                    // TODO: fix this
                     if (group == null) {
                         exit();
+                    } else {
+                        break;
                     }
                 }
                 out.writeObject(group);
@@ -405,13 +444,15 @@ public class VoteClient extends JFrame {
                     bufferedPlay("/resources/buzzer.wav");
                 }
             });
-            int opt = JOptionPane.showConfirmDialog(this, "Thank You! Your votes have been recorded. Next voter!",
-                    "Next Voter", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if (opt == JOptionPane.OK_OPTION) {
-                initGroupAndOptions();
-            } else {
-                // TODO: fix this
-                exit();
+            while (true) {
+                int opt = JOptionPane.showConfirmDialog(this, "Thank You! Your votes have been recorded. Next voter!",
+                        "Next Voter", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (opt == JOptionPane.OK_OPTION) {
+                    initGroupAndOptions();
+                    break;
+                } else {
+                    exit();
+                }
             }
         } else {
             nextOptions();
@@ -470,7 +511,7 @@ public class VoteClient extends JFrame {
      *
      * @param args the command-line arguments (none needed)
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         //<editor-fold defaultstate="collapsed" desc="Set 'Nimbus' L&F (optional)">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
@@ -490,7 +531,7 @@ public class VoteClient extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new VoteClient().setVisible(true);
+                new VoteClient(!(args.length > 0 && args[0].equalsIgnoreCase("--no-local"))).setVisible(true);
             }
         });
     }
