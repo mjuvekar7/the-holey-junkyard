@@ -1,0 +1,123 @@
+options {
+    MULTI = true;
+    IGNORE_CASE = true;
+}
+
+PARSER_BEGIN(GoDlangParser)
+
+public class GoDlangParser {
+
+    public static void main (String[] args) {
+        GoDlangParser parser = new GoDlangParser(System.in);
+        try {
+            SimpleNode sn = parser.root();
+            sn.semanticCheck();
+            sn.translate(0);
+        } catch (ParseException ex) {
+            System.err.print("Error during parsing/symantic check: ");
+            System.err.println(ex.getMessage());
+        } catch (UnsupportedOperationException ex) {
+            System.err.println(ex.getMessage());
+            System.err.println("Something's wrong with the compiler.\n"
+                     + "Please contact <shardul.chiplunkar@gmail.com> with a "
+                     + "description of the failure.");
+        }
+    }
+}
+
+PARSER_END(GoDlangParser)
+
+SKIP:
+{   " "
+|   "\t"
+|   "\r"
+|   "\n"
+|   "\r\n"
+}
+
+TOKEN:
+{   < SHAPE: "shape" >
+|   < LET: "let" >
+|   < BE: "be" >
+|   < A_NUMBER: "a number" >
+|   < TEXT: "text" >
+|   < A_LIST: "a list" >
+|   < AN_ACT: "an action" >
+|   < TO: "to" >
+|   < WITH: "with" >
+|   < DONE: "done" >
+|   < COLON: ":" >
+|   < COMMA: "," >
+}
+
+TOKEN:
+{   < SSTRING: "'" (~["'"])* "'" >
+|   < DSTRING: "\"" (~["\""])* "\"" >
+|   < DECIMAL: (["0"-"9"])+ ("." (["0"-"9"])+)? >
+|   < ID: (~[" ", "\t", "\r", "\n", ":", ","])+ >
+}
+
+ASTroot root () :
+{Token id;}
+{
+    "shape" id = <ID> { jjtThis.name = id.image; }
+    ( declaration() | action() )*
+    <EOF>
+    { return jjtThis; }
+}
+
+String string () #void :
+{}
+{
+    <SSTRING>
+    { return getToken(0).image.replaceAll("'", ""); }
+|
+    <DSTRING>
+    { return getToken(0).image.replaceAll("\"", ""); }
+}
+
+double number () #void :
+{}
+{
+    <DECIMAL> { return Double.parseDouble(getToken(0).image); }
+}
+
+void declaration () :
+{Token id;}
+{
+    "let"
+    id = <ID> { jjtThis.name = id.image; jjtThis.lineno = id.beginLine; } "be"
+    ( "a number" { jjtThis.type = SimpleNode.Type.NUM; }
+    | "text" { jjtThis.type = SimpleNode.Type.TEXT; }
+    | "a list" { jjtThis.type = SimpleNode.Type.LIST; } )
+}
+
+void action () :
+{Token id;}
+{
+    "to"
+    id = <ID> { jjtThis.name = id.image;
+                jjtThis.type = SimpleNode.Type.ACT;
+                jjtThis.lineno = id.beginLine; }
+    ( "with" param(jjtThis) ( "," param(jjtThis) )* )?
+    ":"
+    ( statement() )*
+//    ( "done" | return_statement() )
+    "done"
+}
+
+void param (ASTaction act) :
+{}
+{
+(   "a number" <ID> { jjtThis.type = SimpleNode.Type.NUM; }
+|   "text" <ID> { jjtThis.type = SimpleNode.Type.TEXT; }
+|   "a list" <ID> { jjtThis.type = SimpleNode.Type.LIST; }
+|   "an action" <ID> { jjtThis.type = SimpleNode.Type.ACT; }
+)   { jjtThis.name = getToken(0).image; act.numParams++; }
+}
+
+void statement () #void :
+{}
+{
+    declaration()
+}
